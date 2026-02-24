@@ -45,6 +45,38 @@ const FolderIco = ({ color = 'var(--amber)', open }) => <svg width="14" height="
 const PDFIco = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>;
 const ZIPIco = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><path d="M10 12v2" /><path d="M10 16v2" /><path d="M10 8v2" /></svg>;
 const DlIco = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>;
+const EyeIco = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>;
+const CloseIco = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>;
+
+/* ─ PDF Preview Modal ───────────────────────────────────────── */
+function PreviewModal({ url, name, onClose }) {
+    if (!url) return null;
+    return (
+        <div onClick={onClose} style={{
+            position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', flexDirection: 'column',
+            backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+        }}>
+            <div onClick={e => e.stopPropagation()} style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '12px 20px', backgroundColor: 'rgba(0,0,0,0.6)',
+                borderBottom: '1px solid rgba(255,255,255,0.1)'
+            }}>
+                <span style={{ color: 'white', fontSize: 14, fontWeight: 600, fontFamily: "'Inter',sans-serif", overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, marginRight: 16 }}>
+                    {name?.replace(/\.(pdf|zip)$/i, '').replace(/[_-]/g, ' ')}
+                </span>
+                <button onClick={onClose} style={{
+                    color: 'white', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: 8, width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    cursor: 'pointer', transition: 'background 0.15s', flexShrink: 0
+                }}><CloseIco /></button>
+            </div>
+            <div onClick={e => e.stopPropagation()} style={{ flex: 1, padding: '0 16px 16px' }}>
+                <iframe src={url} title={name} allow="autoplay"
+                    style={{ width: '100%', height: '100%', border: 'none', borderRadius: '0 0 12px 12px', backgroundColor: '#1a1a1a' }} />
+            </div>
+        </div>
+    );
+}
 
 /* ─ Depth config ─────────────────────────────────────────────── */
 const DS = [
@@ -55,36 +87,48 @@ const DS = [
 ];
 
 /* ─ FileRow ─────────────────────────────────────────────────── */
-function FileRow({ node, depth = 0 }) {
+function FileRow({ node, depth = 0, onPreview }) {
     const [h, sH] = useState(false);
     const isZip = node.name.toLowerCase().endsWith('.zip');
+    const isPdf = node.name.toLowerCase().endsWith('.pdf');
     const label = (node.label ?? node.name.replace(/\.(pdf|zip)$/i, '').replace(/[_-]/g, ' '));
     return (
-        <a href={node.path} download={node.name} onMouseEnter={() => sH(true)} onMouseLeave={() => sH(false)}
+        <div onMouseEnter={() => sH(true)} onMouseLeave={() => sH(false)}
             style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: `8px 10px 8px ${10 + depth * 16}px`, borderRadius: 8, margin: '1px 0',
                 backgroundColor: h ? 'var(--bg-hover)' : 'transparent', border: '1px solid ' + (h ? 'var(--border)' : 'transparent'),
-                textDecoration: 'none', transition: 'all 0.13s', cursor: 'pointer'
+                transition: 'all 0.13s'
             }}>
             {isZip ? <ZIPIco /> : <PDFIco />}
             <span style={{ flex: 1, fontSize: 13, fontWeight: 400, color: h ? 'var(--text)' : 'var(--text-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: "'Inter',sans-serif" }}>
                 {label}
             </span>
-            <span style={{
-                display: 'flex', alignItems: 'center', gap: 4, padding: '3px 9px', borderRadius: 6, fontSize: 11, fontWeight: 600, fontFamily: "'Inter',sans-serif",
-                color: h ? 'white' : 'var(--text-muted)', backgroundColor: h ? (isZip ? '#F59E0B' : 'var(--accent)') : 'var(--border-2)', border: '1px solid ' + (h ? 'transparent' : 'var(--border)'),
-                transition: 'all 0.13s', flexShrink: 0, boxShadow: h ? (isZip ? '0 1px 6px rgba(245,158,11,0.35)' : '0 1px 6px rgba(79,70,229,0.35)') : 'none'
-            }}>
-                <DlIco /> {isZip ? 'ZIP' : 'PDF'}
-            </span>
-        </a>
+            <div style={{ display: 'flex', gap: 5, flexShrink: 0 }}>
+                {isPdf && node.previewUrl && (
+                    <button onClick={() => onPreview?.(node)} style={{
+                        display: 'flex', alignItems: 'center', gap: 4, padding: '3px 9px', borderRadius: 6, fontSize: 11, fontWeight: 600, fontFamily: "'Inter',sans-serif",
+                        color: h ? 'white' : 'var(--text-muted)', backgroundColor: h ? '#059669' : 'var(--border-2)', border: '1px solid ' + (h ? 'transparent' : 'var(--border)'),
+                        transition: 'all 0.13s', cursor: 'pointer', boxShadow: h ? '0 1px 6px rgba(5,150,105,0.35)' : 'none'
+                    }}>
+                        <EyeIco /> Preview
+                    </button>
+                )}
+                <a href={node.path} download={node.name} style={{
+                    display: 'flex', alignItems: 'center', gap: 4, padding: '3px 9px', borderRadius: 6, fontSize: 11, fontWeight: 600, fontFamily: "'Inter',sans-serif",
+                    color: h ? 'white' : 'var(--text-muted)', backgroundColor: h ? (isZip ? '#F59E0B' : 'var(--accent)') : 'var(--border-2)', border: '1px solid ' + (h ? 'transparent' : 'var(--border)'),
+                    transition: 'all 0.13s', textDecoration: 'none', cursor: 'pointer', flexShrink: 0, boxShadow: h ? (isZip ? '0 1px 6px rgba(245,158,11,0.35)' : '0 1px 6px rgba(79,70,229,0.35)') : 'none'
+                }}>
+                    <DlIco /> {isZip ? 'ZIP' : 'PDF'}
+                </a>
+            </div>
+        </div>
     );
 }
 
 /* ─ TreeNode ─────────────────────────────────────────────────── */
-function TreeNode({ node, depth = 0 }) {
+function TreeNode({ node, depth = 0, onPreview }) {
     const [open, sO] = useState(false);
-    if (node.type === 'file') return <FileRow node={node} depth={depth} />;
+    if (node.type === 'file') return <FileRow node={node} depth={depth} onPreview={onPreview} />;
     const ds = DS[Math.min(depth, DS.length - 1)];
     const display = pretty(node.name);
     const files = node.children?.filter(c => c.type === 'file') ?? [];
@@ -109,7 +153,7 @@ function TreeNode({ node, depth = 0 }) {
             </button>
             {open && node.children?.length > 0 && (
                 <div className="anim-in" style={{ marginLeft: pl + 8, paddingLeft: 8, borderLeft: '1.5px solid var(--border)', paddingTop: 2, paddingBottom: 2, marginTop: 2 }}>
-                    {node.children.map((c, i) => <TreeNode key={`${c.name}-${i}`} node={c} depth={depth + 1} />)}
+                    {node.children.map((c, i) => <TreeNode key={`${c.name}-${i}`} node={c} depth={depth + 1} onPreview={onPreview} />)}
                 </div>
             )}
         </div>
@@ -117,15 +161,16 @@ function TreeNode({ node, depth = 0 }) {
 }
 
 /* ─ ResultRow ────────────────────────────────────────────────── */
-function ResultRow({ file }) {
+function ResultRow({ file, onPreview }) {
     const [h, sH] = useState(false);
     const isCS = file.subject === 'cs';
+    const isPdf = file.name?.toLowerCase().endsWith('.pdf');
     return (
-        <a href={file.path} download={file.name} onMouseEnter={() => sH(true)} onMouseLeave={() => sH(false)}
+        <div onMouseEnter={() => sH(true)} onMouseLeave={() => sH(false)}
             style={{
                 display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 10,
                 border: '1px solid ' + (h ? 'var(--border)' : 'var(--border-2)'), backgroundColor: h ? 'var(--bg-hover)' : 'var(--bg-card)',
-                textDecoration: 'none', transition: 'all 0.13s', cursor: 'pointer', marginBottom: 6
+                transition: 'all 0.13s', marginBottom: 6
             }}>
             <span style={{
                 flexShrink: 0, fontSize: 10, fontWeight: 700, fontFamily: "'Inter',sans-serif", letterSpacing: '0.05em',
@@ -140,14 +185,25 @@ function ResultRow({ file }) {
                     {file.label ?? file.name}
                 </div>
             </div>
-            <span style={{
-                flexShrink: 0, display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, fontFamily: "'Inter',sans-serif",
-                color: h ? 'white' : 'var(--text-muted)', backgroundColor: h ? 'var(--accent)' : 'var(--border-2)', border: '1px solid ' + (h ? 'transparent' : 'var(--border)'),
-                transition: 'all 0.13s', boxShadow: h ? '0 1px 6px rgba(79,70,229,0.35)' : 'none'
-            }}>
-                <DlIco /> <span className="hide-sm">Download</span>
-            </span>
-        </a>
+            <div style={{ display: 'flex', gap: 5, flexShrink: 0 }}>
+                {isPdf && file.previewUrl && (
+                    <button onClick={() => onPreview?.(file)} style={{
+                        display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, fontFamily: "'Inter',sans-serif",
+                        color: h ? 'white' : 'var(--text-muted)', backgroundColor: h ? '#059669' : 'var(--border-2)', border: '1px solid ' + (h ? 'transparent' : 'var(--border)'),
+                        transition: 'all 0.13s', cursor: 'pointer', boxShadow: h ? '0 1px 6px rgba(5,150,105,0.35)' : 'none'
+                    }}>
+                        <EyeIco /> <span className="hide-sm">Preview</span>
+                    </button>
+                )}
+                <a href={file.path} download={file.name} style={{
+                    display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, fontFamily: "'Inter',sans-serif",
+                    color: h ? 'white' : 'var(--text-muted)', backgroundColor: h ? 'var(--accent)' : 'var(--border-2)', border: '1px solid ' + (h ? 'transparent' : 'var(--border)'),
+                    transition: 'all 0.13s', textDecoration: 'none', cursor: 'pointer', boxShadow: h ? '0 1px 6px rgba(79,70,229,0.35)' : 'none'
+                }}>
+                    <DlIco /> <span className="hide-sm">Download</span>
+                </a>
+            </div>
+        </div>
     );
 }
 
@@ -177,6 +233,7 @@ export default function SubjectPage() {
     const [fSession, sFS] = useState('');
     const [fType, sFT] = useState('');
     const searchRef = useRef(null);
+    const [previewFile, setPreviewFile] = useState(null);
 
     const meta = SUBJECT_META[slug] ?? SUBJECT_META.cs;
 
@@ -294,7 +351,7 @@ export default function SubjectPage() {
                             ? <div style={{ padding: '40px', textAlign: 'center', border: '1.5px dashed var(--border)', borderRadius: 12 }}>
                                 <p style={{ fontSize: 14, color: 'var(--text-faint)', fontFamily: "'Inter',sans-serif" }}>No files match — try different keywords or clear filters.</p>
                             </div>
-                            : filtered.map((f, i) => <ResultRow key={`${f.path}-${i}`} file={f} />)
+                            : filtered.map((f, i) => <ResultRow key={`${f.path}-${i}`} file={f} onPreview={f => setPreviewFile(f)} />)
                         }
                     </div>
                 ) : (
@@ -311,7 +368,7 @@ export default function SubjectPage() {
                                     <div style={{ padding: '10px 14px 14px' }}>
                                         {n.type === 'file'
                                             ? <FileRow node={n} depth={0} />
-                                            : n.children?.map((c, j) => <TreeNode key={`${c.name}-${j}`} node={c} depth={0} />)
+                                            : n.children?.map((c, j) => <TreeNode key={`${c.name}-${j}`} node={c} depth={0} onPreview={f => setPreviewFile(f)} />)
                                         }
                                     </div>
                                 </section>
@@ -323,6 +380,7 @@ export default function SubjectPage() {
                             </div>
                 )}
             </main>
+            {previewFile && <PreviewModal url={previewFile.previewUrl} name={previewFile.name} onClose={() => setPreviewFile(null)} />}
         </div>
     );
 }

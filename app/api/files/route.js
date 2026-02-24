@@ -1,50 +1,42 @@
 import { NextResponse } from 'next/server';
-import path from 'path';
-import fs from 'fs';
+import { getDriveTree } from '@/lib/drive';
 
-/**
- * Recursively reads a directory and returns a nested tree.
- * Each node is either:
- *   { name, type: 'dir', children: [...] }
- *   { name, type: 'file', path: '/cs/...' }
- */
-function readTree(dirPath, publicBase) {
-    if (!fs.existsSync(dirPath)) return [];
-
-    return fs
-        .readdirSync(dirPath, { withFileTypes: true })
-        .map((entry) => {
-            const fullPath = path.join(dirPath, entry.name);
-            const relativePath = '/' + path.relative(publicBase, fullPath).replace(/\\/g, '/');
-
-            if (entry.isDirectory()) {
-                return {
-                    name: entry.name,
-                    type: 'dir',
-                    children: readTree(fullPath, publicBase),
-                };
-            }
-
-            // Expose PDF and ZIP files
-            const ext = entry.name.toLowerCase();
-            if (ext.endsWith('.pdf') || ext.endsWith('.zip')) {
-                return {
-                    name: entry.name,
-                    type: 'file',
-                    path: relativePath,
-                };
-            }
-
-            return null;
-        })
-        .filter(Boolean); // strip nulls (non-PDF files)
-}
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-    const publicBase = path.join(process.cwd(), 'public');
+    const csFolderId = process.env.DRIVE_CS_FOLDER_ID;
+    const ictFolderId = process.env.DRIVE_ICT_FOLDER_ID;
 
-    const cs = readTree(path.join(publicBase, 'cs'), publicBase);
-    const ict = readTree(path.join(publicBase, 'ict'), publicBase);
+    if (!csFolderId || !ictFolderId) {
+        return NextResponse.json({
+            error: 'Google Drive folder IDs are missing',
+            cs: [], ict: []
+        }, { status: 400 });
+    }
 
-    return NextResponse.json({ cs, ict });
+    const hasCredentials = process.env.GOOGLE_CREDENTIALS_BASE64 ||
+        (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL && process.env.GOOGLE_PRIVATE_KEY);
+
+    if (!hasCredentials) {
+        return NextResponse.json({
+            error: 'Google authentication credentials are missing in production environment',
+            cs: [], ict: []
+        }, { status: 400 });
+    }
+
+    try {
+        const [cs, ict] = await Promise.all([
+            getDriveTree(csFolderId),
+            getDriveTree(ictFolderId)
+        ]);
+
+        return NextResponse.json({ cs, ict });
+    } catch (error) {
+        console.error('Files API Error:', error);
+        return NextResponse.json({
+            error: 'Internal Server Error',
+            message: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        }, { status: 500 });
+    }
 }

@@ -1,1 +1,6 @@
-.vercel
+.DS_Store\n.vercel
+node_modules
+.next
+.env.local
+public/cs
+public/ict

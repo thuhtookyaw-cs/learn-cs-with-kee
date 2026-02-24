@@ -21,13 +21,25 @@ export default function Navbar({ dark, onToggleTheme }) {
             backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
             backgroundColor: 'color-mix(in srgb, var(--bg) 88%, transparent)',
         }}>
-            {/* Logo */}
-            <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
-                <BookIcon />
-                <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 16, color: 'var(--text)' }}>
-                    IGCSE Vault
-                </span>
-            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+                {/* Logo */}
+                <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
+                    <BookIcon />
+                    <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 16, color: 'var(--text)' }}>
+                        IGCSE Vault
+                    </span>
+                </Link>
+
+                {/* Nav Links */}
+                <nav style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <Link href="/articles" style={{
+                        fontSize: 14, fontWeight: 500, fontFamily: "'Inter', sans-serif",
+                        color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.15s'
+                    }} className="hover:text-[var(--text)]">
+                        Articles
+                    </Link>
+                </nav>
+            </div>
 
             {/* Theme toggle */}
             {onToggleTheme && (

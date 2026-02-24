@@ -102,6 +102,63 @@ export default function DashboardPage() {
                             <SubjectCard subject={s} />
                         </div>
                     ))}
+
+                    {/* Articles Card */}
+                    <div className="anim-up anim-delay-3" style={{ height: '100%' }}>
+                        <Link href="/articles" style={{ textDecoration: 'none', height: '100%', display: 'block' }}>
+                            <div style={{
+                                position: 'relative', overflow: 'hidden', height: '100%',
+                                display: 'flex', flexDirection: 'column',
+                                padding: 24, borderRadius: 24,
+                                backgroundColor: 'var(--bg-card)',
+                                border: '1px solid var(--border)',
+                                boxShadow: 'var(--shadow-sm)',
+                                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                                cursor: 'pointer',
+                            }} className="subject-card">
+                                <style jsx>{`
+                                    .subject-card:hover {
+                                        transform: translateY(-4px);
+                                        border-color: rgba(245, 158, 11, 0.35);
+                                        box-shadow: 0 12px 32px rgba(245, 158, 11, 0.15);
+                                    }
+                                    .subject-card:hover .glow-bg { opacity: 1; transform: scale(1.1); }
+                                `}</style>
+
+                                <div className="glow-bg" style={{
+                                    position: 'absolute', top: -50, right: -50, width: 180, height: 180,
+                                    background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%)',
+                                    borderRadius: '50%', opacity: 0.5, transition: 'all 0.5s ease', pointerEvents: 'none',
+                                }} />
+
+                                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20, position: 'relative', zIndex: 1 }}>
+                                    <div style={{
+                                        width: 48, height: 48, borderRadius: 14,
+                                        background: 'linear-gradient(135deg, #F59E0B, #D97706)',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        color: 'white', fontSize: 24, boxShadow: '0 4px 12px rgba(245,158,11,0.2)'
+                                    }}>
+                                        📝
+                                    </div>
+                                </div>
+
+                                <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                    <h2 style={{
+                                        fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 800,
+                                        color: 'var(--text)', margin: '0 0 8px 0', letterSpacing: '-0.01em'
+                                    }}>
+                                        Articles & Guides
+                                    </h2>
+                                    <p style={{
+                                        fontSize: 14, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif",
+                                        lineHeight: 1.5, flex: 1, margin: 0,
+                                    }}>
+                                        Study tips, announcements, and written tutorials for Edexcel IGCSE.
+                                    </p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Info row */}

@@ -29,7 +29,7 @@ export default function PasscodeGate({ children }) {
         setLoading(true);
         setError('');
         try {
-            const res = await fetch('/api/verify-passcode', {
+            const res = await fetch('/api/vault', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ passcode: input }),

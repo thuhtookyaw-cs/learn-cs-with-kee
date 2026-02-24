@@ -3,4 +3,4 @@ const nextConfig = {
     // Allow serving files from public/resources
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;
