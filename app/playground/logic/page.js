@@ -22,7 +22,7 @@ import Navbar from '@/components/layout/Navbar';
 // 1. INPUT NODE
 const InputNode = ({ data, isConnectable }) => {
     return (
-        <div className={\`w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-mono font-bold transition-all shadow-md \${data.value ? 'bg-emerald-500 text-white ring-4 ring-emerald-500/30' : 'bg-[var(--bg-card)] border-2 border-[var(--border)] text-[var(--text)]'}\`}>
+        <div className={`w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-mono font-bold transition-all shadow-md ${data.value ? 'bg-emerald-500 text-white ring-4 ring-emerald-500/30' : 'bg-[var(--bg-card)] border-2 border-[var(--border)] text-[var(--text)]'}`}>
             <div className="absolute -top-6 text-xs font-sans text-[var(--text-muted)] tracking-wider">INPUT</div>
             {data.value ? '1' : '0'}
             <Handle type="source" position={Position.Right} isConnectable={isConnectable} className="w-4 h-4 bg-emerald-500 border-2 border-[var(--bg)]" />
@@ -33,7 +33,7 @@ const InputNode = ({ data, isConnectable }) => {
 // 2. OUTPUT NODE
 const OutputNode = ({ data, isConnectable }) => {
     return (
-        <div className={\`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-mono font-bold transition-all duration-300 shadow-lg \${data.value ? 'bg-emerald-500 text-white shadow-[0_0_30px_rgba(16,185,129,0.5)] scale-110 border-none' : 'bg-[var(--bg-card)] border-2 border-[var(--border)] text-[var(--text-muted)]'}\`}>
+        <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-mono font-bold transition-all duration-300 shadow-lg ${data.value ? 'bg-emerald-500 text-white shadow-[0_0_30px_rgba(16,185,129,0.5)] scale-110 border-none' : 'bg-[var(--bg-card)] border-2 border-[var(--border)] text-[var(--text-muted)]'}`}>
             <Handle type="target" position={Position.Left} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
             <div className="absolute -top-6 text-xs font-sans text-[var(--text-muted)] tracking-wider">OUTPUT</div>
             {data.value ? '1' : '0'}
@@ -48,7 +48,7 @@ const GateNode = ({ data, isConnectable }) => {
         <div className="w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-xl flex items-center justify-center text-white font-black text-xl tracking-wider select-none relative">
             {/* Targets (Inputs to the gate) */}
             {isNot ? (
-                 <Handle type="target" position={Position.Left} id="a" style={{ top: '50%' }} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
+                <Handle type="target" position={Position.Left} id="a" style={{ top: '50%' }} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
             ) : (
                 <>
                     <Handle type="target" position={Position.Left} id="a" style={{ top: '30%' }} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
@@ -112,7 +112,7 @@ function InteractiveLogicCanvas() {
             const sourceValues = {};
             nextNodes.forEach(n => {
                 if (n.type === 'inputNode') {
-                    sourceValues[\`\${n.id}-source\`] = n.data.value; // inputs just output their value
+                    sourceValues[`${n.id}-source`] = n.data.value; // inputs just output their value
                 }
             });
 
@@ -127,8 +127,8 @@ function InteractiveLogicCanvas() {
                     const edgeA = inEdges.find(e => e.targetHandle === 'a' || (!e.targetHandle && gate.data.type === 'NOT'));
                     const edgeB = inEdges.find(e => e.targetHandle === 'b');
 
-                    const valA = edgeA ? (sourceValues[\`\${edgeA.source}-source\`] || 0) : 0;
-                    const valB = edgeB ? (sourceValues[\`\${edgeB.source}-source\`] || 0) : 0;
+                    const valA = edgeA ? (sourceValues[`${edgeA.source}-source`] || 0) : 0;
+                    const valB = edgeB ? (sourceValues[`${edgeB.source}-source`] || 0) : 0;
 
                     let outVal = 0;
                     switch (gate.data.type) {
@@ -140,8 +140,8 @@ function InteractiveLogicCanvas() {
                         case 'NOT': outVal = !valA ? 1 : 0; break;
                     }
 
-                    if (sourceValues[\`\${gate.id}-source\`] !== outVal) {
-                        sourceValues[\`\${gate.id}-source\`] = outVal;
+                    if (sourceValues[`${gate.id}-source`] !== outVal) {
+                        sourceValues[`${gate.id}-source`] = outVal;
                         stabilized = false;
                     }
                 });
@@ -153,7 +153,7 @@ function InteractiveLogicCanvas() {
             nextNodes.forEach(n => {
                 if (n.type === 'outputNode') {
                     const inEdge = edges.find(e => e.target === n.id);
-                    const inVal = inEdge ? (sourceValues[\`\${inEdge.source}-source\`] || 0) : 0;
+                    const inVal = inEdge ? (sourceValues[`${inEdge.source}-source`] || 0) : 0;
                     if (n.data.value !== inVal) {
                         n.data = { ...n.data, value: inVal };
                         changed = true;
@@ -164,13 +164,13 @@ function InteractiveLogicCanvas() {
             // Visual Edge Updating (Make them green and animated if carrying a 1)
             setEdges(eds => {
                 return eds.map(e => {
-                    const val = sourceValues[\`\${e.source}-source\`];
+                    const val = sourceValues[`${e.source}-source`];
                     const isHigh = val === 1;
                     if (e.animated !== isHigh || e.style.stroke !== (isHigh ? '#10B981' : '#3f3f46')) {
-                        return { 
-                            ...e, 
-                            animated: isHigh, 
-                            style: { ...e.style, stroke: isHigh ? '#10B981' : '#3f3f46' } 
+                        return {
+                            ...e,
+                            animated: isHigh,
+                            style: { ...e.style, stroke: isHigh ? '#10B981' : '#3f3f46' }
                         };
                     }
                     return e;
@@ -179,7 +179,7 @@ function InteractiveLogicCanvas() {
 
             return changed ? nextNodes : nds;
         });
-    }, [edges, nodes.length, nodes.filter(n=>n.type==='inputNode').map(n=>n.data.value).join(',')]);
+    }, [edges, nodes.length, nodes.filter(n => n.type === 'inputNode').map(n => n.data.value).join(',')]);
 
 
     // Toggle inputs on node click
@@ -198,7 +198,7 @@ function InteractiveLogicCanvas() {
     // Side Panel Tools
     const addNode = (type, gateType = null) => {
         const newNode = {
-            id: \`node_\${Date.now()}\`,
+            id: `node_${Date.now()}`,
             position: { x: Math.random() * 200 + 100, y: Math.random() * 200 + 100 },
             type: type,
             data: type === 'gateNode' ? { type: gateType } : { value: 0 }
@@ -261,11 +261,11 @@ export default function LogicPlaygroundPage() {
         <main className="h-screen flex flex-col bg-[var(--bg)] overflow-hidden">
             <Navbar />
             <div className="pt-20 px-6 pb-2 w-full flex items-center gap-4">
-               <Link href="/playground" className="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors font-medium text-sm no-underline shrink-0">
-                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
-                   Back
-               </Link>
-               <h1 className="text-xl font-serif font-bold text-[var(--text)] ml-2">Logic Gate Simulator</h1>
+                <Link href="/playground" className="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors font-medium text-sm no-underline shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+                    Back
+                </Link>
+                <h1 className="text-xl font-serif font-bold text-[var(--text)] ml-2">Logic Gate Simulator</h1>
             </div>
             {/* The React Flow canvas needs a fixed height parent */}
             <div className="flex-1 w-full border-t border-[var(--border)]">
