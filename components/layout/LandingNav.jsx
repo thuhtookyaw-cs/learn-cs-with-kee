@@ -1,12 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-import { m, LazyMotion, domAnimation } from 'framer-motion';
+import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 
 export default function LandingNav() {
     const [scrolled, setScrolled] = useState(false);
     const [dark, setDark] = useState(false);
+    const [activeSection, setActiveSection] = useState('');
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const stored = localStorage.getItem('igcse-theme');
@@ -17,7 +21,31 @@ export default function LandingNav() {
 
         const handler = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handler, { passive: true });
-        return () => window.removeEventListener('scroll', handler);
+
+        // Scroll spy
+        const observers = [];
+        const sections = ['about', 'services', 'contact'];
+
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                const obs = new IntersectionObserver(
+                    ([entry]) => {
+                        if (entry.isIntersecting) {
+                            setActiveSection(id);
+                        }
+                    },
+                    { rootMargin: '-30% 0px -70% 0px' }
+                );
+                obs.observe(el);
+                observers.push(obs);
+            }
+        });
+
+        return () => {
+            window.removeEventListener('scroll', handler);
+            observers.forEach(obs => obs.disconnect());
+        };
     }, []);
 
     const toggleTheme = () => {
@@ -65,25 +93,56 @@ export default function LandingNav() {
                 </m.div>
 
                 <nav style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    {[['#about', 'About'], ['#services', 'Services'], ['#contact', 'Contact']].map(([h, l]) => (
-                        <m.a variants={itemAnimation} key={h} href={h}
-                            style={{ fontSize: 13, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif", textDecoration: 'none', padding: '6px 10px', borderRadius: 8, transition: 'color 0.15s' }}
-                            onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
-                            onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
-                        >{l}</m.a>
-                    ))}
-                    <m.div variants={itemAnimation}>
-                        <Link href="/dashboard" style={{
-                            display: 'inline-flex', alignItems: 'center', gap: 6,
-                            padding: '7px 14px', borderRadius: 100,
-                            border: '1px solid var(--border)', backgroundColor: 'var(--bg-card)',
-                            fontSize: 12, fontWeight: 600, fontFamily: "'Inter', sans-serif",
-                            color: 'var(--text)', textDecoration: 'none', transition: 'all 0.15s',
-                        }}
-                            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 4px 12px var(--accent-soft)'; }}
-                            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
-                        >
-                            📚 Resources
+                    {[['#about', 'About'], ['#services', 'Services'], ['#contact', 'Contact']].map(([h, l]) => {
+                        // For hash links, isActive depends on the activeSection (from scroll spy)
+                        const isActive = activeSection === h.slice(1);
+                        return (
+                            <m.a variants={itemAnimation} key={h} href={h}
+                                className="relative px-2.5 py-1.5 no-underline hidden md:block"
+                            >
+                                <span className="relative z-10 text-[13px] font-sans transition-colors duration-200" style={{
+                                    fontWeight: isActive ? 600 : 500,
+                                    color: isActive ? 'var(--text)' : 'var(--text-muted)'
+                                }}>
+                                    {l}
+                                </span>
+                                {isActive && (
+                                    <m.div
+                                        layoutId="landingnav-active-hash"
+                                        className="absolute inset-0 bg-[var(--bg-card)] border border-[var(--border)] rounded-lg z-0"
+                                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                                    />
+                                )}
+                            </m.a>
+                        );
+                    })}
+                    <m.div variants={itemAnimation} className="hidden md:flex gap-1.5 items-center">
+                        {[
+                            { href: '/articles', label: 'Blog' },
+                            { href: '/store', label: 'Store' }
+                        ].map(({ href, label }) => {
+                            const isActive = pathname === href || pathname?.startsWith(`${href}/`);
+                            return (
+                                <Link key={href} href={href} className="relative px-2.5 py-1.5 no-underline">
+                                    <span className="relative z-10 text-[13px] font-sans transition-colors duration-200" style={{
+                                        fontWeight: isActive ? 600 : 500,
+                                        color: isActive ? 'var(--text)' : 'var(--text-muted)'
+                                    }}>
+                                        {label}
+                                    </span>
+                                    {isActive && (
+                                        <m.div
+                                            layoutId="landingnav-active"
+                                            className="absolute inset-0 bg-[var(--bg-card)] border border-[var(--border)] rounded-lg z-0"
+                                            transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })}
+
+                        <Link href="/dashboard" className="hidden md:inline-flex items-center gap-1.5 ml-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--bg-card)] text-[12px] font-semibold font-sans text-[var(--text)] no-underline transition-all duration-150 hover:border-[var(--accent)] hover:text-[var(--accent)] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_var(--accent-soft)]">
+                            📝 Past Papers
                         </Link>
                     </m.div>
                     <m.button variants={itemAnimation} onClick={toggleTheme} aria-label="Toggle theme" style={{
@@ -100,8 +159,46 @@ export default function LandingNav() {
                             : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
                         }
                     </m.button>
+                    {/* Hamburger Button for Mobile */}
+                    <m.button variants={itemAnimation} onClick={() => setIsMobileOpen(v => !v)} aria-label="Toggle mobile menu" className="md:hidden flex items-center justify-center w-[34px] h-[34px] rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-muted)] cursor-pointer transition-all duration-150 hover:text-[var(--text)]">
+                        {isMobileOpen ? (
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        ) : (
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        )}
+                    </m.button>
                 </nav>
             </m.header>
+
+            {/* Mobile Dropdown Menu */}
+            <AnimatePresence>
+                {isMobileOpen && (
+                    <m.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="md:hidden fixed top-[60px] left-0 right-0 z-40 bg-[var(--bg)] border-b border-[var(--border)] shadow-md p-4 flex flex-col gap-2"
+                        // To allow backdrop blur matching nav:
+                        style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', backgroundColor: 'color-mix(in srgb, var(--bg) 95%, transparent)' }}
+                    >
+                        {[['#about', 'About'], ['#services', 'Services'], ['#contact', 'Contact']].map(([h, l]) => (
+                            <a key={h} href={h} onClick={() => setIsMobileOpen(false)} className="px-4 py-3 rounded-xl hover:bg-[var(--bg-card)] text-[var(--text)] font-medium text-sm transition-colors border border-transparent hover:border-[var(--border)]">
+                                {l}
+                            </a>
+                        ))}
+                        {[
+                            { href: '/articles', label: 'Blog' },
+                            { href: '/store', label: 'Store' },
+                            { href: '/dashboard', label: 'Past Papers' },
+                        ].map(({ href, label }) => (
+                            <Link key={href} href={href} onClick={() => setIsMobileOpen(false)} className="px-4 py-3 rounded-xl hover:bg-[var(--bg-card)] text-[var(--text)] font-medium text-sm transition-colors border border-transparent hover:border-[var(--border)]">
+                                {label}
+                            </Link>
+                        ))}
+                    </m.div>
+                )}
+            </AnimatePresence>
         </LazyMotion>
     );
 }

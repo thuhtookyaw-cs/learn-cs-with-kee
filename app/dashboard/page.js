@@ -34,176 +34,76 @@ const SUBJECTS = [
 ];
 
 export default function DashboardPage() {
-    const [dark, setDark] = useState(false);
-
-    useEffect(() => {
-        const stored = localStorage.getItem('igcse-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = stored ? stored === 'dark' : prefersDark;
-        setDark(isDark);
-        document.documentElement.classList.toggle('dark', isDark);
-    }, []);
-
-    const toggleTheme = useCallback(() => {
-        setDark(d => {
-            const next = !d;
-            document.documentElement.classList.toggle('dark', next);
-            localStorage.setItem('igcse-theme', next ? 'dark' : 'light');
-            return next;
-        });
-    }, []);
-
     return (
-        <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg)' }}>
-            <Navbar dark={dark} onToggleTheme={toggleTheme} />
+        <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg)', position: 'relative', overflow: 'hidden' }}>
+            {/* Ambient Background Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-            <main style={{ flex: 1, maxWidth: 900, width: '100%', margin: '0 auto', padding: '48px 20px 80px' }}>
-                {/* Back link */}
-                <div className="anim-up" style={{ marginBottom: 24 }}>
-                    <Link href="/" style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 6,
-                        fontSize: 13, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif",
-                        textDecoration: 'none', fontWeight: 500,
-                        transition: 'color 0.15s',
-                    }}
-                        onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
-                        onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
-                    >
-                        ← Back to home
-                    </Link>
-                </div>
+            <Navbar />
 
-                {/* Header */}
-                <div className="anim-up" style={{ marginBottom: 40 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                        <img src="/logo.png" alt="Logo" style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'contain' }} />
-                        <h1 style={{
-                            fontFamily: "'Playfair Display', serif",
-                            fontSize: 'clamp(24px, 5vw, 36px)',
-                            fontWeight: 900, letterSpacing: '-0.02em',
-                            color: 'var(--text)', margin: 0,
-                        }}>
-                            Resources
+            <main className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 py-12 relative z-10">
+
+                {/* Hero Section */}
+                <div className="relative text-center mb-16 animate-fade-in py-8 sm:py-12 border-b border-[var(--border)] border-dashed">
+                    <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-sm font-semibold text-[var(--accent)] tracking-wide shadow-sm">
+                        <span>📚</span> Exam Resources
+                    </div>
+                    <div className="flex items-center justify-center gap-3 sm:gap-4 mb-6">
+                        <img src="/logo.png" alt="Logo" className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-contain shadow-sm" />
+                        <h1 className="text-4xl sm:text-6xl font-extrabold font-serif text-[var(--text)] tracking-tight">
+                            Past Papers
                         </h1>
                     </div>
-                    <p style={{ fontSize: 14, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif", fontWeight: 300, maxWidth: 500 }}>
+                    <p className="text-lg sm:text-xl text-[var(--text-muted)] max-w-2xl mx-auto leading-relaxed">
                         Curated Edexcel IGCSE past papers, mark schemes, examiner reports and more — all in one place.
                     </p>
                 </div>
 
                 {/* Subject cards grid */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
-                    gap: 20,
-                }}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-16">
                     {SUBJECTS.map((s, i) => (
                         <div key={s.slug} className={`anim-up anim-delay-${i + 1}`}>
                             <SubjectCard subject={s} />
                         </div>
                     ))}
-
-                    {/* Articles Card */}
-                    <div className="anim-up anim-delay-3" style={{ height: '100%' }}>
-                        <Link href="/articles" style={{ textDecoration: 'none', height: '100%', display: 'block' }}>
-                            <div style={{
-                                position: 'relative', overflow: 'hidden', height: '100%',
-                                display: 'flex', flexDirection: 'column',
-                                padding: 24, borderRadius: 24,
-                                backgroundColor: 'var(--bg-card)',
-                                border: '1px solid var(--border)',
-                                boxShadow: 'var(--shadow-sm)',
-                                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                                cursor: 'pointer',
-                            }} className="subject-card">
-                                <style jsx>{`
-                                    .subject-card:hover {
-                                        transform: translateY(-4px);
-                                        border-color: rgba(245, 158, 11, 0.35);
-                                        box-shadow: 0 12px 32px rgba(245, 158, 11, 0.15);
-                                    }
-                                    .subject-card:hover .glow-bg { opacity: 1; transform: scale(1.1); }
-                                `}</style>
-
-                                <div className="glow-bg" style={{
-                                    position: 'absolute', top: -50, right: -50, width: 180, height: 180,
-                                    background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%)',
-                                    borderRadius: '50%', opacity: 0.5, transition: 'all 0.5s ease', pointerEvents: 'none',
-                                }} />
-
-                                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20, position: 'relative', zIndex: 1 }}>
-                                    <div style={{
-                                        width: 48, height: 48, borderRadius: 14,
-                                        background: 'linear-gradient(135deg, #F59E0B, #D97706)',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        color: 'white', fontSize: 24, boxShadow: '0 4px 12px rgba(245,158,11,0.2)'
-                                    }}>
-                                        📝
-                                    </div>
-                                </div>
-
-                                <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                    <h2 style={{
-                                        fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 800,
-                                        color: 'var(--text)', margin: '0 0 8px 0', letterSpacing: '-0.01em'
-                                    }}>
-                                        Articles & Guides
-                                    </h2>
-                                    <p style={{
-                                        fontSize: 14, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif",
-                                        lineHeight: 1.5, flex: 1, margin: 0,
-                                    }}>
-                                        Study tips, announcements, and written tutorials for Edexcel IGCSE.
-                                    </p>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
                 </div>
 
                 {/* Info row */}
-                <div className="anim-up anim-delay-3" style={{
-                    marginTop: 36,
-                    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12,
-                }}>
-                    <div style={{
-                        padding: '16px 20px', borderRadius: 12,
-                        border: '1px solid var(--border)', backgroundColor: 'var(--bg-card)',
-                        display: 'flex', alignItems: 'flex-start', gap: 12,
-                    }}>
-                        <span style={{ fontSize: 18, flexShrink: 0 }}>🔍</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up anim-delay-3">
+                    <div className="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border)] flex items-start gap-4 transition-all hover:border-[var(--accent)] hover:shadow-paper-hover">
+                        <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0 border border-indigo-500/20 text-xl">
+                            🔍
+                        </div>
                         <div>
-                            <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', fontFamily: "'Inter', sans-serif", marginBottom: 4 }}>Search & Filter</div>
-                            <p style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif", lineHeight: 1.5, margin: 0 }}>
+                            <div className="text-sm font-bold text-[var(--text)] mb-2 uppercase tracking-wide">Search & Filter</div>
+                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">
                                 Filter by year, session, or paper type inside each subject.
                             </p>
                         </div>
                     </div>
-                    <div style={{
-                        padding: '16px 20px', borderRadius: 12,
-                        border: '1px solid var(--border)', backgroundColor: 'var(--bg-card)',
-                        display: 'flex', alignItems: 'flex-start', gap: 12,
-                    }}>
-                        <span style={{ fontSize: 18, flexShrink: 0 }}>📥</span>
+
+                    <div className="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border)] flex items-start gap-4 transition-all hover:border-[var(--accent)] hover:shadow-paper-hover">
+                        <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20 text-xl">
+                            📥
+                        </div>
                         <div>
-                            <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', fontFamily: "'Inter', sans-serif", marginBottom: 4 }}>Instant Download</div>
-                            <p style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif", lineHeight: 1.5, margin: 0 }}>
+                            <div className="text-sm font-bold text-[var(--text)] mb-2 uppercase tracking-wide">Instant Download</div>
+                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">
                                 Click any file to download PDFs directly — no sign-up needed.
                             </p>
                         </div>
                     </div>
-                    <div style={{
-                        padding: '16px 20px', borderRadius: 12,
-                        border: '1px solid var(--border)', backgroundColor: 'var(--bg-card)',
-                        display: 'flex', alignItems: 'flex-start', gap: 12,
-                    }}>
-                        <span style={{ fontSize: 18, flexShrink: 0 }}>📬</span>
+
+                    <div className="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border)] flex items-start gap-4 transition-all hover:border-[var(--accent)] hover:shadow-paper-hover">
+                        <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center shrink-0 border border-amber-500/20 text-xl">
+                            📬
+                        </div>
                         <div>
-                            <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', fontFamily: "'Inter', sans-serif", marginBottom: 4 }}>Need Help?</div>
-                            <p style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif", lineHeight: 1.5, margin: 0 }}>
+                            <div className="text-sm font-bold text-[var(--text)] mb-2 uppercase tracking-wide">Need Help?</div>
+                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">
                                 Join the{' '}
                                 <a href="https://t.me/learncswithkee" target="_blank" rel="noreferrer"
-                                    style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}>
+                                    className="text-[var(--accent)] font-semibold hover:underline">
                                     Telegram channel
                                 </a>{' '}
                                 for tips and updates.
