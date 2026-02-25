@@ -5,39 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import confetti from 'canvas-confetti';
 
-// A small bank of IGCSE CS questions
-const QUESTION_BANK = [
-    {
-        id: 1,
-        q: "Which logic gate outputs 1 only when both inputs are 1?",
-        options: ["OR", "AND", "NAND", "XOR"],
-        answer: "AND"
-    },
-    {
-        id: 2,
-        q: "What is the denary (decimal) value of the binary number 1011?",
-        options: ["11", "13", "9", "15"],
-        answer: "11"
-    },
-    {
-        id: 3,
-        q: "Which of these is an example of secondary storage?",
-        options: ["RAM", "ROM", "Cache", "SSD"],
-        answer: "SSD"
-    },
-    {
-        id: 4,
-        q: "In hex, what does 'A' represent in denary?",
-        options: ["10", "11", "12", "15"],
-        answer: "10"
-    },
-    {
-        id: 5,
-        q: "Which type of translator converts source code into executable machine code all at once?",
-        options: ["Interpreter", "Assembler", "Compiler", "Linker"],
-        answer: "Compiler"
-    }
-];
+import { getRandomQuestions } from '@/lib/quiz-data';
 
 export default function QuizPage() {
     const [started, setStarted] = useState(false);
@@ -45,10 +13,12 @@ export default function QuizPage() {
     const [score, setScore] = useState(0);
     const [showResults, setShowResults] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [questions, setQuestions] = useState([]);
 
-    const question = QUESTION_BANK[currentIndex];
+    const question = questions[currentIndex] || null;
 
     const handleStart = () => {
+        setQuestions(getRandomQuestions(10)); // Pick 10 random questions per run
         setStarted(true);
         setCurrentIndex(0);
         setScore(0);
@@ -64,11 +34,11 @@ export default function QuizPage() {
 
         setTimeout(() => {
             setSelectedAnswer(null);
-            if (currentIndex < QUESTION_BANK.length - 1) {
+            if (currentIndex < questions.length - 1) {
                 setCurrentIndex(currentIndex + 1);
             } else {
                 setShowResults(true);
-                if (score + (isCorrect ? 1 : 0) === QUESTION_BANK.length) {
+                if (score + (isCorrect ? 1 : 0) === questions.length) {
                     triggerConfetti();
                 }
             }
@@ -139,10 +109,10 @@ export default function QuizPage() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     className="text-center"
                                 >
-                                    <div className="text-6xl mb-6">{score === QUESTION_BANK.length ? '🏆' : score > 2 ? '👍' : '📚'}</div>
+                                    <div className="text-6xl mb-6">{score === questions.length ? '🏆' : score > (questions.length / 2) ? '👍' : '📚'}</div>
                                     <h2 className="text-3xl font-bold mb-2 text-[var(--text)] font-serif">Quiz Complete!</h2>
                                     <p className="text-xl text-[var(--text-muted)] mb-8">
-                                        You scored <strong className="text-[var(--accent)] font-bold">{score}</strong> out of {QUESTION_BANK.length}.
+                                        You scored <strong className="text-[var(--accent)] font-bold">{score}</strong> out of {questions.length}.
                                     </p>
                                     <div className="flex gap-4 justify-center">
                                         <button onClick={handleStart} className="px-6 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] font-semibold rounded-full hover:bg-[var(--border)] transition-colors">
@@ -163,7 +133,7 @@ export default function QuizPage() {
                                     className="w-full"
                                 >
                                     <div className="flex justify-between items-center mb-8">
-                                        <span className="text-sm font-semibold text-[var(--text-muted)] tracking-wider uppercase">Question {currentIndex + 1} of {QUESTION_BANK.length}</span>
+                                        <span className="text-sm font-semibold text-[var(--text-muted)] tracking-wider uppercase">Question {currentIndex + 1} of {questions.length}</span>
                                         <span className="text-sm font-bold text-[var(--text)] bg-[var(--bg)] px-3 py-1 rounded-full border border-[var(--border)]">Score: {score}</span>
                                     </div>
 
