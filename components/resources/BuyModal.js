@@ -71,8 +71,24 @@ export default function BuyModal({ isOpen, onClose, resource }) {
                 </div>
 
                 {/* Body */}
-                <div className="p-6 overflow-y-auto">
-                    <div className="mb-6 p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
+                <motion.div
+                    initial="hidden"
+                    animate="show"
+                    variants={{
+                        hidden: {},
+                        show: {
+                            transition: {
+                                staggerChildren: 0.1,
+                                delayChildren: 0.2
+                            }
+                        }
+                    }}
+                    className="p-6 overflow-y-auto"
+                >
+                    <motion.div
+                        variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }}
+                        className="mb-6 p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20"
+                    >
                         <p className="text-sm text-indigo-300 font-medium mb-1">Retrieving access for:</p>
                         <p className="text-lg font-bold text-indigo-100">{resource.title}</p>
                         {resource.levels && resource.levels.length > 0 && (
@@ -91,10 +107,10 @@ export default function BuyModal({ isOpen, onClose, resource }) {
                                 </select>
                             </div>
                         )}
-                    </div>
+                    </motion.div>
 
                     <div className="space-y-6">
-                        <div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }}>
                             <div className="flex items-center justify-between mb-4">
                                 <h4 className="flex items-center gap-2 text-sm font-bold text-parchment2 uppercase tracking-wide">
                                     <span className="bg-emerald-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
@@ -118,9 +134,9 @@ export default function BuyModal({ isOpen, onClose, resource }) {
                                     <span className="font-bold text-parchment2">{resource.price} MMK</span>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
-                        <div>
+                        <motion.div variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }}>
                             <h4 className="flex items-center gap-2 text-sm font-bold text-parchment2 uppercase tracking-wide mb-3">
                                 <span className="bg-emerald-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
                                 Send Screenshot
@@ -142,9 +158,9 @@ export default function BuyModal({ isOpen, onClose, resource }) {
                                 </svg>
                                 Send Screenshot on Telegram
                             </a>
-                        </div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
             </div>
 
             {/* Toast Notification */}

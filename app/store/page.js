@@ -176,18 +176,32 @@ export default function ResourcesPage() {
 
                         {/* Category Pills */}
                         <div className="flex flex-wrap gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0 hide-scrollbar justify-start sm:justify-end">
-                            {CATEGORIES.map(category => (
-                                <button
-                                    key={category}
-                                    onClick={() => setSelectedCategory(category)}
-                                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${selectedCategory === category
-                                        ? 'bg-[var(--accent)] text-white shadow-md shadow-[var(--accent-soft)]'
-                                        : 'bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-card-2)]'
-                                        }`}
-                                >
-                                    {category}
-                                </button>
-                            ))}
+                            {CATEGORIES.map(category => {
+                                const isActive = selectedCategory === category;
+                                return (
+                                    <button
+                                        key={category}
+                                        onClick={() => setSelectedCategory(category)}
+                                        className={`relative px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors duration-300 ${isActive
+                                                ? 'text-white'
+                                                : 'text-[var(--text-muted)] hover:text-[var(--text)]'
+                                            }`}
+                                    >
+                                        <span className="relative z-10">{category}</span>
+                                        {isActive && (
+                                            <motion.div
+                                                layoutId="store-category-pill"
+                                                className="absolute inset-0 bg-[var(--accent)] rounded-full shadow-md shadow-[var(--accent-soft)] z-0"
+                                                initial={false}
+                                                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                                            />
+                                        )}
+                                        {!isActive && (
+                                            <div className="absolute inset-0 border border-[var(--border)] rounded-full bg-[var(--bg-card)] z-[-1]" />
+                                        )}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 

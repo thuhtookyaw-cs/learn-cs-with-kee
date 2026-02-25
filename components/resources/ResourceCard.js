@@ -1,10 +1,43 @@
 'use client';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 export default function ResourceCard({ resource, onBuyClick }) {
     const isFree = resource.price === 0 || resource.price === 'Free';
 
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20 });
+    const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20 });
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
     return (
-        <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 transition-all duration-300 hover:shadow-paper-hover hover:-translate-y-1 hover:border-[var(--accent)]">
+        <motion.div
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 transition-colors duration-300 hover:border-[var(--accent)] cursor-pointer"
+        >
+            <div className="absolute inset-0 bg-[var(--bg-card)] z-0 rounded-2xl" style={{ transform: "translateZ(-10px)", boxShadow: "var(--shadow-md)" }} />
             {/* Glow Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -55,6 +88,7 @@ export default function ResourceCard({ resource, onBuyClick }) {
 
                 <button
                     onClick={() => onBuyClick(resource)}
+                    style={{ transform: "translateZ(30px)" }}
                     className={`px-6 py-2.5 rounded-xl font-medium text-sm transition-all shadow-sm ${isFree
                         ? 'bg-[var(--text)] text-[var(--bg)] hover:opacity-90 hover:shadow-md'
                         : 'bg-[var(--accent)] text-white hover:opacity-90 hover:shadow-[var(--accent-soft)]'
@@ -63,6 +97,6 @@ export default function ResourceCard({ resource, onBuyClick }) {
                     {isFree ? 'Download PDF' : 'Buy Now'}
                 </button>
             </div>
-        </div>
+        </motion.div>
     );
 }

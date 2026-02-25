@@ -1,8 +1,44 @@
 'use client';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useInView } from 'framer-motion';
 import Stamp from '@/components/ui/Stamp';
 import { TUTOR } from '@/lib/data';
+
+function CountUpStat({ value, label }) {
+    const ref = useRef(null);
+    const inView = useInView(ref, { once: true, margin: "-50px" });
+    const [displayVal, setDisplayVal] = useState("0");
+    const hasSuffix = typeof value === 'string' && value.includes('★');
+    const target = parseFloat(hasSuffix ? value.replace('★', '') : value) || 0;
+
+    useEffect(() => {
+        if (!inView) return;
+        let start = 0;
+        const duration = 1500;
+        const stepTime = 20;
+        const steps = duration / stepTime;
+        const inc = target / steps;
+
+        const timer = setInterval(() => {
+            start += inc;
+            if (start >= target) {
+                setDisplayVal(hasSuffix ? `${target}★` : `${target}${typeof value === 'string' ? value.replace(/[0-9.]/g, '') : ''}`);
+                clearInterval(timer);
+            } else {
+                setDisplayVal(hasSuffix ? `${start.toFixed(1)}★` : Math.floor(start).toString());
+            }
+        }, stepTime);
+
+        return () => clearInterval(timer);
+    }, [inView, target, value, hasSuffix]);
+
+    return (
+        <div ref={ref} className="text-center">
+            <div className="font-serif text-3xl sm:text-4xl font-extrabold text-[var(--accent)] mb-1">{displayVal}</div>
+            <div className="text-xs text-[var(--text-faint)] font-sans tracking-widest uppercase font-semibold">{label}</div>
+        </div>
+    );
+}
 
 export default function Hero() {
     const ref = useRef(null);
@@ -93,10 +129,7 @@ export default function Hero() {
                         { v: TUTOR.sessions, l: 'Sessions Done' },
                         { v: TUTOR.rating + '★', l: 'Avg Rating' },
                     ].map(s => (
-                        <div key={s.l} className="text-center">
-                            <div className="font-serif text-3xl sm:text-4xl font-extrabold text-[var(--accent)] mb-1">{s.v}</div>
-                            <div className="text-xs text-[var(--text-faint)] font-sans tracking-widest uppercase font-semibold">{s.l}</div>
-                        </div>
+                        <CountUpStat key={s.l} value={s.v} label={s.l} />
                     ))}
                 </div>
             </motion.div>
