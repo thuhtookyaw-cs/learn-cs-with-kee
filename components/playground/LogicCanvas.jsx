@@ -38,25 +38,80 @@ const OutputNode = ({ data, isConnectable }) => {
     );
 };
 
+const GateIcon = ({ type, className = "w-full h-full" }) => {
+    const fill = "rgba(99, 102, 241, 0.15)";
+    const stroke = "currentColor";
+    const sw = 6;
+
+    switch (type) {
+        case 'AND':
+            return (
+                <svg className={className} viewBox="0 0 100 100">
+                    <path d="M 10 10 L 60 10 A 40 40 0 0 1 60 90 L 10 90 Z" fill={fill} stroke={stroke} strokeWidth={sw} strokeLinejoin="round" />
+                </svg>
+            );
+        case 'OR':
+            return (
+                <svg className={className} viewBox="0 0 100 100">
+                    <path d="M 10 10 C 50 10 75 25 100 50 C 75 75 50 90 10 90 C 30 60 30 40 10 10 Z" fill={fill} stroke={stroke} strokeWidth={sw} strokeLinejoin="round" />
+                </svg>
+            );
+        case 'NOT':
+            return (
+                <svg className={className} viewBox="0 0 100 100">
+                    <path d="M 10 20 L 76 50 L 10 80 Z" fill={fill} stroke={stroke} strokeWidth={sw} strokeLinejoin="round" />
+                    <circle cx="88" cy="50" r="8" fill="var(--bg-card)" stroke={stroke} strokeWidth={sw} />
+                </svg>
+            );
+        case 'NAND':
+            return (
+                <svg className={className} viewBox="0 0 100 100">
+                    <path d="M 10 10 L 42 10 A 40 40 0 0 1 42 90 L 10 90 Z" fill={fill} stroke={stroke} strokeWidth={sw} strokeLinejoin="round" />
+                    <circle cx="90" cy="50" r="8" fill="var(--bg-card)" stroke={stroke} strokeWidth={sw} />
+                </svg>
+            );
+        case 'NOR':
+            return (
+                <svg className={className} viewBox="0 0 100 100">
+                    <path d="M 10 10 C 40 10 60 25 78 50 C 60 75 40 90 10 90 C 30 60 30 40 10 10 Z" fill={fill} stroke={stroke} strokeWidth={sw} strokeLinejoin="round" />
+                    <circle cx="88" cy="50" r="8" fill="var(--bg-card)" stroke={stroke} strokeWidth={sw} />
+                </svg>
+            );
+        case 'XOR':
+            return (
+                <svg className={className} viewBox="0 0 100 100">
+                    <path d="M 5 10 C 25 40 25 60 5 90" fill="none" stroke={stroke} strokeWidth={sw} strokeLinecap="round" />
+                    <path d="M 20 10 C 50 10 70 25 100 50 C 70 75 50 90 20 90 C 40 60 40 40 20 10 Z" fill={fill} stroke={stroke} strokeWidth={sw} strokeLinejoin="round" />
+                </svg>
+            );
+        default:
+            return null;
+    }
+};
+
 // 3. GATE NODE
 const GateNode = ({ data, isConnectable }) => {
     const isNot = data.type === 'NOT';
     return (
-        <div className="w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-xl flex items-center justify-center text-white font-black text-xl tracking-wider select-none relative">
+        <div className="flex items-center justify-center relative group transition-all" style={{ width: 80, height: 60 }}>
+            {/* The SVG Graphic */}
+            <GateIcon type={data.type} className="absolute inset-0 w-full h-full text-[var(--text)] drop-shadow-md" />
+
+            {/* Type Label Below */}
+            <div className="absolute -bottom-6 text-[10px] font-bold tracking-widest text-[var(--text-muted)] group-hover:text-[var(--text)] transition-colors uppercase select-none">{data.type}</div>
+
             {/* Targets (Inputs to the gate) */}
             {isNot ? (
-                <Handle type="target" position={Position.Left} id="a" style={{ top: '50%' }} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
+                <Handle type="target" position={Position.Left} id="a" style={{ top: '50%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none transition-transform hover:scale-150" />
             ) : (
                 <>
-                    <Handle type="target" position={Position.Left} id="a" style={{ top: '30%' }} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
-                    <Handle type="target" position={Position.Left} id="b" style={{ top: '70%' }} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
+                    <Handle type="target" position={Position.Left} id="a" style={{ top: '25%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none transition-transform hover:scale-150" />
+                    <Handle type="target" position={Position.Left} id="b" style={{ top: '75%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none transition-transform hover:scale-150" />
                 </>
             )}
 
-            {data.type}
-
             {/* Source (Output from the gate) */}
-            <Handle type="source" position={Position.Right} isConnectable={isConnectable} className="w-4 h-4 bg-emerald-500 border-2 border-[var(--bg)]" />
+            <Handle type="source" position={Position.Right} style={{ top: '50%', right: -2 }} isConnectable={isConnectable} className="w-3 h-3 bg-emerald-500 border-none transition-transform hover:scale-150" />
         </div>
     );
 };
@@ -227,8 +282,11 @@ export default function LogicCanvas() {
                 <div className="space-y-2">
                     <h3 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mt-4 mb-2">Logic Gates</h3>
                     {['AND', 'OR', 'NOT', 'XOR', 'NAND', 'NOR'].map(g => (
-                        <button key={g} onClick={() => addNode('gateNode', g)} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-purple-500 transition-colors flex items-center justify-between">
-                            {g} Gate <span className="w-4 h-4 rounded shadow bg-gradient-to-br from-indigo-500 to-purple-600"></span>
+                        <button key={g} onClick={() => addNode('gateNode', g)} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-indigo-500 transition-colors flex items-center justify-between group">
+                            {g} Gate
+                            <div className="w-8 h-6 text-[var(--text-muted)] group-hover:text-indigo-400 transition-colors">
+                                <GateIcon type={g} />
+                            </div>
                         </button>
                     ))}
                 </div>
