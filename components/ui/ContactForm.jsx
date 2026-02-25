@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { TUTOR } from '@/lib/data';
+import Magnetic from '@/components/ui/Magnetic';
 
 function Stamp({ children, color = '#4F46E5' }) {
     return (
@@ -44,25 +45,57 @@ export default function ContactForm() {
                             placeholder="Your name (optional)"
                             style={{ padding: '12px 16px', borderRadius: 10, border: '1px solid var(--border)', backgroundColor: 'var(--bg-input)', fontSize: 14, fontFamily: "'Inter', sans-serif", color: 'var(--text)', outline: 'none' }}
                         />
-                        <textarea value={msg} onChange={e => setMsg(e.target.value)}
-                            placeholder="What do you need help with? (e.g. algorithms, past papers, exam in May 2025…)"
-                            rows={3}
-                            style={{ padding: '12px 16px', borderRadius: 10, border: '1px solid var(--border)', backgroundColor: 'var(--bg-input)', fontSize: 14, fontFamily: "'Inter', sans-serif", color: 'var(--text)', outline: 'none', resize: 'vertical', lineHeight: 1.6 }}
-                        />
-                        <a href={tgLink} target="_blank" rel="noreferrer" style={{
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9,
-                            padding: '15px', borderRadius: 10,
-                            background: 'linear-gradient(135deg,#2AABEE,#0088CC)',
-                            color: 'white', fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: 15,
-                            textDecoration: 'none', boxShadow: '0 4px 20px rgba(42,171,238,0.4)',
-                            transition: 'transform 0.15s, box-shadow 0.15s',
-                        }}
-                            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(42,171,238,0.5)'; }}
-                            onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 20px rgba(42,171,238,0.4)'; }}
-                        >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" /></svg>
-                            Message Me on Telegram
-                        </a>
+                        <div style={{ position: 'relative' }}>
+                            <textarea value={msg} onChange={e => setMsg(e.target.value)}
+                                placeholder="What do you need help with? (e.g. algorithms, past papers, exam in May 2025…)"
+                                rows={4}
+                                maxLength={500}
+                                style={{
+                                    width: '100%', padding: '12px 16px', borderRadius: 10, border: '1px solid var(--border)',
+                                    backgroundColor: 'var(--bg-input)', fontSize: 14, fontFamily: "'Inter', sans-serif",
+                                    color: 'var(--text)', outline: 'none', resize: 'vertical', lineHeight: 1.6,
+                                    paddingBottom: '30px'
+                                }}
+                            />
+                            <div style={{
+                                position: 'absolute', bottom: 12, right: 16, fontSize: 11,
+                                color: msg.length > 450 ? '#ef4444' : 'var(--text-faint)', fontFamily: "'Inter', sans-serif",
+                                pointerEvents: 'none'
+                            }}>
+                                {msg.length}/500
+                            </div>
+                        </div>
+
+                        <Magnetic strength={0.15}>
+                            <a href={tgLink} target="_blank" rel="noreferrer" style={{
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9,
+                                padding: '15px', borderRadius: 10,
+                                background: msg.length > 0 ? 'linear-gradient(135deg,#2AABEE,#0088CC)' : 'var(--bg-input)',
+                                color: msg.length > 0 ? 'white' : 'var(--text-muted)', fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: 15,
+                                textDecoration: 'none',
+                                border: msg.length > 0 ? '1px solid transparent' : '1px solid var(--border)',
+                                boxShadow: msg.length > 0 ? '0 4px 20px rgba(42,171,238,0.4)' : 'none',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                cursor: 'pointer',
+                                width: '100%'
+                            }}
+                                onMouseEnter={e => {
+                                    if (msg.length > 0) {
+                                        e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                                        e.currentTarget.style.boxShadow = '0 8px 28px rgba(42,171,238,0.6)';
+                                    }
+                                }}
+                                onMouseLeave={e => {
+                                    if (msg.length > 0) {
+                                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                                        e.currentTarget.style.boxShadow = '0 4px 20px rgba(42,171,238,0.4)';
+                                    }
+                                }}
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" /></svg>
+                                Send Message
+                            </a>
+                        </Magnetic>
                         <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-faint)', fontFamily: "'Inter', sans-serif", margin: 0 }}>
                             We'll open Telegram with your message ready · Usually replies within 1 hour
                         </p>

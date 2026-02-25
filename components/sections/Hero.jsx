@@ -1,7 +1,7 @@
-'use client';
 import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring, useInView } from 'framer-motion';
 import Stamp from '@/components/ui/Stamp';
+import Magnetic from '@/components/ui/Magnetic';
 import { TUTOR } from '@/lib/data';
 
 function CountUpStat({ value, label }) {
@@ -77,8 +77,12 @@ export default function Hero() {
     const orb2x = useTransform(pX, [-1, 1], [-50, 50]);
     const orb2y = useTransform(pY, [-1, 1], [-50, 50]);
 
+    // Spotlight orb (follows cursor closely)
+    const spotlightX = useTransform(pX, [-1, 1], [-300, 300]);
+    const spotlightY = useTransform(pY, [-1, 1], [-300, 300]);
+
     return (
-        <section id="hero" ref={ref} onMouseMove={handleMouseMove} className="min-h-[90dvh] flex flex-col items-center justify-center text-center px-6 pt-32 pb-16 relative overflow-hidden">
+        <section id="hero" ref={ref} onMouseMove={handleMouseMove} onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }} className="min-h-[90dvh] flex flex-col items-center justify-center text-center px-6 pt-32 pb-16 relative overflow-hidden">
             {/* Animated Background Blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 <motion.div
@@ -88,6 +92,11 @@ export default function Hero() {
                 <motion.div
                     style={{ x: orb2x, y: orb2y, background: 'radial-gradient(circle, rgba(5,150,105,0.15) 0%, transparent 70%)' }}
                     className="shimmer anim-delay-2 absolute bottom-[10%] right-[15%] w-[35vw] h-[35vw] rounded-full mix-blend-multiply blur-[80px]"
+                />
+                {/* Spotlight Orb */}
+                <motion.div
+                    style={{ x: spotlightX, y: spotlightY, background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%)' }}
+                    className="absolute top-1/2 left-1/2 -mt-[20vw] -ml-[20vw] w-[40vw] h-[40vw] rounded-full mix-blend-overlay blur-[60px]"
                 />
             </div>
 
@@ -113,13 +122,18 @@ export default function Hero() {
 
                 {/* CTAs */}
                 <div className="anim-up anim-delay-2 flex flex-wrap gap-4 justify-center mb-16">
-                    <a href={TUTOR.telegram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-sky-400 to-blue-600 text-white font-bold whitespace-nowrap hover:-translate-y-1 hover:shadow-lg transition-all font-sans">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" /></svg>
-                        Message on Telegram
-                    </a>
-                    <a href="#contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-[var(--border)] bg-[var(--bg-card)] text-[var(--text)] font-semibold whitespace-nowrap hover:bg-[var(--border)] hover:-translate-y-1 transition-all font-sans">
-                        View Contact Info ↓
-                    </a>
+                    <Magnetic strength={0.2}>
+                        <a href={TUTOR.telegram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-sky-400 to-blue-600 text-white font-bold whitespace-nowrap hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/50 transition-all font-sans relative overflow-hidden group">
+                            <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black pointer-events-none" />
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="relative z-10"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" /></svg>
+                            <span className="relative z-10">Message on Telegram</span>
+                        </a>
+                    </Magnetic>
+                    <Magnetic strength={0.1}>
+                        <a href="#contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border-2 border-[var(--border)] bg-[var(--bg-card)] text-[var(--text)] font-semibold whitespace-nowrap hover:bg-[var(--border)] hover:-translate-y-1 transition-all font-sans">
+                            View Contact Info ↓
+                        </a>
+                    </Magnetic>
                 </div>
 
                 {/* Stats row */}
