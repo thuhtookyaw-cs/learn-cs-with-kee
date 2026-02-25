@@ -3,6 +3,8 @@ import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
+import { motion, AnimatePresence } from 'framer-motion';
+import { TUTOR } from '@/lib/data';
 
 /* ─ Config ─────────────────────────────────────────────────── */
 const SUBJECT_META = {
@@ -52,29 +54,50 @@ const CloseIco = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="non
 function PreviewModal({ url, name, onClose }) {
     if (!url) return null;
     return (
-        <div onClick={onClose} style={{
-            position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', flexDirection: 'column',
-            backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
-        }}>
-            <div onClick={e => e.stopPropagation()} style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                padding: '12px 20px', backgroundColor: 'rgba(0,0,0,0.6)',
-                borderBottom: '1px solid rgba(255,255,255,0.1)'
-            }}>
-                <span style={{ color: 'white', fontSize: 14, fontWeight: 600, fontFamily: "'Inter',sans-serif", overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, marginRight: 16 }}>
-                    {name?.replace(/\.(pdf|zip)$/i, '').replace(/[_-]/g, ' ')}
-                </span>
-                <button onClick={onClose} style={{
-                    color: 'white', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: 8, width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: 'pointer', transition: 'background 0.15s', flexShrink: 0
-                }}><CloseIco /></button>
-            </div>
-            <div onClick={e => e.stopPropagation()} style={{ flex: 1, padding: '0 16px 16px' }}>
-                <iframe src={url} title={name} allow="autoplay"
-                    style={{ width: '100%', height: '100%', border: 'none', borderRadius: '0 0 12px 12px', backgroundColor: '#1a1a1a' }} />
-            </div>
-        </div>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            style={{
+                position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', flexDirection: 'column',
+                backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+                justifyContent: 'center', alignItems: 'center', padding: '5vh 5vw'
+            }}
+        >
+            <motion.div
+                initial={{ scale: 0.95, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95, y: 20 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                onClick={e => e.stopPropagation()}
+                style={{
+                    display: 'flex', flexDirection: 'column',
+                    width: '100%', maxWidth: 1000, height: '100%',
+                    backgroundColor: '#1a1a1a', borderRadius: 12, overflow: 'hidden',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+                }}
+            >
+                <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '12px 20px', backgroundColor: 'rgba(0,0,0,0.6)',
+                    borderBottom: '1px solid rgba(255,255,255,0.1)'
+                }}>
+                    <span style={{ color: 'white', fontSize: 14, fontWeight: 600, fontFamily: "'Inter',sans-serif", overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, marginRight: 16 }}>
+                        {name?.replace(/\.(pdf|zip)$/i, '').replace(/[_-]/g, ' ')}
+                    </span>
+                    <button onClick={onClose} style={{
+                        color: 'white', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                        borderRadius: 8, width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        cursor: 'pointer', transition: 'background 0.15s', flexShrink: 0
+                    }}><CloseIco /></button>
+                </div>
+                <div style={{ flex: 1, padding: '0 16px 16px' }}>
+                    <iframe src={url} title={name} allow="autoplay"
+                        style={{ width: '100%', height: '100%', border: 'none', borderRadius: '0 0 12px 12px', backgroundColor: '#1a1a1a' }} />
+                </div>
+            </motion.div>
+        </motion.div>
     );
 }
 
@@ -151,11 +174,18 @@ function TreeNode({ node, depth = 0, onPreview }) {
                     {badge}
                 </span>}
             </button>
-            {open && node.children?.length > 0 && (
-                <div className="anim-in" style={{ marginLeft: pl + 8, paddingLeft: 8, borderLeft: '1.5px solid var(--border)', paddingTop: 2, paddingBottom: 2, marginTop: 2 }}>
-                    {node.children.map((c, i) => <TreeNode key={`${c.name}-${i}`} node={c} depth={depth + 1} onPreview={onPreview} />)}
-                </div>
-            )}
+            <AnimatePresence initial={false}>
+                {open && node.children?.length > 0 && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        style={{ overflow: 'hidden', marginLeft: pl + 8, paddingLeft: 8, borderLeft: '1.5px solid var(--border)', paddingTop: 2, paddingBottom: 2, marginTop: 2 }}>
+                        {node.children.map((c, i) => <TreeNode key={`${c.name}-${i}`} node={c} depth={depth + 1} onPreview={onPreview} />)}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
@@ -348,9 +378,24 @@ export default function SubjectPage() {
                             </span>
                         </div>
                         {filtered.length === 0
-                            ? <div style={{ padding: '40px', textAlign: 'center', border: '1.5px dashed var(--border)', borderRadius: 12 }}>
-                                <p style={{ fontSize: 14, color: 'var(--text-faint)', fontFamily: "'Inter',sans-serif" }}>No files match — try different keywords or clear filters.</p>
-                            </div>
+                            ? <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ padding: '40px 20px', textAlign: 'center', border: '1.5px dashed var(--border)', borderRadius: 12, backgroundColor: 'var(--bg-card)' }}>
+                                <div style={{ fontSize: 32, marginBottom: 12 }}>🔍</div>
+                                <p style={{ fontSize: 16, fontWeight: 600, color: 'var(--text)', fontFamily: "'Inter',sans-serif", marginBottom: 6 }}>No matches found</p>
+                                <p style={{ fontSize: 14, color: 'var(--text-faint)', fontFamily: "'Inter',sans-serif", marginBottom: 20 }}>
+                                    We couldn't find anything matching "{query}" or your filters.
+                                </p>
+                                <a
+                                    href={TUTOR?.telegram || 'https://t.me/kee'} target="_blank" rel="noreferrer"
+                                    style={{
+                                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                                        padding: '10px 20px', borderRadius: 10, backgroundColor: '#2AABEE', color: 'white',
+                                        fontSize: 14, fontWeight: 600, fontFamily: "'Inter', sans-serif", textDecoration: 'none',
+                                        boxShadow: '0 4px 12px rgba(42, 171, 238, 0.3)'
+                                    }}
+                                >
+                                    Request paper on Telegram
+                                </a>
+                            </motion.div>
                             : filtered.map((f, i) => <ResultRow key={`${f.path}-${i}`} file={f} onPreview={f => setPreviewFile(f)} />)
                         }
                     </div>
@@ -380,7 +425,9 @@ export default function SubjectPage() {
                             </div>
                 )}
             </main>
-            {previewFile && <PreviewModal url={previewFile.previewUrl} name={previewFile.name} onClose={() => setPreviewFile(null)} />}
+            <AnimatePresence>
+                {previewFile && <PreviewModal url={previewFile.previewUrl} name={previewFile.name} onClose={() => setPreviewFile(null)} />}
+            </AnimatePresence>
         </div>
     );
 }

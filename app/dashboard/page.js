@@ -60,10 +60,10 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Subject cards grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-16 relative z-10">
                     {SUBJECTS.map((s, i) => (
-                        <div key={s.slug} className={`anim-up anim-delay-${i + 1}`}>
-                            <SubjectCard subject={s} />
+                        <div key={s.slug}>
+                            <SubjectCard subject={s} index={i} />
                         </div>
                     ))}
                 </div>

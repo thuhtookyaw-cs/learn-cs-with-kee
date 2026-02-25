@@ -25,7 +25,7 @@ export default function LandingNav() {
 
         // Scroll spy
         const observers = [];
-        const sections = ['about', 'services', 'contact'];
+        const sections = ['hero', 'about', 'services', 'contact'];
 
         sections.forEach(id => {
             const el = document.getElementById(id);
@@ -33,10 +33,10 @@ export default function LandingNav() {
                 const obs = new IntersectionObserver(
                     ([entry]) => {
                         if (entry.isIntersecting) {
-                            setActiveSection(id);
+                            setActiveSection(id === 'hero' ? '' : id);
                         }
                     },
-                    { rootMargin: '-30% 0px -70% 0px' }
+                    { rootMargin: '-20% 0px -80% 0px' }
                 );
                 obs.observe(el);
                 observers.push(obs);
