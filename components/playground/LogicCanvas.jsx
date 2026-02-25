@@ -104,24 +104,25 @@ const GateNode = ({ data, isConnectable }) => {
     const isNot = data.type === 'NOT';
     return (
         <div className="flex items-center justify-center relative group transition-all" style={{ width: 80, height: 60 }}>
-            {/* The SVG Graphic */}
-            <GateIcon type={data.type} className="absolute inset-0 w-full h-full text-[var(--text)] drop-shadow-md" />
+            {/* The SVG Graphic - Styled as a glowing neon module */}
+            <div className={`absolute inset-0 transition-all duration-300 rounded-xl ${isNot ? 'bg-red-500/5 shadow-[0_0_15px_rgba(239,68,68,0.15)] ring-1 ring-red-500/30' : 'bg-indigo-500/5 shadow-[0_0_15px_rgba(99,102,241,0.15)] ring-1 ring-indigo-500/30'} group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] backdrop-blur-sm`} />
+            <GateIcon type={data.type} className={`absolute inset-0 w-full h-full drop-shadow-md z-10 ${isNot ? 'text-red-400' : 'text-indigo-400'}`} />
 
             {/* Type Label Below */}
             <div className="absolute -bottom-6 text-[10px] font-bold tracking-widest text-[var(--text-muted)] group-hover:text-[var(--text)] transition-colors uppercase select-none">{data.type}</div>
 
             {/* Targets (Inputs to the gate) */}
             {isNot ? (
-                <Handle type="target" position={Position.Left} id="a" style={{ top: '50%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none transition-transform hover:scale-150" />
+                <Handle type="target" position={Position.Left} id="a" style={{ top: '50%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-red-400 border-none transition-transform hover:scale-150 z-20" />
             ) : (
                 <>
-                    <Handle type="target" position={Position.Left} id="a" style={{ top: '25%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none transition-transform hover:scale-150" />
-                    <Handle type="target" position={Position.Left} id="b" style={{ top: '75%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none transition-transform hover:scale-150" />
+                    <Handle type="target" position={Position.Left} id="a" style={{ top: '25%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-400 border-none transition-transform hover:scale-150 z-20" />
+                    <Handle type="target" position={Position.Left} id="b" style={{ top: '75%', left: 5 }} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-400 border-none transition-transform hover:scale-150 z-20" />
                 </>
             )}
 
             {/* Source (Output from the gate) */}
-            <Handle type="source" position={Position.Right} style={{ top: '50%', right: -2 }} isConnectable={isConnectable} className="w-3 h-3 bg-emerald-500 border-none transition-transform hover:scale-150" />
+            <Handle type="source" position={Position.Right} style={{ top: '50%', right: -2 }} isConnectable={isConnectable} className="w-3 h-3 bg-emerald-400 border-none transition-transform hover:scale-150 z-20" />
         </div>
     );
 };
@@ -139,8 +140,8 @@ const initialNodes = [
 
 const initialEdges = [
     { id: 'e1-1', source: 'in1', target: 'gate1', targetHandle: 'a', animated: true, style: { strokeWidth: 4, stroke: '#10B981' } },
-    { id: 'e1-2', source: 'in2', target: 'gate1', targetHandle: 'b', animated: false, style: { strokeWidth: 2, stroke: '#3f3f46' } },
-    { id: 'e1-3', source: 'gate1', target: 'out1', animated: false, style: { strokeWidth: 2, stroke: '#3f3f46' } },
+    { id: 'e1-2', source: 'in2', target: 'gate1', targetHandle: 'b', animated: false, style: { strokeWidth: 3, stroke: '#52525b' } },
+    { id: 'e1-3', source: 'gate1', target: 'out1', animated: false, style: { strokeWidth: 3, stroke: '#52525b' } },
 ];
 
 export default function LogicCanvas() {
@@ -158,7 +159,7 @@ export default function LogicCanvas() {
         []
     );
     const onConnect = useCallback(
-        (params) => setEdges((eds) => addEdge({ ...params, animated: false, style: { strokeWidth: 2, stroke: '#3f3f46' } }, eds)),
+        (params) => setEdges((eds) => addEdge({ ...params, animated: false, style: { strokeWidth: 3, stroke: '#52525b' } }, eds)),
         []
     );
 
@@ -226,12 +227,12 @@ export default function LogicCanvas() {
             const updatedEdges = eds.map(e => {
                 const val = sourceValues[`${e.source}-source`];
                 const isHigh = val === 1;
-                if (e.animated !== isHigh || e.style?.stroke !== (isHigh ? '#10B981' : '#3f3f46')) {
+                if (e.animated !== isHigh || e.style?.stroke !== (isHigh ? '#10B981' : '#52525b')) {
                     edsChanged = true;
                     return {
                         ...e,
                         animated: isHigh,
-                        style: { ...e.style, strokeWidth: isHigh ? 4 : 2, stroke: isHigh ? '#10B981' : '#3f3f46' }
+                        style: { ...e.style, strokeWidth: isHigh ? 4 : 3, stroke: isHigh ? '#10B981' : '#52525b' }
                     };
                 }
                 return e;
@@ -268,30 +269,39 @@ export default function LogicCanvas() {
 
     return (
         <div className="flex w-full h-full text-black">
-            {/* Sidebar */}
-            <div className="w-64 bg-[var(--bg-card)] border-r border-[var(--border)] p-6 flex flex-col gap-6 overflow-y-auto z-10">
-                <div>
-                    <h2 className="text-xl font-bold text-[var(--text)] font-serif mb-2">Sim Tools</h2>
-                    <p className="text-[var(--text-muted)] text-xs mb-4">Click to add parts. Drag gates, connect colored dots (black to blue) to build a circuit. Click Inputs to flip 0/1, and press Backspace to delete selected components.</p>
+            {/* Sidebar Toolbox */}
+            <div className="w-72 bg-[#18181b] border-r border-[#27272a] p-6 flex flex-col gap-8 overflow-y-auto z-10 shadow-2xl relative">
+
+                {/* Header */}
+                <div className="border-b border-[#27272a] pb-4">
+                    <h2 className="text-xl font-black text-white tracking-widest uppercase mb-2 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        Toolbox
+                    </h2>
+                    <p className="text-[#a1a1aa] text-xs leading-relaxed">Drag components onto the grid. Connect colored dots to build logic. Click Inputs to toggle <span className="text-emerald-400 font-bold">ON/OFF</span>. Select & press Backspace to delete.</p>
                 </div>
 
-                <div className="flex gap-2">
-                    <button onClick={() => { setNodes([]); setEdges([]); }} className="flex-1 py-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg text-xs font-bold transition-colors">
-                        Clear All
+                <div className="flex gap-3">
+                    <button onClick={() => { setNodes([]); setEdges([]); }} className="flex-1 py-2.5 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-lg text-xs font-bold tracking-widest uppercase transition-all shadow-sm">
+                        Clear
                     </button>
-                    <button onClick={() => { setNodes(initialNodes); setEdges(initialEdges); }} className="flex-1 py-2 bg-[var(--bg)] text-[var(--text-muted)] hover:text-[var(--text)] border border-[var(--border)] hover:border-indigo-500 rounded-lg text-xs font-bold transition-colors">
-                        Load Demo
+                    <button onClick={() => { setNodes(initialNodes); setEdges(initialEdges); }} className="flex-1 py-2.5 bg-[#27272a] text-white hover:bg-indigo-500 rounded-lg text-xs font-bold tracking-widest uppercase transition-all shadow-sm">
+                        Demo
                     </button>
                 </div>
 
-                <div className="space-y-2">
-                    <h3 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">Terminals</h3>
-                    <button onClick={() => addNode('inputNode')} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-emerald-500 transition-colors flex items-center justify-between">
-                        Input (0/1) <span className="w-3 h-3 bg-emerald-500 rounded-full"></span>
+                <div className="space-y-3">
+                    <h3 className="text-[10px] font-black text-[#52525b] uppercase tracking-widest flex items-center gap-2">
+                        <span className="w-full h-px bg-[#27272a]"></span>
+                        Terminals
+                        <span className="w-full h-px bg-[#27272a]"></span>
+                    </h3>
+                    <button onClick={() => addNode('inputNode')} className="w-full px-4 py-3.5 bg-[#27272a] border border-[#3f3f46] text-white rounded-xl text-sm font-bold hover:border-emerald-400 hover:shadow-[0_0_15px_rgba(52,211,153,0.15)] transition-all flex items-center justify-between group">
+                        Input Switch <span className="w-3 h-3 bg-emerald-500 rounded-full group-hover:scale-125 transition-transform shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
                     </button>
-                    <button onClick={() => addNode('outputNode')} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-yellow-400 transition-colors flex items-center justify-between group">
-                        Output Lamp
-                        <svg viewBox="0 0 24 24" className="w-5 h-5 text-[var(--text-muted)] group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <button onClick={() => addNode('outputNode')} className="w-full px-4 py-3.5 bg-[#27272a] border border-[#3f3f46] text-white rounded-xl text-sm font-bold hover:border-yellow-400 hover:shadow-[0_0_15px_rgba(250,204,21,0.15)] transition-all flex items-center justify-between group">
+                        Output Bulb
+                        <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#a1a1aa] group-hover:text-yellow-400 group-hover:scale-110 transition-all drop-shadow-md" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" />
                             <path d="M9 18h6" />
                             <path d="M10 22h4" />
@@ -299,16 +309,22 @@ export default function LogicCanvas() {
                     </button>
                 </div>
 
-                <div className="space-y-2">
-                    <h3 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mt-4 mb-2">Logic Gates</h3>
-                    {['AND', 'OR', 'NOT', 'XOR', 'NAND', 'NOR'].map(g => (
-                        <button key={g} onClick={() => addNode('gateNode', g)} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-indigo-500 transition-colors flex items-center justify-between group">
-                            {g} Gate
-                            <div className="w-8 h-6 text-[var(--text-muted)] group-hover:text-indigo-400 transition-colors">
-                                <GateIcon type={g} />
-                            </div>
-                        </button>
-                    ))}
+                <div className="space-y-3">
+                    <h3 className="text-[10px] font-black text-[#52525b] uppercase tracking-widest flex items-center gap-2">
+                        <span className="w-full h-px bg-[#27272a]"></span>
+                        Logic Gates
+                        <span className="w-full h-px bg-[#27272a]"></span>
+                    </h3>
+                    <div className="grid grid-cols-2 gap-3">
+                        {['AND', 'OR', 'NOT', 'XOR', 'NAND', 'NOR'].map(g => (
+                            <button key={g} onClick={() => addNode('gateNode', g)} className="flex flex-col items-center justify-center p-3 bg-[#27272a] border border-[#3f3f46] text-white rounded-xl text-xs font-bold hover:border-indigo-400 hover:bg-[#313136] hover:shadow-[0_0_15px_rgba(99,102,241,0.15)] transition-all group gap-2">
+                                <div className="w-10 h-8 text-[#a1a1aa] group-hover:text-indigo-400 transition-colors">
+                                    <GateIcon type={g} />
+                                </div>
+                                {g}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
