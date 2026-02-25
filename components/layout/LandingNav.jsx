@@ -120,7 +120,8 @@ export default function LandingNav() {
                     <m.div variants={itemAnimation} className="hidden md:flex gap-1.5 items-center">
                         {[
                             { href: '/articles', label: 'Blog' },
-                            { href: '/store', label: 'Store' }
+                            { href: '/store', label: 'Store' },
+                            { href: '/playground', label: 'Playground' }
                         ].map(({ href, label }) => {
                             const isActive = pathname === href || pathname?.startsWith(`${href}/`);
                             return (
@@ -193,6 +194,7 @@ export default function LandingNav() {
                         {[
                             { href: '/articles', label: 'Blog' },
                             { href: '/store', label: 'Store' },
+                            { href: '/playground', label: 'Playground' },
                             { href: '/dashboard', label: 'Past Papers' },
                         ].map(({ href, label }) => (
                             <Link key={href} href={href} onClick={() => setIsMobileOpen(false)} className="px-4 py-3 rounded-xl hover:bg-[var(--bg-card)] text-[var(--text)] font-medium text-sm transition-colors border border-transparent hover:border-[var(--border)]">
