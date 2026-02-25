@@ -28,20 +28,29 @@ const InputNode = ({ data, isConnectable }) => {
     );
 };
 
-// 2. OUTPUT NODE (Lightbulb Style)
+// 2. OUTPUT NODE (Realistic Lightbulb)
 const OutputNode = ({ data, isConnectable }) => {
     const isOn = data.value === 1;
     return (
-        <div className="relative flex items-center justify-center w-16 h-20 group">
-            {/* The Lightbulb SVG */}
-            <svg viewBox="0 0 24 24" className={`w-full h-full transition-all duration-300 drop-shadow-xl ${isOn ? 'text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.8)] scale-110' : 'text-[#3f3f46]'}`} fill={isOn ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" />
-                <path d="M9 18h6" />
-                <path d="M10 22h4" />
-            </svg>
+        <div className="relative flex flex-col items-center justify-center w-16 h-24 group">
+            {/* The Glass Bulb */}
+            <div className={`relative w-12 h-12 rounded-full border-2 transition-all duration-300 z-20 flex items-center justify-center ${isOn ? 'bg-yellow-200/90 border-yellow-300 shadow-[0_0_30px_rgba(250,204,21,0.9),inset_0_0_15px_rgba(255,255,255,1)] scale-110' : 'bg-[#18181b]/80 border-[#3f3f46] shadow-inner backdrop-blur-sm'}`}>
+                {/* Inner Filament */}
+                <div className={`w-4 h-5 border-2 border-b-0 rounded-t-full transition-all duration-300 ${isOn ? 'border-amber-100 shadow-[0_0_8px_rgba(255,255,255,1)]' : 'border-[#52525b]'}`}></div>
 
-            <Handle type="target" position={Position.Left} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none left-[-6px] top-[40%] transition-transform hover:scale-150" />
-            <div className={`absolute -bottom-4 text-[10px] font-bold tracking-widest uppercase transition-colors ${isOn ? 'text-yellow-400' : 'text-[var(--text-muted)]'}`}>
+                {/* Glow Core */}
+                {isOn && <div className="absolute w-6 h-6 bg-white rounded-full opacity-80 blur-[4px]"></div>}
+            </div>
+
+            {/* The Bulb Base (Always visible, grey/metallic) */}
+            <div className={`w-6 h-5 bg-gradient-to-b from-[#52525b] to-[#27272a] rounded-b-[4px] border border-[#3f3f46] border-t-0 z-10 transition-all -mt-1 flex flex-col items-center justify-start pt-1 ${isOn ? 'shadow-[0_4px_10px_rgba(250,204,21,0.2)]' : ''}`}>
+                <div className="w-full h-px bg-[#71717a] opacity-50 mb-[2px]"></div>
+                <div className="w-full h-px bg-[#71717a] opacity-50 mb-[2px]"></div>
+                <div className="w-full h-px bg-[#71717a] opacity-50"></div>
+            </div>
+
+            <Handle type="target" position={Position.Left} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none left-[-4px] top-[35%] transition-transform hover:scale-150 z-30" />
+            <div className={`absolute -bottom-2 text-[10px] font-bold tracking-widest uppercase transition-colors ${isOn ? 'text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]' : 'text-[var(--text-muted)]'}`}>
                 {isOn ? 'ON' : 'OFF'}
             </div>
         </div>
