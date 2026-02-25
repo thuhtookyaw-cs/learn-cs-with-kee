@@ -165,7 +165,7 @@ export default function PythonPlayground() {
                             <div className="flex items-center gap-3 text-[var(--text-muted)] text-sm font-medium">
                                 <span>Write and execute Paper 2 algorithms directly in the browser via Pyodide.</span>
 
-                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#18181b] border border-[#27272a] shadow-inner text-xs font-bold font-mono tracking-widest uppercase">
+                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--bg-card)] border border-[var(--border)] shadow-sm text-xs font-bold font-mono tracking-widest uppercase text-[var(--text)]">
                                     <span className={`w-2 h-2 rounded-full ${engineStatus === "Ready" ? "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]" : engineStatus === "Failed to Load Engine" ? "bg-rose-500" : "bg-yellow-500 animate-pulse"}`}></span>
                                     {engineStatus === "Ready" ? "CPython Active" : engineStatus}
                                 </div>
@@ -175,8 +175,8 @@ export default function PythonPlayground() {
                         <div className="flex items-center gap-4">
                             {/* Example Selector */}
                             <select
-                                className="px-4 py-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-muted)] text-sm font-semibold outline-none hover:border-indigo-500/50 transition-colors shadow-sm appearance-none cursor-pointer pr-10 relative"
-                                style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', backgroundSize: '16px' }}
+                                className="px-4 py-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text)] text-sm font-semibold outline-none hover:border-indigo-500/50 transition-colors shadow-sm appearance-none cursor-pointer pr-10 relative"
+                                style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', backgroundSize: '16px' }}
                                 onChange={(e) => {
                                     if (e.target.value && EXAMPLES[e.target.value]) {
                                         setCode(EXAMPLES[e.target.value]);
@@ -192,7 +192,7 @@ export default function PythonPlayground() {
                             <button
                                 onClick={handleRunCode}
                                 disabled={isRunning || !pyodideRef.current}
-                                className={`px-8 py-3 rounded-xl font-black flex items-center gap-2 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] tracking-widest uppercase text-sm ${isRunning || !pyodideRef.current ? 'bg-[#27272a] text-[#71717a] shadow-none cursor-not-allowed border border-[#3f3f46]' : 'bg-emerald-500 text-white hover:-translate-y-1 hover:shadow-[0_4px_25px_rgba(16,185,129,0.5)] border border-emerald-400'}`}
+                                className={`px-8 py-3 rounded-xl font-black flex items-center gap-2 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] tracking-widest uppercase text-sm ${isRunning || !pyodideRef.current ? 'bg-[var(--bg-card)] text-[var(--text-faint)] shadow-none cursor-not-allowed border border-[var(--border)]' : 'bg-emerald-500 text-white hover:-translate-y-1 hover:shadow-[0_4px_25px_rgba(16,185,129,0.5)] border border-emerald-400'}`}
                             >
                                 {isRunning ? (
                                     <>
@@ -209,19 +209,19 @@ export default function PythonPlayground() {
                         </div>
                     </div>
 
-                    <div className="flex-1 bg-[#1e1e1e] border border-[#3f3f46] rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
+                    <div className="flex-1 bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
                         {/* Editor View */}
-                        <div className="flex-1 md:border-r border-[#3f3f46] bg-[#1e1e1e] flex flex-col">
+                        <div className="flex-1 md:border-r border-[var(--border)] bg-[var(--bg-card)] flex flex-col">
                             {/* Mac Window Header */}
-                            <div className="bg-[#2d2d30] px-4 py-2 flex items-center gap-4 border-b border-[#3f3f46] select-none">
+                            <div className="bg-[var(--bg)] px-4 py-2 flex items-center gap-4 border-b border-[var(--border)] select-none">
                                 <div className="flex gap-1.5">
                                     <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors"></div>
                                     <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors"></div>
                                     <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors"></div>
                                 </div>
-                                <div className="flex items-center gap-2 bg-[#1e1e1e] px-4 py-1 rounded-md border border-[#3f3f46]">
+                                <div className="flex items-center gap-2 bg-[var(--bg-card)] px-4 py-1 rounded-md border border-[var(--border)]">
                                     <span className="text-yellow-400 text-sm">🐍</span>
-                                    <span className="text-xs font-mono text-gray-300">script.py</span>
+                                    <span className="text-xs font-mono text-[var(--text-muted)]">script.py</span>
                                 </div>
                             </div>
                             <div className="flex-1 w-full pt-2">
@@ -247,21 +247,21 @@ export default function PythonPlayground() {
                         </div>
 
                         {/* Console Output */}
-                        <div className="w-full md:w-1/3 min-h-[250px] bg-[#0c0c0c] flex flex-col relative overflow-hidden group">
+                        <div className="w-full md:w-1/3 min-h-[250px] bg-[var(--bg)] flex flex-col relative overflow-hidden group">
                             {/* Terminal scanline effect overlay */}
                             <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] z-10 pointer-events-none opacity-20"></div>
 
-                            <div className="bg-[#18181b] px-4 py-2.5 flex items-center justify-between border-b border-[#27272a] z-20">
+                            <div className="bg-[var(--bg-card)] px-4 py-2.5 flex items-center justify-between border-b border-[var(--border)] z-20">
                                 <span className="text-[10px] font-mono text-emerald-500 uppercase tracking-widest font-black flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                                     Console Output
                                 </span>
-                                <button onClick={() => setOutput([])} className="text-xs text-gray-400 hover:text-white transition-colors bg-[#27272a] px-3 py-1 rounded-md font-medium border border-[#3f3f46]">Clear</button>
+                                <button onClick={() => setOutput([])} className="text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors bg-[var(--bg)] px-3 py-1 rounded-md font-medium border border-[var(--border)]">Clear</button>
                             </div>
 
-                            <div className="p-5 font-mono text-[13px] text-gray-300 overflow-y-auto flex-1 z-20 leading-relaxed shadow-inner">
+                            <div className="p-5 font-mono text-[13px] text-[var(--text)] overflow-y-auto flex-1 z-20 leading-relaxed shadow-inner">
                                 {output.length === 0 && !isRunning && (
-                                    <span className="text-gray-500 italic">Ready for execution. Watch this space for outputs...</span>
+                                    <span className="text-[var(--text-faint)] italic">Ready for execution. Watch this space for outputs...</span>
                                 )}
                                 {output.map((line, i) => (
                                     <div key={i} className={`whitespace-pre-wrap ${line.startsWith('Error') ? 'text-rose-400 font-bold' : line.startsWith('>') ? 'text-indigo-300 font-bold' : ''}`}>

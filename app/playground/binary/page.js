@@ -123,7 +123,7 @@ export default function BinaryDropPage() {
                                     <h2 className="text-5xl sm:text-6xl font-black mb-4 text-rose-500 font-sans tracking-tight drop-shadow-[0_0_20px_rgba(244,63,94,0.4)]">SYSTEM FAILURE</h2>
                                     <p className="text-[var(--text-muted)] mb-2 text-xl font-mono">PACKET COLLISION DETECTED.</p>
                                     <p className="text-[var(--text)] mb-12 text-2xl font-medium">Final Score: <strong className="text-emerald-400 text-5xl ml-2">{score}</strong></p>
-                                    <button onClick={handleStart} className="px-10 py-4 bg-[#27272a] hover:bg-white text-white hover:text-black border border-[#3f3f46] font-black rounded-full transition-all text-xl tracking-widest uppercase shadow-lg">
+                                    <button onClick={handleStart} className="px-10 py-4 bg-[var(--bg-card)] hover:bg-[var(--text)] text-[var(--text)] hover:text-[var(--bg)] border border-[var(--border)] font-black rounded-full transition-all text-xl tracking-widest uppercase shadow-lg">
                                         REBOOT
                                     </button>
                                 </motion.div>
@@ -147,7 +147,7 @@ export default function BinaryDropPage() {
                                     </div>
 
                                     {/* Falling Target Area */}
-                                    <div className="relative flex-1 bg-[#18181b] rounded-3xl border-2 border-[#27272a] shadow-inner overflow-hidden flex flex-col items-center min-h-[300px]">
+                                    <div className="relative flex-1 bg-[var(--bg)] rounded-3xl border-2 border-[var(--border)] shadow-inner overflow-hidden flex flex-col items-center min-h-[300px]">
 
                                         {/* Retro Grid Background Effect */}
                                         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none"></div>
@@ -169,7 +169,7 @@ export default function BinaryDropPage() {
                                         </AnimatePresence>
 
                                         {/* Danger Floor (Visual indicator of time) */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-4 bg-[#27272a] z-20 overflow-hidden shadow-[0_-5px_15px_rgba(0,0,0,0.5)] border-t border-[#3f3f46]">
+                                        <div className="absolute bottom-0 left-0 right-0 h-4 bg-[var(--bg-card)] z-20 overflow-hidden shadow-inner border-t border-[var(--border)]">
                                             <div
                                                 className={`h-full transition-all duration-75 ease-linear ${timeRemaining < 25 ? 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,1)]' : timeRemaining < 50 ? 'bg-orange-500' : 'bg-emerald-500'}`}
                                                 style={{ width: `${timeRemaining}%` }}
@@ -185,12 +185,12 @@ export default function BinaryDropPage() {
                                                 return (
                                                     <div key={idx} className="flex flex-col items-center gap-2">
                                                         {/* Place Value Label */}
-                                                        <span className="text-[var(--text-muted)] text-[10px] sm:text-xs font-mono font-bold px-2 py-1 bg-[#27272a] border border-[#3f3f46] rounded-md shadow-sm">{bitValue}</span>
+                                                        <span className="text-[var(--text-muted)] text-[10px] sm:text-xs font-mono font-bold px-2 py-1 bg-[var(--bg-card)] border border-[var(--border)] rounded-md shadow-sm">{bitValue}</span>
                                                         {/* Toggle Button */}
                                                         <button
                                                             className={`w-12 h-16 sm:w-16 sm:h-20 rounded-xl flex items-center justify-center text-3xl font-mono font-black transition-all duration-200 active:scale-90 ${bit
                                                                 ? 'bg-emerald-500 text-white shadow-[0_0_25px_rgba(16,185,129,0.5),inset_0_4px_4px_rgba(255,255,255,0.3)] border-transparent scale-105'
-                                                                : 'bg-[#18181b] border-2 border-[#3f3f46] text-[#71717a] hover:border-emerald-500/50 hover:text-emerald-500/40 shadow-inner hover:-translate-y-1'
+                                                                : 'bg-[var(--bg)] border-2 border-[var(--border)] text-[var(--text-muted)] hover:border-emerald-500/50 hover:text-emerald-500 shadow-inner hover:-translate-y-1'
                                                                 }`}
                                                             onClick={() => toggleBit(idx)}
                                                         >
@@ -202,9 +202,9 @@ export default function BinaryDropPage() {
                                         </div>
 
                                         {/* Total Visualizer */}
-                                        <div className="flex items-center justify-center gap-4 bg-[#18181b] border border-[#27272a] rounded-2xl py-4 px-8 mx-auto w-fit shadow-xl">
+                                        <div className="flex items-center justify-center gap-4 bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl py-4 px-8 mx-auto w-fit shadow-md">
                                             <span className="text-[var(--text-muted)] font-bold text-sm tracking-widest uppercase">INPUT:</span>
-                                            <span className={`font-mono font-black text-4xl sm:text-5xl transition-colors duration-300 ${currentDecimalValue === targetDecimal ? 'text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)] scale-110' : 'text-white'}`}>
+                                            <span className={`font-mono font-black text-4xl sm:text-5xl transition-colors duration-300 ${currentDecimalValue === targetDecimal ? 'text-emerald-500 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)] scale-110' : 'text-[var(--text)]'}`}>
                                                 {currentDecimalValue}
                                             </span>
                                         </div>
