@@ -162,85 +162,81 @@ export default function LogicCanvas() {
 
     // Re-evaluate logic circuit whenever nodes or edges change
     useEffect(() => {
-        setNodes((nds) => {
-            const nextNodes = [...nds];
-            let changed = false;
+        // Prevent infinite loops by only evaluating when actual structural changes or input toggles happen
+        // We will do a full evaluation pass and only state-update if values actually changed
+        let stateChanged = false;
+        const sourceValues = {};
 
-            // Simple topological sort / evaluation approach
-            // 1. Map all source values
-            const sourceValues = {};
-            nextNodes.forEach(n => {
-                if (n.type === 'inputNode') {
-                    sourceValues[`${n.id}-source`] = n.data.value; // inputs just output their value
+        // 1. Map Initial Inputs
+        nodes.forEach(n => {
+            if (n.type === 'inputNode') sourceValues[`${n.id}-source`] = n.data.value;
+        });
+
+        // 2. Evaluate Gates (up to 10 passes for complex feedback loops)
+        for (let i = 0; i < 10; i++) {
+            let stabilized = true;
+            nodes.filter(n => n.type === 'gateNode').forEach(gate => {
+                const inEdges = edges.filter(e => e.target === gate.id);
+                const edgeA = inEdges.find(e => e.targetHandle === 'a' || (!e.targetHandle && gate.data.type === 'NOT'));
+                const edgeB = inEdges.find(e => e.targetHandle === 'b');
+
+                const valA = edgeA ? (sourceValues[`${edgeA.source}-source`] || 0) : 0;
+                const valB = edgeB ? (sourceValues[`${edgeB.source}-source`] || 0) : 0;
+
+                let outVal = 0;
+                switch (gate.data.type) {
+                    case 'AND': outVal = valA && valB; break;
+                    case 'OR': outVal = valA || valB; break;
+                    case 'NAND': outVal = !(valA && valB) ? 1 : 0; break;
+                    case 'NOR': outVal = !(valA || valB) ? 1 : 0; break;
+                    case 'XOR': outVal = valA !== valB ? 1 : 0; break;
+                    case 'NOT': outVal = !valA ? 1 : 0; break;
+                }
+
+                if (sourceValues[`${gate.id}-source`] !== outVal) {
+                    sourceValues[`${gate.id}-source`] = outVal;
+                    stabilized = false;
                 }
             });
+            if (stabilized) break;
+        }
 
-            // We need to evaluate gates until they stabilize (max 10 iterations to prevent infinite loops)
-            for (let i = 0; i < 10; i++) {
-                let stabilized = true;
-
-                // Evaluate Gates
-                nextNodes.filter(n => n.type === 'gateNode').forEach(gate => {
-                    // Find incoming edges
-                    const inEdges = edges.filter(e => e.target === gate.id);
-                    const edgeA = inEdges.find(e => e.targetHandle === 'a' || (!e.targetHandle && gate.data.type === 'NOT'));
-                    const edgeB = inEdges.find(e => e.targetHandle === 'b');
-
-                    const valA = edgeA ? (sourceValues[`${edgeA.source}-source`] || 0) : 0;
-                    const valB = edgeB ? (sourceValues[`${edgeB.source}-source`] || 0) : 0;
-
-                    let outVal = 0;
-                    switch (gate.data.type) {
-                        case 'AND': outVal = valA && valB; break;
-                        case 'OR': outVal = valA || valB; break;
-                        case 'NAND': outVal = !(valA && valB) ? 1 : 0; break;
-                        case 'NOR': outVal = !(valA || valB) ? 1 : 0; break;
-                        case 'XOR': outVal = valA !== valB ? 1 : 0; break;
-                        case 'NOT': outVal = !valA ? 1 : 0; break;
-                    }
-
-                    if (sourceValues[`${gate.id}-source`] !== outVal) {
-                        sourceValues[`${gate.id}-source`] = outVal;
-                        stabilized = false;
-                    }
-                });
-
-                if (stabilized) break;
-            }
-
-            // Update output nodes based on what feeds into them
-            nextNodes.forEach(n => {
+        // 3. Update Node States
+        setNodes(nds => {
+            let ndsChanged = false;
+            const updatedNodes = nds.map(n => {
                 if (n.type === 'outputNode') {
                     const inEdge = edges.find(e => e.target === n.id);
                     const inVal = inEdge ? (sourceValues[`${inEdge.source}-source`] || 0) : 0;
                     if (n.data.value !== inVal) {
-                        n.data = { ...n.data, value: inVal };
-                        changed = true;
+                        ndsChanged = true;
+                        return { ...n, data: { ...n.data, value: inVal } };
                     }
                 }
+                return n;
             });
-
-            // Visual Edge Updating (Make them green and animated if carrying a 1)
-            setEdges(eds => {
-                let edgeChanged = false;
-                const newEdges = eds.map(e => {
-                    const val = sourceValues[`${e.source}-source`];
-                    const isHigh = val === 1;
-                    if (e.animated !== isHigh || e.style?.stroke !== (isHigh ? '#10B981' : '#3f3f46')) {
-                        edgeChanged = true;
-                        return {
-                            ...e,
-                            animated: isHigh,
-                            style: { ...e.style, strokeWidth: isHigh ? 4 : 2, stroke: isHigh ? '#10B981' : '#3f3f46' }
-                        };
-                    }
-                    return e;
-                });
-                return edgeChanged ? newEdges : eds;
-            });
-
-            return changed ? nextNodes : nds;
+            return ndsChanged ? updatedNodes : nds;
         });
+
+        // 4. Update Edge Visuals
+        setEdges(eds => {
+            let edsChanged = false;
+            const updatedEdges = eds.map(e => {
+                const val = sourceValues[`${e.source}-source`];
+                const isHigh = val === 1;
+                if (e.animated !== isHigh || e.style?.stroke !== (isHigh ? '#10B981' : '#3f3f46')) {
+                    edsChanged = true;
+                    return {
+                        ...e,
+                        animated: isHigh,
+                        style: { ...e.style, strokeWidth: isHigh ? 4 : 2, stroke: isHigh ? '#10B981' : '#3f3f46' }
+                    };
+                }
+                return e;
+            });
+            return edsChanged ? updatedEdges : eds;
+        });
+
     }, [edges, nodes.length, nodes.filter(n => n.type === 'inputNode').map(n => n.data.value).join(',')]);
 
 
