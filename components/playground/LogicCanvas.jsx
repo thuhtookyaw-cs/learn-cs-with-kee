@@ -9,6 +9,7 @@ import {
     addEdge,
     Handle,
     Position,
+    BackgroundVariant
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -16,24 +17,31 @@ import '@xyflow/react/dist/style.css';
 // CUSTOM NODES
 // ----------------------------------------------------------------------------
 
-// 1. INPUT NODE
+// 1. INPUT NODE (Toggle Switch Style)
 const InputNode = ({ data, isConnectable }) => {
     return (
-        <div className={`w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-mono font-bold transition-all shadow-md ${data.value ? 'bg-emerald-500 text-white ring-4 ring-emerald-500/30' : 'bg-[var(--bg-card)] border-2 border-[var(--border)] text-[var(--text)]'}`}>
-            <div className="absolute -top-6 text-xs font-sans text-[var(--text-muted)] tracking-wider">INPUT</div>
+        <div className={`w-14 h-14 rounded-full border-2 flex items-center justify-center text-xl font-mono transition-all duration-200 cursor-pointer select-none ${data.value ? 'bg-emerald-500 border-emerald-400 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-[var(--bg-card)] border-[var(--border)] text-[var(--text-muted)] hover:border-emerald-500/50 hover:text-[var(--text)]'}`}>
+            <div className="absolute -top-6 text-[10px] font-bold tracking-widest text-[var(--text-muted)] uppercase">INPUT</div>
             {data.value ? '1' : '0'}
-            <Handle type="source" position={Position.Right} isConnectable={isConnectable} className="w-4 h-4 bg-emerald-500 border-2 border-[var(--bg)]" />
+            <Handle type="source" position={Position.Right} isConnectable={isConnectable} className="w-3 h-3 bg-emerald-500 border-none right-[-6px] transition-transform hover:scale-150" />
         </div>
     );
 };
 
-// 2. OUTPUT NODE
+// 2. OUTPUT NODE (LED Style)
 const OutputNode = ({ data, isConnectable }) => {
     return (
-        <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-mono font-bold transition-all duration-300 shadow-lg ${data.value ? 'bg-emerald-500 text-white shadow-[0_0_30px_rgba(16,185,129,0.5)] scale-110 border-none' : 'bg-[var(--bg-card)] border-2 border-[var(--border)] text-[var(--text-muted)]'}`}>
-            <Handle type="target" position={Position.Left} isConnectable={isConnectable} className="w-4 h-4 bg-indigo-500 border-2 border-[var(--bg)]" />
-            <div className="absolute -top-6 text-xs font-sans text-[var(--text-muted)] tracking-wider">OUTPUT</div>
-            {data.value ? '1' : '0'}
+        <div className="relative flex items-center justify-center">
+            {/* Outer LED casing */}
+            <div className={`w-16 h-16 rounded-full border-4 flex items-center justify-center text-2xl font-mono font-bold transition-all duration-300 ${data.value ? 'bg-red-500 border-red-400 text-white shadow-[0_0_40px_rgba(239,68,68,0.8)]' : 'bg-[#18181b] border-[#27272a] text-[#3f3f46] shadow-inner'}`}>
+                {data.value ? '1' : '0'}
+            </div>
+
+            {/* LED Glow overlay inside */}
+            {data.value === 1 && <div className="absolute inset-2 rounded-full bg-white opacity-20 blur-[2px]"></div>}
+
+            <Handle type="target" position={Position.Left} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none left-[-6px] transition-transform hover:scale-150" />
+            <div className="absolute -top-6 text-[10px] font-bold tracking-widest text-[var(--text-muted)] uppercase">LAMP</div>
         </div>
     );
 };
@@ -128,9 +136,9 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-    { id: 'e1-1', source: 'in1', target: 'gate1', targetHandle: 'a', animated: true, style: { strokeWidth: 3, stroke: '#10B981' } },
-    { id: 'e1-2', source: 'in2', target: 'gate1', targetHandle: 'b', animated: false, style: { strokeWidth: 3, stroke: '#3f3f46' } },
-    { id: 'e1-3', source: 'gate1', target: 'out1', animated: false, style: { strokeWidth: 3, stroke: '#3f3f46' } },
+    { id: 'e1-1', source: 'in1', target: 'gate1', targetHandle: 'a', animated: true, style: { strokeWidth: 4, stroke: '#10B981' } },
+    { id: 'e1-2', source: 'in2', target: 'gate1', targetHandle: 'b', animated: false, style: { strokeWidth: 2, stroke: '#3f3f46' } },
+    { id: 'e1-3', source: 'gate1', target: 'out1', animated: false, style: { strokeWidth: 2, stroke: '#3f3f46' } },
 ];
 
 export default function LogicCanvas() {
@@ -148,7 +156,7 @@ export default function LogicCanvas() {
         []
     );
     const onConnect = useCallback(
-        (params) => setEdges((eds) => addEdge({ ...params, animated: false, style: { strokeWidth: 3, stroke: '#3f3f46' } }, eds)),
+        (params) => setEdges((eds) => addEdge({ ...params, animated: false, style: { strokeWidth: 2, stroke: '#3f3f46' } }, eds)),
         []
     );
 
@@ -223,7 +231,7 @@ export default function LogicCanvas() {
                         return {
                             ...e,
                             animated: isHigh,
-                            style: { ...e.style, stroke: isHigh ? '#10B981' : '#3f3f46' }
+                            style: { ...e.style, strokeWidth: isHigh ? 4 : 2, stroke: isHigh ? '#10B981' : '#3f3f46' }
                         };
                     }
                     return e;
@@ -266,7 +274,16 @@ export default function LogicCanvas() {
             <div className="w-64 bg-[var(--bg-card)] border-r border-[var(--border)] p-6 flex flex-col gap-6 overflow-y-auto z-10">
                 <div>
                     <h2 className="text-xl font-bold text-[var(--text)] font-serif mb-2">Sim Tools</h2>
-                    <p className="text-[var(--text-muted)] text-xs mb-4">Click to add parts. Drag gates, connect colored dots (black to blue) to build a circuit. Click Inputs to flip 0/1.</p>
+                    <p className="text-[var(--text-muted)] text-xs mb-4">Click to add parts. Drag gates, connect colored dots (black to blue) to build a circuit. Click Inputs to flip 0/1, and press Backspace to delete selected components.</p>
+                </div>
+
+                <div className="flex gap-2">
+                    <button onClick={() => { setNodes([]); setEdges([]); }} className="flex-1 py-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg text-xs font-bold transition-colors">
+                        Clear All
+                    </button>
+                    <button onClick={() => { setNodes(initialNodes); setEdges(initialEdges); }} className="flex-1 py-2 bg-[var(--bg)] text-[var(--text-muted)] hover:text-[var(--text)] border border-[var(--border)] hover:border-indigo-500 rounded-lg text-xs font-bold transition-colors">
+                        Load Demo
+                    </button>
                 </div>
 
                 <div className="space-y-2">
@@ -305,8 +322,8 @@ export default function LogicCanvas() {
                     fitView
                     className="bg-[#0f0f11]" // explicit dark background for canvas
                 >
-                    <Background color="#27272a" gap={24} />
-                    <Controls className="bg-[var(--bg-card)] border-[var(--border)] fill-[var(--text)] [&_button]:border-b-[var(--border)]" />
+                    <Background color="#3f3f46" gap={16} variant={BackgroundVariant.Dots} size={1} />
+                    <Controls className="bg-[var(--bg-card)] border-[var(--border)] fill-[var(--text)] [&_button]:border-b-[var(--border)] [&_button:hover]:bg-[var(--bg)]" />
                 </ReactFlow>
             </div>
         </div>
