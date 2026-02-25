@@ -64,7 +64,7 @@ export default function Hero() {
                 {/* Headline */}
                 <h1 className="anim-up text-5xl sm:text-6xl md:text-7xl font-extrabold font-serif mb-6 max-w-4xl tracking-tight text-[var(--text)]">
                     Master IGCSE{' '}
-                    <span className="italic bg-clip-text text-transparent bg-gradient-to-br from-indigo-500 to-purple-600">
+                    <span className="italic bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 animate-text-gradient bg-[length:200%_auto]">
                         Computer Science
                     </span>
                     {' '}&amp; ICT

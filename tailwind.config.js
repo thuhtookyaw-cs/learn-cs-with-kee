@@ -30,10 +30,15 @@ module.exports = {
             animation: {
                 'fade-in': 'fadeIn 0.25s ease-in-out',
                 'slide-down': 'slideDown 0.25s ease-in-out',
+                'text-gradient': 'textGradient 5s linear infinite',
             },
             keyframes: {
                 fadeIn: { from: { opacity: '0', transform: 'translateY(4px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
                 slideDown: { from: { opacity: '0', maxHeight: '0', transform: 'translateY(-4px)' }, to: { opacity: '1', maxHeight: '2000px', transform: 'translateY(0)' } },
+                textGradient: {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                },
             },
         },
     },
