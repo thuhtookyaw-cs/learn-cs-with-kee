@@ -28,20 +28,22 @@ const InputNode = ({ data, isConnectable }) => {
     );
 };
 
-// 2. OUTPUT NODE (LED Style)
+// 2. OUTPUT NODE (Lightbulb Style)
 const OutputNode = ({ data, isConnectable }) => {
+    const isOn = data.value === 1;
     return (
-        <div className="relative flex items-center justify-center">
-            {/* Outer LED casing */}
-            <div className={`w-16 h-16 rounded-full border-4 flex items-center justify-center text-2xl font-mono font-bold transition-all duration-300 ${data.value ? 'bg-red-500 border-red-400 text-white shadow-[0_0_40px_rgba(239,68,68,0.8)]' : 'bg-[#18181b] border-[#27272a] text-[#3f3f46] shadow-inner'}`}>
-                {data.value ? '1' : '0'}
+        <div className="relative flex items-center justify-center w-16 h-20 group">
+            {/* The Lightbulb SVG */}
+            <svg viewBox="0 0 24 24" className={`w-full h-full transition-all duration-300 drop-shadow-xl ${isOn ? 'text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.8)] scale-110' : 'text-[#3f3f46]'}`} fill={isOn ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" />
+                <path d="M9 18h6" />
+                <path d="M10 22h4" />
+            </svg>
+
+            <Handle type="target" position={Position.Left} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none left-[-6px] top-[40%] transition-transform hover:scale-150" />
+            <div className={`absolute -bottom-4 text-[10px] font-bold tracking-widest uppercase transition-colors ${isOn ? 'text-yellow-400' : 'text-[var(--text-muted)]'}`}>
+                {isOn ? 'ON' : 'OFF'}
             </div>
-
-            {/* LED Glow overlay inside */}
-            {data.value === 1 && <div className="absolute inset-2 rounded-full bg-white opacity-20 blur-[2px]"></div>}
-
-            <Handle type="target" position={Position.Left} isConnectable={isConnectable} className="w-3 h-3 bg-indigo-500 border-none left-[-6px] transition-transform hover:scale-150" />
-            <div className="absolute -top-6 text-[10px] font-bold tracking-widest text-[var(--text-muted)] uppercase">LAMP</div>
         </div>
     );
 };
@@ -287,8 +289,13 @@ export default function LogicCanvas() {
                     <button onClick={() => addNode('inputNode')} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-emerald-500 transition-colors flex items-center justify-between">
                         Input (0/1) <span className="w-3 h-3 bg-emerald-500 rounded-full"></span>
                     </button>
-                    <button onClick={() => addNode('outputNode')} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-indigo-500 transition-colors flex items-center justify-between">
-                        Output Lamp <span className="w-3 h-3 bg-indigo-500 rounded-full"></span>
+                    <button onClick={() => addNode('outputNode')} className="w-full px-4 py-3 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-bold hover:border-yellow-400 transition-colors flex items-center justify-between group">
+                        Output Lamp
+                        <svg viewBox="0 0 24 24" className="w-5 h-5 text-[var(--text-muted)] group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" />
+                            <path d="M9 18h6" />
+                            <path d="M10 22h4" />
+                        </svg>
                     </button>
                 </div>
 
