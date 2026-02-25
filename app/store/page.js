@@ -1,8 +1,9 @@
-'use client';
 import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import ResourceCard from '@/components/resources/ResourceCard';
 import BuyModal from '@/components/resources/BuyModal';
+import { TUTOR } from '@/lib/data';
 
 // Mock Data (Replace with real data or keep as MVP)
 const MOCK_RESOURCES = [
@@ -191,17 +192,39 @@ export default function ResourcesPage() {
 
                     {/* Resources Grid */}
                     {filteredResources.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-slide-down">
+                        <motion.div
+                            initial="hidden"
+                            animate="show"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                show: {
+                                    opacity: 1,
+                                    transition: { staggerChildren: 0.1 }
+                                }
+                            }}
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                        >
                             {filteredResources.map(resource => (
-                                <ResourceCard
+                                <motion.div
                                     key={resource.id}
-                                    resource={resource}
-                                    onBuyClick={handleBuyClick}
-                                />
+                                    variants={{
+                                        hidden: { opacity: 0, y: 20 },
+                                        show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+                                    }}
+                                >
+                                    <ResourceCard
+                                        resource={resource}
+                                        onBuyClick={handleBuyClick}
+                                    />
+                                </motion.div>
                             ))}
-                        </div>
+                        </motion.div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center py-24 px-6 bg-[var(--bg-card)] rounded-3xl border border-[var(--border)] border-dashed">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="flex flex-col items-center justify-center py-24 px-6 bg-[var(--bg-card)] rounded-3xl border border-[var(--border)] border-dashed"
+                        >
                             <div className="w-20 h-20 mb-6 rounded-full bg-[var(--bg-input)] flex items-center justify-center border border-[var(--border)] shadow-sm">
                                 <svg className="w-10 h-10 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -209,15 +232,23 @@ export default function ResourcesPage() {
                             </div>
                             <h3 className="text-2xl font-bold text-[var(--text)] mb-3">No matching resources</h3>
                             <p className="text-[var(--text-muted)] text-center max-w-md mb-8">
-                                We couldn't find anything matching "{searchQuery}" in the selected categories. Try adjusting your filters or search term.
+                                We couldn't find anything matching "{searchQuery}" in our current vault.
                             </p>
-                            <button
-                                onClick={() => { setSearchQuery(''); setSelectedCategory('All'); setPriceFilter('All'); }}
-                                className="px-6 py-3 bg-[var(--text)] text-[var(--bg)] font-medium rounded-xl hover:opacity-90 transition-opacity shadow-sm"
-                            >
-                                Clear all filters
-                            </button>
-                        </div>
+                            <div className="flex flex-wrap items-center gap-3 justify-center">
+                                <button
+                                    onClick={() => { setSearchQuery(''); setSelectedCategory('All'); setPriceFilter('All'); }}
+                                    className="px-6 py-3 bg-[var(--bg-input)] border border-[var(--border)] text-[var(--text)] font-medium rounded-xl hover:bg-[var(--bg-card-2)] transition-colors shadow-sm"
+                                >
+                                    Clear filters
+                                </button>
+                                <a
+                                    href={TUTOR?.telegram || 'https://t.me/kee'} target="_blank" rel="noreferrer"
+                                    className="px-6 py-3 bg-[#2AABEE] text-white font-medium rounded-xl hover:bg-[#229ED9] transition-colors shadow-sm"
+                                >
+                                    Request on Telegram
+                                </a>
+                            </div>
+                        </motion.div>
                     )}
                 </div>
             </div>

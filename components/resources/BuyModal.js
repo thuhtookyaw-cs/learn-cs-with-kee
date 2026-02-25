@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { TUTOR } from '@/lib/data';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function BuyModal({ isOpen, onClose, resource }) {
     const [showToast, setShowToast] = useState(false);
@@ -98,7 +100,9 @@ export default function BuyModal({ isOpen, onClose, resource }) {
                                     <span className="bg-emerald-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
                                     Pay via KPay
                                 </h4>
-                                <img src="/kpay.png" alt="KPay Logo" className="h-10 sm:h-12 w-auto object-contain drop-shadow-md" />
+                                <div className="relative h-10 w-24 sm:h-12 w-28">
+                                    <Image src="/kpay.png" alt="KPay Logo" fill className="object-contain drop-shadow-md" />
+                                </div>
                             </div>
                             <div className="bg-dark-card2 rounded-xl p-4 border border-dark-border space-y-3 text-sm">
                                 <div className="flex justify-between">
@@ -144,15 +148,22 @@ export default function BuyModal({ isOpen, onClose, resource }) {
             </div>
 
             {/* Toast Notification */}
-            {showToast && (
-                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] w-[90vw] max-w-md bg-emerald-500 text-white px-4 py-3 sm:px-6 rounded-2xl sm:rounded-full shadow-lg font-medium text-sm flex items-start sm:items-center gap-3 animate-fade-in border border-emerald-400 text-left sm:text-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5 sm:mt-0">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    <span>After sending the screenshot, you'll receive your file shortly!</span>
-                </div>
-            )}
+            <AnimatePresence>
+                {showToast && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] w-[90vw] max-w-md bg-emerald-500 text-white px-4 py-3 sm:px-6 rounded-2xl sm:rounded-full shadow-lg font-medium text-sm flex items-start sm:items-center gap-3 border border-emerald-400 text-left sm:text-center"
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5 sm:mt-0">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <span>After sending the screenshot, you'll receive your file shortly!</span>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

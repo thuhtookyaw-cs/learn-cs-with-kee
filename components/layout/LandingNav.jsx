@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 
@@ -83,7 +84,7 @@ export default function LandingNav() {
                     transition: 'background-color 0.3s, border-color 0.3s',
                 }}>
                 <m.div variants={itemAnimation} style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                    <img src="/logo.png" alt="Logo" style={{ width: 28, height: 28, borderRadius: 6, objectFit: 'contain' }} />
+                    <Image src="/logo.png" alt="Logo" width={28} height={28} style={{ borderRadius: 6, objectFit: 'contain' }} priority />
                     <span style={{ fontSize: 18, letterSpacing: '-0.02em', color: 'var(--text)', display: 'flex', alignItems: 'baseline', gap: '3px' }}>
                         <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 16 }}>Learn</span>
                         <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 900 }}>CS</span>
