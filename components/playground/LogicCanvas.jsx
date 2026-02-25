@@ -159,10 +159,12 @@ export default function LogicCanvas() {
 
             // Visual Edge Updating (Make them green and animated if carrying a 1)
             setEdges(eds => {
-                return eds.map(e => {
+                let edgeChanged = false;
+                const newEdges = eds.map(e => {
                     const val = sourceValues[`${e.source}-source`];
                     const isHigh = val === 1;
-                    if (e.animated !== isHigh || e.style.stroke !== (isHigh ? '#10B981' : '#3f3f46')) {
+                    if (e.animated !== isHigh || e.style?.stroke !== (isHigh ? '#10B981' : '#3f3f46')) {
+                        edgeChanged = true;
                         return {
                             ...e,
                             animated: isHigh,
@@ -171,6 +173,7 @@ export default function LogicCanvas() {
                     }
                     return e;
                 });
+                return edgeChanged ? newEdges : eds;
             });
 
             return changed ? nextNodes : nds;
