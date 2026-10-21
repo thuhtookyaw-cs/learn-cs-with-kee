@@ -118,7 +118,7 @@ if (page === 'playground') {
 }
 
 if (page === 'dashboard') {
-  loadResources().then(files => { $('#cs-count').textContent = files.filter(file => file.subject === 'cs' && file.sourceKey === 'primary').length; $('#ict-count').textContent = files.filter(file => file.subject === 'ict' && file.sourceKey === 'primary').length; $('#language-b-count').textContent = files.filter(file => file.subject === 'language-b' && file.sourceKey === 'primary').length; }).catch(() => { $('#cs-count').textContent = 'CS'; $('#ict-count').textContent = 'ICT'; $('#language-b-count').textContent = 'English'; });
+  loadResources().then(files => { $('#cs-count').textContent = files.filter(file => file.subject === 'cs' && file.sourceKey === 'primary').length; $('#ict-count').textContent = files.filter(file => file.subject === 'ict' && file.sourceKey === 'primary').length; $('#language-b-count').textContent = files.filter(file => file.subject === 'language-b' && file.sourceKey === 'primary').length; $('#physics-count').textContent = files.filter(file => file.subject === 'physics' && file.sourceKey === 'primary').length; }).catch(() => { $('#cs-count').textContent = 'CS'; $('#ict-count').textContent = 'ICT'; $('#language-b-count').textContent = 'English'; $('#physics-count').textContent = 'Physics'; });
 }
 
 if (page === 'resources') {

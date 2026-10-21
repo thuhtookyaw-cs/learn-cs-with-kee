@@ -823,5 +823,485 @@
     "path": "papers/language-b/2019/4eb1-may-june-2019-p1r-qp.pdf",
     "sha256": "1f6eebe8f16581c061d170b65b289f0e84223e6409958334a843fb2dcc007f00",
     "bytes": 1376873
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p1p-ms.pdf",
+    "sha256": "75d692462f9ff7178498fe01919360c1128c7d4ad64ebe7bc0f57befad0becf2",
+    "bytes": 564142
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p1p-qp.pdf",
+    "sha256": "04d05027f1178eb571a4341b2e95482559d7897300b44c2125a9869467c074c7",
+    "bytes": 2980414
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p1pr-ms.pdf",
+    "sha256": "3e20d40d530cc5bcd75578a6e4b5dece6c8e5615631f99f88a87555a1348944f",
+    "bytes": 451431
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p1pr-qp.pdf",
+    "sha256": "2709198bccff3906ec42d93ff4c387f938c163468ac9af65ae74733b6242b463",
+    "bytes": 2797135
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p2p-ms.pdf",
+    "sha256": "fa2862178a86646dfd9a5f80619f4c50518f99ccd576e3e5dcb628c80f430a08",
+    "bytes": 477853
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p2p-qp.pdf",
+    "sha256": "d90d0a7c49c9478e9b453fe0054ecd7ae622499d52f6d4426366a05cd305c047",
+    "bytes": 1998660
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p2pr-ms.pdf",
+    "sha256": "cd5ee7d2435a4d94396a4ac3239a7534a7745c1b83d4cf2f693f6f64b400da4d",
+    "bytes": 410832
+  },
+  {
+    "path": "papers/physics/2025/4ph1-june-2025-p2pr-qp.pdf",
+    "sha256": "58bb413788dc3b4d67543eb118ebd97f69df3170d96503811b75a3ef52b6ea26",
+    "bytes": 1477339
+  },
+  {
+    "path": "papers/physics/2024/4ph1-november-2024-p1p-ms.pdf",
+    "sha256": "1c3ba7a401902e2a8a5a2d83ff97eaab513ede612ed3afcd04b15b93b697ab16",
+    "bytes": 417192
+  },
+  {
+    "path": "papers/physics/2024/4ph1-november-2024-p1p-qp.pdf",
+    "sha256": "14c5677c7bc0fb3bdbf69ed8f40ad6c199976f18999f0b008766e9ecea965358",
+    "bytes": 750020
+  },
+  {
+    "path": "papers/physics/2024/4ph1-november-2024-p2p-ms.pdf",
+    "sha256": "6e63a1ea0f2474008013ee07db21e8c31d585338a517494f73c53463b580708d",
+    "bytes": 226890
+  },
+  {
+    "path": "papers/physics/2024/4ph1-november-2024-p2p-qp.pdf",
+    "sha256": "442a3541ac91ab11550fbb6a3f8e6da2a8c7927f9bfaa973bffe4cd90a7051d6",
+    "bytes": 572536
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p1p-ms.pdf",
+    "sha256": "9ca559f719b9603c62ebb2a293c5174c7082c1cf6b13aa412fc5d59fd09c181f",
+    "bytes": 242009
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p1p-qp.pdf",
+    "sha256": "3c1e2eea09258259ce0ae86d6adf24da26a1320e297317c60f64c272839b8454",
+    "bytes": 1266863
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p1pr-ms.pdf",
+    "sha256": "9fb56e1a4f47e2f97f25daeff3e4c7df643fa69800942a1fe765cf5a920a243d",
+    "bytes": 269038
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p1pr-qp.pdf",
+    "sha256": "bbb72ad3f05db8a716715e058ebe4e8c146f980fab658b8a8a55ede9c22de803",
+    "bytes": 1099618
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p2p-ms.pdf",
+    "sha256": "b9a6697f85d1e8604cc199a029ad0d386ed09ceeef281e314885e0c4b8afb7cf",
+    "bytes": 702815
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p2p-qp.pdf",
+    "sha256": "e5920b0b4f8478d915b434aac97cc945e99517a2f823cc1a31675af7fdcbf9eb",
+    "bytes": 1415592
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p2pr-ms.pdf",
+    "sha256": "dc0e6df491c2127c56e42bd22f658f386334bad424892fc843c8b847d37270ed",
+    "bytes": 269440
+  },
+  {
+    "path": "papers/physics/2024/4ph1-june-2024-p2pr-qp.pdf",
+    "sha256": "e99ecb0e2c52893acf58374215a93114f1107a9ded6a1a9c4e739fed4c4c04ff",
+    "bytes": 1835607
+  },
+  {
+    "path": "papers/physics/2023/4ph1-november-2023-p1p-ms.pdf",
+    "sha256": "ede67f1a1fb8ffb8a06a149c1ff9b6a123d3004ce1e5bfbdf430f47520b3cc9d",
+    "bytes": 929934
+  },
+  {
+    "path": "papers/physics/2023/4ph1-november-2023-p1p-qp.pdf",
+    "sha256": "f872f5bebbee1260491ee389f0f4d2fa606fdfa6a28fd011c8233070ba955b2a",
+    "bytes": 1084512
+  },
+  {
+    "path": "papers/physics/2023/4ph1-november-2023-p2p-ms.pdf",
+    "sha256": "d08d4eedf4489f472d4a6c5ff7c72e8d8c56ca7ecb6e6dbe9b13456d0ae1bcdd",
+    "bytes": 393441
+  },
+  {
+    "path": "papers/physics/2023/4ph1-november-2023-p2p-qp.pdf",
+    "sha256": "4a08ebd92a86e394455d222adfce72985db96c24a7f66dd693a519454a82ad62",
+    "bytes": 529305
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p1p-ms.pdf",
+    "sha256": "48a8e20e744a5205bb4b160bf6a436f8cc967660698eaffb8139d5f723c8c58d",
+    "bytes": 631125
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p1p-qp.pdf",
+    "sha256": "8a872d304ddb3eb03c54b6c404841858e494c0c5449eb33fa04747d7a2dc82c3",
+    "bytes": 787119
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p1pr-ms.pdf",
+    "sha256": "63f7a7057dd107ad92f2f83d681aaab2eb488361228b2c5ef50239d8668b839b",
+    "bytes": 545909
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p1pr-qp.pdf",
+    "sha256": "79221e982c6f0ff961d774b883a60046e1dfd890eaf7e669dfb089a786051111",
+    "bytes": 1644227
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p2p-ms.pdf",
+    "sha256": "d3f4ae817cbdad3c3d604bbb9d77db375f2055c60128bfaf2bbec317443150d1",
+    "bytes": 374658
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p2p-qp.pdf",
+    "sha256": "5f46e82134287b4a0215f8ff037e76f0f140beef0727686cafc0ffe32d18eda3",
+    "bytes": 1175679
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p2pr-ms.pdf",
+    "sha256": "3882ed584526f3819df4b3754596a7bc1ee30137d3aab2a50288ef1a1c73a60e",
+    "bytes": 385764
+  },
+  {
+    "path": "papers/physics/2023/4ph1-june-2023-p2pr-qp.pdf",
+    "sha256": "8a5adf5370c0b002e7b0f54a879f92acf88dd254972a660d548d91c37f91adbd",
+    "bytes": 1255188
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p1p-ms.pdf",
+    "sha256": "3b918a27572f26a77fa4caf1dacb5d4f19bcf0b763e1c12e80939f9214a60420",
+    "bytes": 1155090
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p1p-qp.pdf",
+    "sha256": "894abfc6cd884f4767d0ba28ba93eea448bd5f4edf3937fe540cad8bd5957fb4",
+    "bytes": 1654819
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p1pr-ms.pdf",
+    "sha256": "093d801ab58c6c8f1fa44964b874bc3dfac7295c97b8f7d533a9217e968ff3ec",
+    "bytes": 731053
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p1pr-qp.pdf",
+    "sha256": "d518d13b432b3b6c6b8f64b5db0ed1285c1b1dfda98bf0ae6d164ee02c761d5d",
+    "bytes": 1513075
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p2p-ms.pdf",
+    "sha256": "5dbfd59819453a067f85d258bb58a692d2a6f860372a447cec09631e169fe38c",
+    "bytes": 913483
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p2p-qp.pdf",
+    "sha256": "e9c475e4df1ac8c44f567e3433975ea4fdbb5fe9a5c6f89023f0edf53c700862",
+    "bytes": 1443332
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p2pr-ms.pdf",
+    "sha256": "9b8817da0764d68c2bbd8e514371f74859de3c6d359c62218e3ce2c61b3a47e3",
+    "bytes": 619255
+  },
+  {
+    "path": "papers/physics/2023/4ph1-january-2023-p2pr-qp.pdf",
+    "sha256": "a0480a8a2b6771b6ccdddaed4d039ec0559d40ba1b965986369ce46146245c41",
+    "bytes": 998246
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p1p-ms.pdf",
+    "sha256": "52512c93fb6c45f633627bbf1985bd82d8ca56556a5cf5c3c8c0a84cba97fb16",
+    "bytes": 677601
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p1p-qp.pdf",
+    "sha256": "beca36c265719dc119b02e95d8721e4ee06f1b79058cb6b549f363e0bc0c50cb",
+    "bytes": 2562086
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p1pr-ms.pdf",
+    "sha256": "1d2280c12413d534ec9a3af1251ccda1465a608b9d701815e9812ede65ca0847",
+    "bytes": 390849
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p1pr-qp.pdf",
+    "sha256": "83f74e40760af826e74f9c6184cf79e2329da9a84aafe1c191794579a90869d5",
+    "bytes": 1689326
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p2p-ms.pdf",
+    "sha256": "c56e8f8021fdfde3410e4252ec309f93efd9b3ac7a12c45f46da067fa371d4fe",
+    "bytes": 720838
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p2p-qp.pdf",
+    "sha256": "210d97236e5ff757ffa57605694e225f4ccf2861d2a39abc2b15e8556a444826",
+    "bytes": 1014788
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p2pr-ms.pdf",
+    "sha256": "e14d04ff2db7a469922b3c4e8c6d68a815de09f8a2356d5d2bab07b0d08cc034",
+    "bytes": 620966
+  },
+  {
+    "path": "papers/physics/2022/4ph1-june-2022-p2pr-qp.pdf",
+    "sha256": "81a797320f4eb725cbe5434730692bce45dd2bafee6f056b58080eaa6246c9bc",
+    "bytes": 1280002
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p1p-ms.pdf",
+    "sha256": "87f6b97027b484ffa7b2e3f9234b666441947cd20a4ed7fcb82682c7d0e0b952",
+    "bytes": 717814
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p1p-qp.pdf",
+    "sha256": "3dd03eab2e82185ea98aeb124ef3ab642d5b6440c61f26c1af920dcdaadf1f84",
+    "bytes": 1679525
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p1pr-ms.pdf",
+    "sha256": "4f4d48e21f5e8e1081d99ed8c540121607d92d379604053b030c6f9b14e4d7dd",
+    "bytes": 927154
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p1pr-qp.pdf",
+    "sha256": "19c423c689cccd5b53bc9e4f79292085375633c3df06e14122dd5bdcfc179303",
+    "bytes": 1579936
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p2p-ms.pdf",
+    "sha256": "89418a641feb778b3357061e1dab0edcdf74e0b09586e5a54f341ae169289191",
+    "bytes": 670575
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p2p-qp.pdf",
+    "sha256": "d5eb57419f98e3c4040e9fa9f9392e485ba2dea73b88688e48fba4a04c63aec0",
+    "bytes": 1334929
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p2pr-ms.pdf",
+    "sha256": "b32fa1fdd32ba1973834fdf53322f7ab66dede2f43240c68eb89a128929110bf",
+    "bytes": 666314
+  },
+  {
+    "path": "papers/physics/2022/4ph1-january-2022-p2pr-qp.pdf",
+    "sha256": "f057e68f7452536fd3327e6322d39c53e625445069afa0138495b3c430685736",
+    "bytes": 1492199
+  },
+  {
+    "path": "papers/physics/2021/4ph1-november-2021-p1p-ms.pdf",
+    "sha256": "3b2d1bf62d9c966dbc59d464828d38cd095e2f620cfe7775ff89e4b3db92601b",
+    "bytes": 847148
+  },
+  {
+    "path": "papers/physics/2021/4ph1-november-2021-p1p-qp.pdf",
+    "sha256": "435e6aef7fc64501aaa06c0ee4d794d0610bf95fed4f5c37fcea9cc36ae68796",
+    "bytes": 1668923
+  },
+  {
+    "path": "papers/physics/2021/4ph1-november-2021-p2p-ms.pdf",
+    "sha256": "706af0810a3650c040916a3c26c709f2e192862762d75fb995d7ea4c649992e5",
+    "bytes": 808136
+  },
+  {
+    "path": "papers/physics/2021/4ph1-november-2021-p2p-qp.pdf",
+    "sha256": "2b84f44cd81283c8290fd953fe80e91873e9e941e9d752686191e244caaeb81b",
+    "bytes": 1495237
+  },
+  {
+    "path": "papers/physics/2021/4ph1-june-2021-p1p-ms.pdf",
+    "sha256": "295adfe9dcc5ee8bbe92c8d8e09b8476e09a9c6478af1c81fa9049ad578da95b",
+    "bytes": 412479
+  },
+  {
+    "path": "papers/physics/2021/4ph1-june-2021-p1p-qp.pdf",
+    "sha256": "9cced461689f508d340304b112114911b8fb9ea4112f3f87bab3e334729725a0",
+    "bytes": 2694161
+  },
+  {
+    "path": "papers/physics/2021/4ph1-june-2021-p2p-ms.pdf",
+    "sha256": "f7953282adf69eba8d4f7f2673a288e3229a7f1ec78d5191b289cada2ac52cfd",
+    "bytes": 320158
+  },
+  {
+    "path": "papers/physics/2021/4ph1-june-2021-p2p-qp.pdf",
+    "sha256": "d4d9ca11727fd59ae9309a0c59a4794bde39c6d56b4198def1681f709c40231d",
+    "bytes": 1078792
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p1p-ms.pdf",
+    "sha256": "15a251ce66ce3ec004469925779130ddc813beddd648c6c1e8ef1b7338ad8530",
+    "bytes": 314695
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p1p-qp.pdf",
+    "sha256": "7cae0df7d5f4dfb542f6420d8f6865b5bc9d20c01f690212b56c09c2c5554df6",
+    "bytes": 2056364
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p1pr-ms.pdf",
+    "sha256": "51d89ff7925b72c9dc5e39cda769dc36947bb044370faec5235969caa928ce1f",
+    "bytes": 507838
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p1pr-qp.pdf",
+    "sha256": "29edd018de47b0214c113f69eb4ae69e1ddaa6c9aea3ff18103bf340d1bf43b1",
+    "bytes": 1346322
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p2p-ms.pdf",
+    "sha256": "9b2d0d0cf09c30900e5324296023b3769c62f0a2ec559e0fa25f3a082c333e32",
+    "bytes": 428592
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p2p-qp.pdf",
+    "sha256": "d73e09fcc0916fac832918f4b84232bebe2aff01658d8e1fa57e48eeb17e1ff2",
+    "bytes": 1158980
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p2pr-ms.pdf",
+    "sha256": "8b221d139ceb194ce36c2545eee1b68abc3d2fbdbf4e27a329ac8f12c0c12c27",
+    "bytes": 259842
+  },
+  {
+    "path": "papers/physics/2021/4ph1-january-2021-p2pr-qp.pdf",
+    "sha256": "527709a1d1c40787d354a9d183c656aaa776fd7ca84f50f5f1fb6231c49b6c7d",
+    "bytes": 851013
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p1p-ms.pdf",
+    "sha256": "1f2fdf9eceacbe15cf5ffb9a355a80ab5a2a02b50e3d4a76db2883ae41dea791",
+    "bytes": 484290
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p1p-qp.pdf",
+    "sha256": "28e1f5bc19c5c8472931d9c5f502f1e94d43a60e36e64a6f36ca4b32fe9d918c",
+    "bytes": 598762
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p1pr-ms.pdf",
+    "sha256": "f4a376833a1e4dfa13a013e252e0bb333061257f954b1e611f071f20a7191790",
+    "bytes": 397456
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p1pr-qp.pdf",
+    "sha256": "a8576c46ea59dc7c55bbe21a28efd11b71904af30d7f75282340f91acd935176",
+    "bytes": 4091040
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p2p-ms.pdf",
+    "sha256": "d1ff61a39541dda7788e123126bf5a198c3d19554e01330b49ff0e99e4946bc6",
+    "bytes": 373190
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p2p-qp.pdf",
+    "sha256": "c10b95175e0fbb0b82853de916c95d36f8bdc4981d693b716e7711df56ea3879",
+    "bytes": 4222950
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p2pr-ms.pdf",
+    "sha256": "cff52d0477034a72abd88a7dfb6b958db26f21747953dcb3e6ea25aad22ca072",
+    "bytes": 287185
+  },
+  {
+    "path": "papers/physics/2020/4ph1-november-2020-p2pr-qp.pdf",
+    "sha256": "5d29cc2a8177affbd580895b2f31e0a26144ab8ceb3b3f412dffc7c6749f7dd0",
+    "bytes": 3174857
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p1p-ms.pdf",
+    "sha256": "9f65b56daa5cab9822eb929a5de1b39124792b74a1372dbee1afc40cefaa6a6d",
+    "bytes": 461275
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p1p-qp.pdf",
+    "sha256": "3ac1cfeed07669509e36628c29f10ac9cfc5b5ba244917104c9df4c452a4131d",
+    "bytes": 1494299
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p1pr-ms.pdf",
+    "sha256": "8b086f3afd159cf469b61723d74bb5eb62496970bea98e4706939291936a9fe3",
+    "bytes": 598267
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p1pr-qp.pdf",
+    "sha256": "04a650a3a37615aa469709fb34d711fbd44b19797b3d9d792e451f5e107dab67",
+    "bytes": 946983
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p2p-ms.pdf",
+    "sha256": "2478e74a685b2b2822b9be4a30d3b9d9a3a300082645983c8815eb86a672bedb",
+    "bytes": 372050
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p2p-qp.pdf",
+    "sha256": "94798b2297c903911c9c78c55352300d3bbfc1800f1356b67c2206b8df281002",
+    "bytes": 1353024
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p2pr-ms.pdf",
+    "sha256": "3026251a962e887159fd051a4d0dc8ed8c5150a1c53395c06782bb4f7168136f",
+    "bytes": 312644
+  },
+  {
+    "path": "papers/physics/2020/4ph1-january-2020-p2pr-qp.pdf",
+    "sha256": "b8419c70375a6c58ffa740f804f302066e5e087cabe3a9598d6b1f3abb395595",
+    "bytes": 875516
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p1p-ms.pdf",
+    "sha256": "a1267fb57d853f2b7ea29af0005ca1c4d7b85bd12f9cad540ca672737aa2f2ea",
+    "bytes": 225978
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p1p-qp.pdf",
+    "sha256": "08f3ebee56b9957cf3794a3f529deecee9796d90222df94c2347abf2dfd1660d",
+    "bytes": 1331120
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p1pr-ms.pdf",
+    "sha256": "a3e55e6c1a4325a9e03836ed4e8d37e55b09413674f175022efa20278683c3dd",
+    "bytes": 308441
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p1pr-qp.pdf",
+    "sha256": "3c7cef10b2365f4b2e39d70b7107717be4e7673a68b14b8a7a938cec7c6b6127",
+    "bytes": 1424092
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p2p-ms.pdf",
+    "sha256": "063310faeadf2d990f2a499adf3da374140883880defcb9b80dff4cc556a3d52",
+    "bytes": 255601
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p2p-qp.pdf",
+    "sha256": "0530e035df5f00bee35041e467a5ffab2256ae86908911ef4ac7ac5d483d438b",
+    "bytes": 764097
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p2pr-ms.pdf",
+    "sha256": "e5eaee5c57d8d53c0f7521e0802d3afd95e5f3a8e5f59006a2a6e8d2e38800a6",
+    "bytes": 152771
+  },
+  {
+    "path": "papers/physics/2019/4ph1-june-2019-p2pr-qp.pdf",
+    "sha256": "78fd786c083d6b41cdb8f24b9f00a66e9b653ba8a3299556eb902f4cadd1dce7",
+    "bytes": 1368496
   }
 ]

@@ -1,4 +1,4 @@
-export const isHostedPaper = file => file?.sourceKey === 'primary' && typeof file.url === 'string' && /^\/papers\/(cs|ict|language-b)\/\d{4}\/[a-z0-9-]+\.(pdf|zip)$/.test(file.url) && (!file.preview || file.preview === file.url);
+export const isHostedPaper = file => file?.sourceKey === 'primary' && typeof file.url === 'string' && /^\/papers\/(cs|ict|language-b|physics)\/\d{4}\/[a-z0-9-]+\.(pdf|zip)$/.test(file.url) && (!file.preview || file.preview === file.url);
 const typeOrder = ['Question paper', 'Mark scheme', 'Data files', 'Examiner report'];
 export const paperLabel = paper => /^P\d+[A-Z]*$/i.test(paper || '') ? `Paper ${paper.slice(1)}` : (paper || 'Supporting files');
 const normalise = value => String(value ?? '').toLowerCase().replace(/[-_·/.]/g, ' ').replace(/\s+/g, ' ').trim();

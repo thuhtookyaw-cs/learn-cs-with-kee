@@ -6,8 +6,8 @@ import './resources.css';
 import './home-hub.css';
 
 export const metadata = {
-    title: { default: 'Learn CS with Kee', template: '%s — Learn CS with Kee' },
-    description: 'Clearer concepts. More confident learners. Edexcel IGCSE Computer Science, ICT, and English Language B classes, resources, and practice with Kee.',
+    title: { default: 'Study with Kee', template: '%s — Study with Kee' },
+    description: 'Clearer concepts. More confident learners. Edexcel IGCSE Computer Science, ICT, English Language B, and Physics classes, resources, and practice with Kee.',
     icons: { icon: [{ url: '/kee-logo.png', type: 'image/png' }], apple: '/kee-logo.png' },
 };
 

@@ -9,9 +9,10 @@ The main library is hosted directly in `public/papers/`. The public index, `publ
 | Computer Science | 4CP0 | 54 |
 | ICT | 4IT1 | 63 |
 | English Language B | 4EB1 | 48 |
-| Total | | 165 |
+| Physics | 4PH1 | 96 |
+| Total | | 261 |
 
-The resources include question papers, mark schemes, examiner reports, and practical archives. All views and dashboard counts use this downloaded library. The former Drive collection, saved index, API routes, and Google API dependency have been removed.
+The resources include question papers, mark schemes, examiner reports, and practical archives. The Physics addition includes 48 paired paper sets from the current 4PH1 syllabus, covering June 2019 through June 2025; its 96 question papers and mark schemes were downloaded from Pearson's public exam-materials archive. The older 4PH0 syllabus was excluded. All views and dashboard counts use this downloaded library. The former Drive collection, saved index, API routes, and Google API dependency have been removed.
 
 Qualification references were checked in all reachable PDFs. The catalogue excludes one missing ICT question paper, four previous-syllabus 4IT0 PDFs and their associated ZIP, and two exact duplicate CS mark schemes. Several English 2026 paper variants and a CS November 2020 mark scheme are labelled using their document-cover references. The combined English 2020 series is preserved with a note rather than reassigned to an unsupported date.
 

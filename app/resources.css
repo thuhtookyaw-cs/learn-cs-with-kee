@@ -94,7 +94,7 @@
   .past-paper-page .paper-page-intro h1 { font-size: 34px; line-height: 1.2; letter-spacing: -1.5px; }
   .paper-subject-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
   .paper-subject-nav a { padding: 10px 12px; border-color: var(--line); justify-content: space-between; }
-  .paper-subject-nav a:last-child { grid-column: 1/-1; }
+  .paper-subject-nav a:last-child { grid-column: auto; }
   .paper-library-summary { display: block; padding-top: 15px; }
   .paper-library-summary p { font-size: 12px; }
   .paper-library-summary > span { display: block; margin-top: 9px; font-size: 11px; }
