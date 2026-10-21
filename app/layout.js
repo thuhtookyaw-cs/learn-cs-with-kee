@@ -3,6 +3,7 @@ import './refined.css';
 import './playground.css';
 import './brand-class.css';
 import './resources.css';
+import './home-hub.css';
 
 export const metadata = {
     title: { default: 'Learn CS with Kee', template: '%s — Learn CS with Kee' },

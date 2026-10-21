@@ -142,7 +142,7 @@ if (page === 'playground') {
   function choosePath(key) {
     const steps = paths[key];
     $$('[data-practice-path]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.practicePath === key)));
-    $('#practice-path').innerHTML = `<ol class="practice-path-steps">${steps.map(([tool,label,url],index) => `<li><a href="${url || practiceTools[tool].url}"><span>${index+1}</span>${label}<i aria-hidden="true">↗</i></a></li>`).join('')}</ol>`;
+    $('#practice-path').innerHTML = `<ol class="practice-path-steps">${steps.map(([tool,label,url],index) => `<li><a href="${url || practiceTools[tool].url}"><span>${index+1}</span>${label}</a></li>`).join('')}</ol>`;
     $$('[data-tool]').forEach(card => { const recommended = card.dataset.tool === steps[0][0]; card.classList.toggle('is-recommended',recommended); $('.recommended-label',card).hidden = !recommended; });
   }
   $$('[data-practice-path]').forEach(button => button.addEventListener('click',()=>choosePath(button.dataset.practicePath)));
@@ -232,7 +232,7 @@ if (page === 'store') {
     const list = products.filter(product => (filter === 'all' || product.type === filter) && `${product.title} ${product.desc}`.toLowerCase().includes(search));
     $('#store-count').textContent = `${list.length} ${list.length === 1 ? 'resource' : 'resources'}`;
     $('#store-empty').hidden = list.length > 0;
-    $('#store-products').innerHTML = list.map(product => `<article class="product-card"><div class="product-art" aria-hidden="true"><span>${product.art}</span><div class="pill">${product.label}</div></div><div class="product-copy"><h2>${product.title}</h2><p>${product.desc}</p><div class="product-price">${product.original ? `<s>${money(product.original)}</s>` : ''}<strong>${product.price ? money(product.price) : 'Free'}</strong></div>${product.type === 'free' ? '<a class="button button-outline" href="/data/sample-exam-paper.pdf" download>Download sample PDF <span>↓</span></a>' : `<button class="button button-outline" data-order="${product.id}">Choose resource <span>↗</span></button>`}</div></article>`).join('');
+    $('#store-products').innerHTML = list.map(product => `<article class="product-card"><div class="product-art" aria-hidden="true"><span>${product.art}</span><div class="pill">${product.label}</div></div><div class="product-copy"><h2>${product.title}</h2><p>${product.desc}</p><div class="product-price">${product.original ? `<s>${money(product.original)}</s>` : ''}<strong>${product.price ? money(product.price) : 'Free'}</strong></div>${product.type === 'free' ? '<a class="button button-outline" href="/data/sample-exam-paper.pdf" download>Download sample PDF <span>↓</span></a>' : `<button class="button button-outline" data-order="${product.id}">Choose resource </button>`}</div></article>`).join('');
     $$('[data-order]').forEach(button => button.addEventListener('click', () => {
       selected = products.find(product => product.id === button.dataset.order);
       $('#order-title').textContent = selected.title;

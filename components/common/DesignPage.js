@@ -1,12 +1,13 @@
 import Script from 'next/script';
 import pages from '@/lib/design-pages.json';
+import { getHomeHtml } from '@/lib/home-content';
 
 // These templates are local, reviewed design assets. No request data is injected.
 export default function DesignPage({ page }) {
     const template = pages[page];
     if (!template) throw new Error(`Unknown design page: ${page}`);
     return <>
-        <div id="site-root" data-page={template.kind} dangerouslySetInnerHTML={{ __html: template.html }} />
+        <div id="site-root" data-page={template.kind} dangerouslySetInnerHTML={{ __html: page === 'home' ? getHomeHtml(template.html) : template.html }} />
         <Script src={page === 'home' ? '/script.js' : '/app.js'} strategy="afterInteractive" />
     </>;
 }

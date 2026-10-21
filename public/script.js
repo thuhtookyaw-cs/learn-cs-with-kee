@@ -35,3 +35,23 @@ document.querySelector('#contact-form').addEventListener('submit', event => {
   window.location.assign(`https://t.me/xkxxee?text=${encodeURIComponent(`Hi Kee! I'm ${name}.\n\n${text}`)}`);
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+// Match the homepage navigation to the section currently being read.
+const sectionLinks = [...document.querySelectorAll('#navigation [data-home-section]')];
+const homeSections = sectionLinks.map(link => document.getElementById(link.dataset.homeSection)).filter(Boolean);
+if (homeSections.length && 'IntersectionObserver' in window) {
+  const visibleSections = new Map();
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) visibleSections.set(entry.target.id, entry.boundingClientRect.top);
+      else visibleSections.delete(entry.target.id);
+    });
+    const active = [...visibleSections].sort((a, b) => a[1] - b[1])[0]?.[0];
+    if (!active) return;
+    sectionLinks.forEach(link => {
+      if (link.dataset.homeSection === active) link.setAttribute('aria-current','location');
+      else link.removeAttribute('aria-current');
+    });
+  }, {rootMargin:'-90px 0px -50% 0px',threshold:0});
+  homeSections.forEach(section => observer.observe(section));
+}

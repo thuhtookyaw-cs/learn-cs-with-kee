@@ -16,6 +16,7 @@ Complete redesign of the existing Next.js teaching website, recovered from its l
 - The custom forest-green Kee logo appears in every header and footer, and in browser icon metadata. The original transparent asset is `public/kee-logo.png`.
 - Edexcel IGCSE English Language B (4EB1) is the third class, linked from the homepage, resource library, and existing subject pages. Its page at `/subject/language-b` includes reading and writing focus areas, class enquiries, a searchable past-paper library, and Pearson's official specification and qualification links. Private class materials are requested from Kee; no separate pricing is claimed.
 - The main library hosts 165 downloaded resources directly under `public/papers/`: 54 CS, 63 ICT, and 48 English Language B files. Main-library links and downloads use this website’s own domain. The existing Kee/Google Drive index remains under Additional resources. Year, session, type, and library filters are available; the default view and dashboard counts use the main library. PDF previews use Google Docs Viewer with a direct-file fallback.
+- Home, Library, Playground, Journal, and Store share a simple navigation menu. Library, Playground, Journal, and Store are also real homepage sections, with links to the complete libraries, tools, articles, and store. Journal previews read the latest Markdown articles automatically; homepage file counts use the hosted paper index. Decorative diagonal-arrow glyphs have been removed from page templates and generated content.
 - Store prices and the original free sample PDF are retained. Orders are prepared as enquiries to Kee on Telegram; this site does not process payments.
 
 ## Run locally
@@ -36,7 +37,7 @@ Keep the existing Vercel environment variables. Google Drive uses `DRIVE_CS_FOLD
 
 ## Content maintenance
 
-Add articles as Markdown files in `content/articles/` and rebuild. Reviewed static page templates live in `lib/design-pages.json`; shared design styles are in `app/globals.css`, `app/refined.css`, `app/playground.css`, `app/brand-class.css`, and `app/resources.css`. Learning-tool interactions live in `public/app.js` and `public/python-worker.js`. Main-library metadata is in `public/data/past-papers.json`, with file sizes and SHA-256 hashes in `lib/papers-manifest.json`; see `docs/past-paper-library.md` before updating it.
+Add articles as Markdown files in `content/articles/` and rebuild. Reviewed static page templates live in `lib/design-pages.json`; shared design styles are in `app/globals.css`, `app/refined.css`, `app/playground.css`, `app/brand-class.css`, `app/resources.css`, and `app/home-hub.css`. Homepage article previews and file counts are populated by `lib/home-content.js`. Homepage store previews use the same current offers as the store; keep their copy and prices aligned when editing offers. Learning-tool interactions live in `public/app.js` and `public/python-worker.js`. Main-library metadata is in `public/data/past-papers.json`, with file sizes and SHA-256 hashes in `lib/papers-manifest.json`; see `docs/past-paper-library.md` before updating it.
 
 All twelve page routes were checked for mobile layout. Functional checks covered resource filters, a full quiz and review, circuit signals and wiring, binary scoring and progression, real Python execution/input/stop, and store difficulty selection.
 
