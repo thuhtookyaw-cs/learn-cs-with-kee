@@ -11,7 +11,7 @@ The main library is hosted directly in `public/papers/`. The public index, `publ
 | English Language B | 4EB1 | 48 |
 | Total | | 165 |
 
-The resources include question papers, mark schemes, examiner reports, and practical archives. Default views and dashboard counts use this main library. The previous Drive collection remains available as Additional resources.
+The resources include question papers, mark schemes, examiner reports, and practical archives. All views and dashboard counts use this downloaded library. The former Drive collection, saved index, API routes, and Google API dependency have been removed.
 
 Qualification references were checked in all reachable PDFs. The catalogue excludes one missing ICT question paper, four previous-syllabus 4IT0 PDFs and their associated ZIP, and two exact duplicate CS mark schemes. Several English 2026 paper variants and a CS November 2020 mark scheme are labelled using their document-cover references. The combined English 2020 series is preserved with a note rather than reassigned to an unsupported date.
 
@@ -21,6 +21,6 @@ When updating the library, check the qualification reference, paper variant, ses
 
 ## Browsing
 
-Hosted files are displayed in paper sets, matched strictly by subject, qualification code, year, full series label, and exact paper variant. Question papers appear before mark schemes, then practical files and examiner reports. This does not claim every set is complete: only the files in the catalogue are shown. Regional papers and the combined English 2020 series remain distinct. Additional resources are shown individually and load only when selected.
+Hosted files are displayed in paper sets, matched strictly by subject, qualification code, year, full series label, and exact paper variant. Question papers appear before mark schemes, then practical files and examiner reports. This does not claim every set is complete: only the files in the catalogue are shown. Regional papers and the combined English 2020 series remain distinct. Every library entry must be a downloaded file under `/papers/`; external resource entries are excluded.
 
-Search supports multiple terms in any order and QP/MS/ER aliases. The year, series, paper variant, and file-type filters work together. Reset returns to the hosted collection. Grouping and search checks run with `node --test tests/paper-library.test.mjs`.
+Search supports multiple terms in any order and QP/MS/ER aliases. The year, series, paper variant, and file-type filters work together. Reset clears the filters within the hosted collection. Grouping and search checks run with `node --test tests/paper-library.test.mjs`.

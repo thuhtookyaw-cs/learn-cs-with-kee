@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {filterPapers,groupPapers} from '../public/paper-library.mjs';
+import {filterPapers,groupPapers,isHostedPaper} from '../public/paper-library.mjs';
 const files = JSON.parse(await readFile(new URL('../public/data/past-papers.json',import.meta.url)));
 test('all hosted files survive grouping, without crossing subjects, series or variants', () => {
   const groups=groupPapers(files);
@@ -12,13 +12,13 @@ test('all hosted files survive grouping, without crossing subjects, series or va
   assert.ok(groups.some(g=>g.session==='May/June/November'));
 });
 test('a question paper is followed by its matching mark scheme', () => {
-  const groups=groupPapers(filterPapers(files,{library:'primary',year:'2026',paper:'P1',session:'May/June'}));
+  const groups=groupPapers(filterPapers(files,{year:'2026',paper:'P1',session:'May/June'}));
   const cs=groups.find(g=>g.code==='4CP0');
   assert.deepEqual(cs.files.map(f=>f.kind),['Question paper','Mark scheme']);
 });
 test('search accepts reordered terms, filenames and common file abbreviations', () => {
   for(const search of ['2026 paper 1 qp','qp 2026 paper 1','4cp0-may-june-2026-p1-qp']) {
-    const found=filterPapers(files,{search,library:'primary'});
+    const found=filterPapers(files,{search});
     assert.ok(found.some(f=>f.url==='/papers/cs/2026/4cp0-may-june-2026-p1-qp.pdf'));
     assert.ok(found.every(f=>f.kind==='Question paper'));
   }
@@ -35,7 +35,12 @@ test('types, ordering, and notes remain intact', () => {
   assert.equal(data.filter(f=>f.note).length,2);
   assert.equal(groupPapers(files,'new')[0].year,'2026');
   assert.equal(groupPapers(files,'old')[0].year,'2019');
-  const extra={...files[0],sourceKey:'additional',url:'https://example.com/a'};
-  assert.equal(filterPapers([...files,extra],{library:'additional'}).length,1);
-  assert.equal(groupPapers([files[0],extra]).length,2);
+
+});
+
+test('only downloaded paper paths qualify as library sources', () => {
+  assert.equal(files.filter(isHostedPaper).length,165);
+  assert.equal(isHostedPaper({...files[0],url:'https://drive.google.com/file/d/example'}),false);
+  assert.equal(isHostedPaper({...files[0],sourceKey:'additional'}),false);
+  assert.equal(isHostedPaper({...files[0],preview:'https://drive.google.com/file/d/example/preview'}),false);
 });

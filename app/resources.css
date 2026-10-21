@@ -60,7 +60,6 @@
 .paper-file-actions a, .paper-file-actions button { cursor: pointer; color: var(--ink); font-size: 12px; min-height: 39px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #cbd5be; padding: 8px 13px; border-radius: 6px; background: #f9faf4; }
 .paper-file-actions button { background: transparent; border-color: transparent; color: #566b49; }
 .paper-file-actions a:hover, .paper-file-actions button:hover { background: #eaf0df; }
-.paper-library-notice { font-size: 12px; line-height: 1.8; padding: 14px; border: 1px solid #cdd7bb; border-radius: 8px; background: #edf1e4; }
 .paper-tutor-help { margin-top: 38px; margin-bottom: 20px; border-top: 1px solid var(--line); padding-top: 30px; display: flex; gap: 25px; align-items: center; justify-content: space-between; }
 .paper-tutor-help h2 { font-size: 23px; line-height: 1.5; letter-spacing: -.6px; margin: 0 0 8px; }
 .paper-tutor-help p { font-size: 13px; line-height: 1.8; color: var(--muted); margin: 0; }
