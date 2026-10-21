@@ -19,7 +19,7 @@ const preview = $('#preview-dialog');
 preview.addEventListener('close', () => $('#preview-frame').removeAttribute('src'));
 function previewFile(file) {
   $('#preview-title').textContent = file.name;
-  $('#preview-frame').src = file.sourceKey === 'paperlords' ? `https://docs.google.com/gview?url=${encodeURIComponent(safeUrl(file.preview))}&embedded=true` : safeUrl(file.preview);
+  $('#preview-frame').src = file.sourceKey === 'primary' ? `https://docs.google.com/gview?url=${encodeURIComponent(safeUrl(file.preview))}&embedded=true` : safeUrl(file.preview);
   $('#preview-fallback').href = safeUrl(file.preview || file.url);
   preview.showModal();
 }
@@ -41,7 +41,7 @@ function flattenDriveTree(tree) {
   for (const subject of ['cs','ict']) visit(tree[subject] || [], subject);
   return files;
 }
-async function loadKeeResources() {
+async function loadAdditionalResources() {
   try {
     const response = await fetch('/api/files');
     if (!response.ok) throw Error('Live index unavailable');
@@ -57,24 +57,21 @@ async function loadKeeResources() {
   }
 }
 async function loadResources(subject) {
-  const [kee, paperlords] = await Promise.allSettled([
-    subject === 'language-b' ? Promise.resolve({files:[],saved:false}) : loadKeeResources(),
-    fetch('/data/paperlords.json').then(async response => {
-      if (!response.ok) throw Error('Paperlords index unavailable');
+  const [kee, primary] = await Promise.allSettled([
+    subject === 'language-b' ? Promise.resolve({files:[],saved:false}) : loadAdditionalResources(),
+    fetch('/data/past-papers.json').then(async response => {
+      if (!response.ok) throw Error('Main library index unavailable');
       const files = await response.json();
-      if (!Array.isArray(files)) throw Error('Invalid Paperlords index');
+      if (!Array.isArray(files)) throw Error('Invalid Main library index');
       return files;
     })
   ]);
-  if (kee.status === 'rejected' && paperlords.status === 'rejected') throw Error('Resource indexes unavailable');
-  if (subject === 'language-b' && paperlords.status === 'rejected') throw Error('English resource index unavailable');
-  const files = kee.status === 'fulfilled' ? kee.value.files.map(file => ({...file, session:file.session === 'June' ? 'May/June' : file.session, source:'Kee library', sourceKey:'kee'})) : [];
-  if (paperlords.status === 'fulfilled') files.push(...paperlords.value);
+  if (kee.status === 'rejected' && primary.status === 'rejected') throw Error('Resource indexes unavailable');
+  if (subject === 'language-b' && primary.status === 'rejected') throw Error('English resource index unavailable');
+  const files = kee.status === 'fulfilled' ? kee.value.files.map(file => ({...file, session:file.session === 'June' ? 'May/June' : file.session, source:'Additional resources', sourceKey:'additional'})) : [];
+  if (primary.status === 'fulfilled') files.push(...primary.value);
   const status = $('#resource-index-status');
-  if (status) status.textContent = subject === 'language-b' ? 'Paperlords · External files' : [
-    kee.status === 'fulfilled' ? `Kee library${kee.value.saved ? ' (saved index)' : ''}` : 'Kee library unavailable',
-    paperlords.status === 'fulfilled' ? 'Paperlords' : 'Paperlords index unavailable'
-  ].join(' · ');
+  if (status) status.textContent = primary.status === 'fulfilled' ? 'PDFs & practical files · Hosted here' : 'Main library unavailable · Additional resources shown';
   return files;
 }
 const page = document.querySelector('#site-root')?.dataset.page || document.body.dataset.page;
@@ -163,25 +160,26 @@ if (page === 'playground') {
 }
 
 if (page === 'dashboard') {
-  loadResources().then(files => { $('#cs-count').textContent = files.filter(file => file.subject === 'cs').length; $('#ict-count').textContent = files.filter(file => file.subject === 'ict').length; $('#language-b-count').textContent = files.filter(file => file.subject === 'language-b').length; }).catch(() => { $('#cs-count').textContent = 'CS'; $('#ict-count').textContent = 'ICT'; $('#language-b-count').textContent = 'English'; });
+  loadResources().then(files => { $('#cs-count').textContent = files.filter(file => file.subject === 'cs' && file.sourceKey === 'primary').length; $('#ict-count').textContent = files.filter(file => file.subject === 'ict' && file.sourceKey === 'primary').length; $('#language-b-count').textContent = files.filter(file => file.subject === 'language-b' && file.sourceKey === 'primary').length; }).catch(() => { $('#cs-count').textContent = 'CS'; $('#ict-count').textContent = 'ICT'; $('#language-b-count').textContent = 'English'; });
 }
 
 if (page === 'resources') {
   const subject = $('.resource-workspace').dataset.subject;
-  const controls = ['#resource-search', '#year-filter', '#session-filter', '#kind-filter', '#source-filter', '#resource-sort'].map(selector => $(selector));
+  const controls = ['#resource-search', '#year-filter', '#session-filter', '#kind-filter', '#library-filter', '#resource-sort'].map(selector => $(selector));
   let files = [], pageNumber = 1, filtered = [];
   const size = 15;
   function render() {
     const search = $('#resource-search').value.toLowerCase().trim();
-    filtered = files.filter(file => (!search || [file.name, ...file.folders, file.kind, file.source, file.code || ''].join(' ').toLowerCase().replace(/[-_]/g, ' ').includes(search.replace(/[-_]/g, ' '))) && (!$('#year-filter').value || file.year === $('#year-filter').value) && (!$('#session-filter').value || file.session === $('#session-filter').value) && (!$('#kind-filter').value || file.kind === $('#kind-filter').value) && (!$('#source-filter').value || file.sourceKey === $('#source-filter').value));
+    const libraryFiles = files.filter(file => !$('#library-filter').value || file.sourceKey === $('#library-filter').value);
+    filtered = libraryFiles.filter(file => (!search || [file.name, ...file.folders, file.kind, file.source, file.code || ''].join(' ').toLowerCase().replace(/[-_]/g, ' ').includes(search.replace(/[-_]/g, ' '))) && (!$('#year-filter').value || file.year === $('#year-filter').value) && (!$('#session-filter').value || file.session === $('#session-filter').value) && (!$('#kind-filter').value || file.kind === $('#kind-filter').value));
     const sort = $('#resource-sort').value;
     const dateOrder = file => Number(file.year || 0) * 12 + (file.session.includes('November') ? 11 : file.session === 'January' ? 1 : file.session ? 6 : 0);
     filtered.sort((a,b) => sort === 'name' ? a.name.localeCompare(b.name) : ((sort === 'new' ? -1 : 1) * (dateOrder(a) - dateOrder(b)) || a.name.localeCompare(b.name)));
     const totalPages = Math.max(1, Math.ceil(filtered.length / size));
     pageNumber = Math.min(pageNumber, totalPages);
-    $('#results-count').textContent = `${filtered.length} ${filtered.length === 1 ? 'file' : 'files'}${filtered.length !== files.length ? ` of ${files.length}` : ''}`;
+    $('#results-count').textContent = `${filtered.length} ${filtered.length === 1 ? 'file' : 'files'}${filtered.length !== libraryFiles.length ? ` of ${libraryFiles.length}` : ''}`;
     const items = filtered.slice((pageNumber - 1) * size, pageNumber * size);
-    $('#resource-list').innerHTML = items.length ? items.map((file,index) => `<article class="file-row"><span class="file-icon" aria-hidden="true">${file.name.includes('.') ? file.name.split('.').pop().slice(0,4).toUpperCase() : 'FILE'}</span><div class="file-copy"><h3>${escapeHtml(file.name.replace(/[-_]/g, ' '))}</h3><p>${escapeHtml([file.year,file.session,file.kind].filter(Boolean).join(' · '))}</p>${file.sourceKey === 'paperlords' ? '<a class="file-source" href="https://www.paperlords.org/igcse" target="_blank" rel="noopener">Source: Paperlords ↗</a>' : '<span class="file-source">Kee library · Google Drive</span>'}${file.note ? `<p class="file-note">${escapeHtml(file.note)}</p>` : ''}</div><div class="file-actions">${file.preview ? `<button class="plain-button" data-preview="${index}" aria-label="Preview ${escapeHtml(file.name)}">Preview</button>` : ''}<a href="${escapeHtml(safeUrl(file.url))}" target="_blank" rel="noopener" aria-label="Open ${escapeHtml(file.name)}">${file.sourceKey === 'paperlords' ? 'Open file' : 'Download'} ↗</a></div></article>`).join('') : '<div class="empty-state"><h2>No papers found.</h2><p>Try a different search, or reset your filters.</p><button class="button button-outline" id="empty-reset">Reset filters</button></div>';
+    $('#resource-list').innerHTML = items.length ? items.map((file,index) => `<article class="file-row"><span class="file-icon" aria-hidden="true">${file.name.includes('.') ? file.name.split('.').pop().slice(0,4).toUpperCase() : 'FILE'}</span><div class="file-copy"><h3>${escapeHtml(file.name.replace(/[-_]/g, ' '))}</h3><p>${escapeHtml([file.year,file.session,file.kind].filter(Boolean).join(' · '))}</p>${file.sourceKey === 'primary' ? `<span class="file-source">${file.bytes ? `${(file.bytes / 1048576).toFixed(1)} MB` : 'Ready to download'}</span>` : '<span class="file-source">Additional resource</span>'}${file.note ? `<p class="file-note">${escapeHtml(file.note)}</p>` : ''}</div><div class="file-actions">${file.preview ? `<button class="plain-button" data-preview="${index}" aria-label="Preview ${escapeHtml(file.name)}">Preview</button>` : ''}<a href="${escapeHtml(safeUrl(file.url))}" target="_blank" rel="noopener" ${file.sourceKey === 'primary' ? 'download' : ''} aria-label="Download ${escapeHtml(file.name)}">Download ↓</a></div></article>`).join('') : '<div class="empty-state"><h2>No papers found.</h2><p>Try a different search, or reset your filters.</p><button class="button button-outline" id="empty-reset">Reset filters</button></div>';
     $$('[data-preview]').forEach(button => button.addEventListener('click', () => previewFile(items[Number(button.dataset.preview)])));
     $('#empty-reset')?.addEventListener('click', resetFilters);
     $('#resource-pagination').innerHTML = totalPages > 1 ? `<button id="previous-page" ${pageNumber === 1 ? 'disabled' : ''}>← Previous</button><span>Page ${pageNumber} of ${totalPages}</span><button id="next-page" ${pageNumber === totalPages ? 'disabled' : ''}>Next →</button>` : '';
@@ -189,15 +187,15 @@ if (page === 'resources') {
     $('#previous-page')?.addEventListener('click', () => turnPage(-1));
     $('#next-page')?.addEventListener('click', () => turnPage(1));
   }
-  function resetFilters() { controls.forEach(control => control.value = control.id === 'resource-sort' ? 'new' : ''); pageNumber = 1; render(); }
+  function resetFilters() { controls.forEach(control => control.value = control.id === 'resource-sort' ? 'new' : control.id === 'library-filter' ? 'primary' : ''); pageNumber = 1; render(); }
   controls.forEach(control => control.addEventListener(control.type === 'search' ? 'input' : 'change', () => { pageNumber = 1; render(); }));
   $('#clear-filters').addEventListener('click', resetFilters);
   loadResources(subject).then(data => {
     files = data.filter(file => file.subject === subject);
     [...new Set(files.map(file => file.year).filter(Boolean))].sort().reverse().forEach(year => $('#year-filter').add(new Option(year, year)));
     [...new Set(files.map(file => file.session).filter(Boolean))].sort().forEach(session => $('#session-filter').add(new Option(session, session)));
-    if (files.some(file => file.sourceKey === 'kee')) $('#source-filter').add(new Option('Kee library · Google Drive','kee'));
-    if (files.some(file => file.sourceKey === 'paperlords')) $('#source-filter').add(new Option('Paperlords','paperlords'));
+    if (!files.some(file => file.sourceKey === 'primary')) $('#library-filter').value = 'additional';
+    if (!files.some(file => file.sourceKey === 'additional')) $('#library-filter').querySelector('option[value="additional"]').remove();
     render();
   }).catch(() => { $('#results-count').textContent = 'Resource index unavailable'; $('#resource-error').hidden = false; });
 }

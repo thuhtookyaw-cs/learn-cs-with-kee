@@ -16,8 +16,8 @@ a.file-source { text-decoration: underline; text-underline-offset: 3px; }
   #resource-index-status { max-width: 175px; text-align: right; line-height: 1.8; }
 }
 @media (max-width: 650px) {
-  .filter-sidebar > label[for=source-filter] { grid-column: 1 / -1; grid-row: 2; }
-  .filter-sidebar #source-filter { grid-column: 1 / -1; grid-row: 3; }
+  .filter-sidebar > label[for=library-filter] { grid-column: 1 / -1; grid-row: 2; }
+  .filter-sidebar #library-filter { grid-column: 1 / -1; grid-row: 3; }
   .filter-sidebar > label[for=year-filter] { grid-column: 1; grid-row: 4; }
   .filter-sidebar #year-filter { grid-column: 1; grid-row: 5; }
   .filter-sidebar > label[for=session-filter] { grid-column: 2; grid-row: 4; }

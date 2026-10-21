@@ -1,0 +1,827 @@
+[
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p1-ms.pdf",
+    "sha256": "56cd814c79e947e46290f8cc358792fc630e56f170bf95e510a87dd455a94b67",
+    "bytes": 668807
+  },
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p1-qp.pdf",
+    "sha256": "972486bbf61cfcc8fff293be7dd5cff2409dad99d9190791b612374f6ca86397",
+    "bytes": 652909
+  },
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p2a-ms.pdf",
+    "sha256": "34c8c40bc9f1ee65cb4645524c245e67f33611de52fe41c11742629883dcf6e9",
+    "bytes": 605146
+  },
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p2a-qp.pdf",
+    "sha256": "56cadf20c2dd871bd4cb2b7d0e5ba16c40ac6f9e59b71254fc565d7771227b54",
+    "bytes": 487653
+  },
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p2b-ms.pdf",
+    "sha256": "b692e77fd2d7cf24c414aa211e637d5c150591af100fe700efce4ba110fb0ab6",
+    "bytes": 718948
+  },
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p2b-qp.pdf",
+    "sha256": "2e2959c6c8a09e7b45bfd939fbed428741918619818984b597353002de833d2a",
+    "bytes": 487475
+  },
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p2c-ms.pdf",
+    "sha256": "e3fbd93b6d0c1983ab9ac751d9a7076635ae592cd27e326dd2fe238c76a6b430",
+    "bytes": 709932
+  },
+  {
+    "path": "papers/cs/2026/4cp0-may-june-2026-p2c-qp.pdf",
+    "sha256": "d65f51846150fb1d744dbda5c3d2c149f212347c3a771d8e15712a17a38ce994",
+    "bytes": 487382
+  },
+  {
+    "path": "papers/cs/2025/4cp0-may-june-2025-p1-ms.pdf",
+    "sha256": "237d1aceffbe20bf48d52685d5f4924770bf3fd4813e9b824ff112158c6bc2f0",
+    "bytes": 557089
+  },
+  {
+    "path": "papers/cs/2025/4cp0-may-june-2025-p1-qp.pdf",
+    "sha256": "ec89a84181c3370be16498072d29b46b699e79a1a6db05df35dc37f59ecf7b3d",
+    "bytes": 587716
+  },
+  {
+    "path": "papers/cs/2025/4cp0-may-june-2025-p2-data.zip",
+    "sha256": "475c881c997d78aa47fd5d8639fe842a24c01084ba5dc0c98d982fba380918cc",
+    "bytes": 653799
+  },
+  {
+    "path": "papers/cs/2025/4cp0-may-june-2025-p2-ms.pdf",
+    "sha256": "b1630ef16425058ff04e2761489ebae32bfb34001e4bc880bee401dff3799f4f",
+    "bytes": 1036650
+  },
+  {
+    "path": "papers/cs/2024/4cp0-may-june-2024-p1-er.pdf",
+    "sha256": "f3573df54f73a98583b430e0112b18d4f4f193fbabc7544eb12e653c78c0b534",
+    "bytes": 277187
+  },
+  {
+    "path": "papers/cs/2024/4cp0-may-june-2024-p1-ms.pdf",
+    "sha256": "cece01a3a0660948897e7f8b0365f90e2c77afcb7fabda31ee8698c743efc2e9",
+    "bytes": 441424
+  },
+  {
+    "path": "papers/cs/2024/4cp0-may-june-2024-p1-qp.pdf",
+    "sha256": "bd58afbacff8bb3f6e261893d72d881430af86f8e5de89360d30fec6f2b9b8b9",
+    "bytes": 490139
+  },
+  {
+    "path": "papers/cs/2024/4cp0-may-june-2024-p2-data.zip",
+    "sha256": "155957ac76c45890dfc77abec2ae6af2029602ce937956be9889f54667100e22",
+    "bytes": 12546
+  },
+  {
+    "path": "papers/cs/2024/4cp0-may-june-2024-p2-er.pdf",
+    "sha256": "a2085622020f1dea65f37fb7fda5601a4e581e90ff91a805307babab71cafd82",
+    "bytes": 239452
+  },
+  {
+    "path": "papers/cs/2024/4cp0-may-june-2024-p2-ms.pdf",
+    "sha256": "5d33f7dda72454a030ef460bc35fea67cd5d72a14c29d3aa06a6a6252ddf9d96",
+    "bytes": 3904790
+  },
+  {
+    "path": "papers/cs/2024/4cp0-may-june-2024-p2-qp.pdf",
+    "sha256": "7050361844694ff1eb5ef60241bf226eec7e16a7ff5b52308768cac1884f56c1",
+    "bytes": 474375
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p1-er.pdf",
+    "sha256": "e7c8f6456663cef21f385abcdb65a841f8e1b364cc9cc74bb6c06fe8de9f0b29",
+    "bytes": 130620
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p1-ms.pdf",
+    "sha256": "73302d97cf01de4987fd963f39c163558dd118fa78ff549fa0ac254f0f9ef312",
+    "bytes": 347893
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p1-qp.pdf",
+    "sha256": "d181d8425dd5cf9fb7818ddcedbe3584d53ea0b36f00c50605e91672dfc36a9f",
+    "bytes": 366375
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p2-data.zip",
+    "sha256": "7462ebe3ea9a61b9bc15216001e02576f55fa7d296c5f6d5636694dd6def7ab2",
+    "bytes": 8432
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p2-er.pdf",
+    "sha256": "8fad6fdd12b6c0cdac23790322549c9a9338b9d0eb700bc1e93e53f44e5aac37",
+    "bytes": 191249
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p2-qp.pdf",
+    "sha256": "871ccbfc74b15b0fe47797dea79f660eab961b7d9db5989afdb0dc2aaf98f447",
+    "bytes": 663665
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p2a-ms.pdf",
+    "sha256": "c4c17895996c6be77d8bd18e744b002b6724f7017bc798a61d54b8d09d6c9b2d",
+    "bytes": 1330928
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p2b-ms.pdf",
+    "sha256": "ac0c390aa56480e2ae24a62c82d0177a37f98a8a8d4c2cdc2a5fbed5e74c1301",
+    "bytes": 1325993
+  },
+  {
+    "path": "papers/cs/2023/4cp0-may-june-2023-p2c-ms.pdf",
+    "sha256": "f22d98a104a27dc1772037d643f3f74418e4dea5692f02a71610788221cc6dc8",
+    "bytes": 1330945
+  },
+  {
+    "path": "papers/cs/2022/4cp0-may-june-2022-p1-ms.pdf",
+    "sha256": "732e7fbabd4b0aa2437dd801f8f141c57aa83b6b120f6365fbdd1f3d93d3d857",
+    "bytes": 299579
+  },
+  {
+    "path": "papers/cs/2022/4cp0-may-june-2022-p1-qp.pdf",
+    "sha256": "a8308e04566d795108d8a7422355c181f309b806722555a86f8cc11ee6d07d54",
+    "bytes": 728552
+  },
+  {
+    "path": "papers/cs/2022/4cp0-may-june-2022-p2-qp.pdf",
+    "sha256": "6fe56349a216dd88a7256ef9981e654a48b557a0c89f3adf7839204810f30388",
+    "bytes": 695676
+  },
+  {
+    "path": "papers/cs/2022/4cp0-may-june-2022-p2a-ms.pdf",
+    "sha256": "9e5f930a37bfca9b12bbfce35bcddd49ae3692e0337ee5f6dae10836b8ceb6c7",
+    "bytes": 444847
+  },
+  {
+    "path": "papers/cs/2021/4cp0-may-june-2021-p1-ms.pdf",
+    "sha256": "d9823f01da68e85b89887010f654fd2e5d95b9bac07cf8db1ff24bf81fb2206b",
+    "bytes": 289163
+  },
+  {
+    "path": "papers/cs/2021/4cp0-may-june-2021-p1-qp.pdf",
+    "sha256": "e427161734a81eb930bb6837af778b77b7f1fe39cf3e89bf5b71f3f082393095",
+    "bytes": 1429196
+  },
+  {
+    "path": "papers/cs/2021/4cp0-may-june-2021-p2-data.zip",
+    "sha256": "d99dc6b9f8514c178f73768eb92df1c5b3fc3ce38fcbdf8170b2878f6698d4b0",
+    "bytes": 3333
+  },
+  {
+    "path": "papers/cs/2021/4cp0-may-june-2021-p2-qp.pdf",
+    "sha256": "a6866fafd0a1e746aa7c514c61501f91464c4f6cd8932a9953db599a0f865070",
+    "bytes": 525567
+  },
+  {
+    "path": "papers/cs/2021/4cp0-may-june-2021-p2a-ms.pdf",
+    "sha256": "57617482166740152c4973d368d975bcd64e1a907dfa9b2538eabacb3a276d7a",
+    "bytes": 335775
+  },
+  {
+    "path": "papers/cs/2021/4cp0-may-june-2021-p2b-ms.pdf",
+    "sha256": "afcb01f0b42ab7729ac8f99020b66ca5f3b7a30563a64421f8ae1560182ee706",
+    "bytes": 390544
+  },
+  {
+    "path": "papers/cs/2021/4cp0-may-june-2021-p2c-ms.pdf",
+    "sha256": "e08ee2ff809c1029bdb0d4a9c34dd951c300b1cbd20e298cd52ae4ff3e0e7de5",
+    "bytes": 401526
+  },
+  {
+    "path": "papers/cs/2021/4cp0-november-2021-p1-ms.pdf",
+    "sha256": "5e0dbcf4543063f5c90274664646dbbc270383f042c146dbae583bac4b59461b",
+    "bytes": 290838
+  },
+  {
+    "path": "papers/cs/2021/4cp0-november-2021-p1-qp.pdf",
+    "sha256": "7d48d307b25b5f76bf0caa31e71a951a6cdf0159175d1a1e184fdc1b5596e5d7",
+    "bytes": 634450
+  },
+  {
+    "path": "papers/cs/2021/4cp0-november-2021-p2-data.zip",
+    "sha256": "4e0a5310a69aef19045a1e14f1f3acf7ad53d4d10f2007bbb563a247b71bb746",
+    "bytes": 15691
+  },
+  {
+    "path": "papers/cs/2021/4cp0-november-2021-p2-qp.pdf",
+    "sha256": "e3fea9ee7e9091fca7cd59328d787cdf9b854d419e3e98962d3ed79fadda4398",
+    "bytes": 981179
+  },
+  {
+    "path": "papers/cs/2021/4cp0-november-2021-p2a-ms.pdf",
+    "sha256": "20600c393504fed16c8ec8e67da3bcb97ffbd8734a9efded89792cee04ea0dad",
+    "bytes": 656169
+  },
+  {
+    "path": "papers/cs/2020/4cp0-november-2020-p1-ms.pdf",
+    "sha256": "6a277450e6f9ed0b7b973866658ad9fd7660dcd000d28e4412f90526dc761cd5",
+    "bytes": 383739
+  },
+  {
+    "path": "papers/cs/2020/4cp0-november-2020-p1-qp.pdf",
+    "sha256": "a7d065671f3f8badc2dd22076f3f0b441c5eabc71ea98f28125e816b5ca961c8",
+    "bytes": 564555
+  },
+  {
+    "path": "papers/cs/2020/4cp0-november-2020-p2-data.zip",
+    "sha256": "6c349398d3794e4dd0f2e7f913d1f631ff8925ee3aa007f708d77b12fbc2286f",
+    "bytes": 3826
+  },
+  {
+    "path": "papers/cs/2020/4cp0-november-2020-p2-qp.pdf",
+    "sha256": "61ae06df4b58158bc1cfbf5dcd6be4b42f27ffb84fa6eea642e6921104e6dac4",
+    "bytes": 754465
+  },
+  {
+    "path": "papers/cs/2020/4cp0-november-2020-p2a-ms.pdf",
+    "sha256": "737887ab00bc69a480a28d5b813ee5f0996f81ac848b3eb38a58b63680eac6ea",
+    "bytes": 295331
+  },
+  {
+    "path": "papers/cs/2019/4cp0-may-june-2019-p1-ms.pdf",
+    "sha256": "fdf7f438cba76811e0186a72e5f89107964fb45f5a92b71a553add7372b27cb5",
+    "bytes": 402295
+  },
+  {
+    "path": "papers/cs/2019/4cp0-may-june-2019-p1-qp.pdf",
+    "sha256": "dce642b1be5468cdb259d76ca798963a1bb60268fd2ce45ce58281854d70e00e",
+    "bytes": 688916
+  },
+  {
+    "path": "papers/cs/2019/4cp0-may-june-2019-p2-data.zip",
+    "sha256": "233cadcfcbd8353d6c16fb45745c0ca52684dfdf1bcad726962c5280da00101b",
+    "bytes": 7764
+  },
+  {
+    "path": "papers/cs/2019/4cp0-may-june-2019-p2-ms.pdf",
+    "sha256": "9f4c4a9b733b2df03edbd7e1093e77d5ebe20a5e6ddc9787112f9ed8181570b3",
+    "bytes": 1032054
+  },
+  {
+    "path": "papers/cs/2019/4cp0-may-june-2019-p2-qp.pdf",
+    "sha256": "6f2890b560b129f0553ef24111ea42a77a542fd879ea0d6fd9e79fcf47ac5a59",
+    "bytes": 745454
+  },
+  {
+    "path": "papers/ict/2025/4it1-may-june-2025-p1-ms.pdf",
+    "sha256": "a99f20e1bd30dfa198b1f9c273bbdee9524bf7e3b46d390de8ff8c0fc22c2f42",
+    "bytes": 467643
+  },
+  {
+    "path": "papers/ict/2025/4it1-may-june-2025-p1-qp.pdf",
+    "sha256": "4a212a394bab0b3117118328807bb038231c4ab4ce269b570864a222654037ef",
+    "bytes": 715521
+  },
+  {
+    "path": "papers/ict/2025/4it1-may-june-2025-p1r-ms.pdf",
+    "sha256": "8d92b1d535fe7151329f2dd931b0c21de15f745b3db4f0916ab81ca065a4e328",
+    "bytes": 375632
+  },
+  {
+    "path": "papers/ict/2025/4it1-may-june-2025-p1r-qp.pdf",
+    "sha256": "4fc3c93c98374a7435866ef18013b9e8fc8c9a3429f1724081a12bfc8bc86bd4",
+    "bytes": 527499
+  },
+  {
+    "path": "papers/ict/2025/4it1-may-june-2025-p2-ms.pdf",
+    "sha256": "d0b5b350868fe53047e2025c9a9413ca89182989e11fc599dcc256c068bfdedf",
+    "bytes": 723837
+  },
+  {
+    "path": "papers/ict/2025/4it1-may-june-2025-p2-qp.pdf",
+    "sha256": "9beab5e49d6ad3dd15faf6a2a27cfcd869f7f0aa5c11008eca7cfe8449b92740",
+    "bytes": 289465
+  },
+  {
+    "path": "papers/ict/2025/4it1-november-2025-p1-ms.pdf",
+    "sha256": "0ca13bbd3515a0a8f498556674c6a47b36c6671dce3f0196e32c621aea3b73ea",
+    "bytes": 372311
+  },
+  {
+    "path": "papers/ict/2025/4it1-november-2025-p1-qp.pdf",
+    "sha256": "f30af0b2c288c7099f71d646868ecbee742ff1fa368025ec2338bf06dc092068",
+    "bytes": 687510
+  },
+  {
+    "path": "papers/ict/2025/4it1-november-2025-p2-data.zip",
+    "sha256": "e63de2b59465d3c8c2ac4456bd7153f4032cac7dde911b6823ebdea8351e3831",
+    "bytes": 3004842
+  },
+  {
+    "path": "papers/ict/2025/4it1-november-2025-p2-ms.pdf",
+    "sha256": "84860afa159b28f894576082db7de47f58ae64631522de7e762d1296bfe4b042",
+    "bytes": 409369
+  },
+  {
+    "path": "papers/ict/2025/4it1-november-2025-p2-qp.pdf",
+    "sha256": "36790fecfd808bdf0f80beb18f785133d2606b0c327f524adf7651569d4623f7",
+    "bytes": 207933
+  },
+  {
+    "path": "papers/ict/2024/4it1-may-june-2024-p1-ms.pdf",
+    "sha256": "010ccd497f739cdefd933984d5f35df930341ee0427158036709906219f2fda9",
+    "bytes": 256208
+  },
+  {
+    "path": "papers/ict/2024/4it1-may-june-2024-p1-qp.pdf",
+    "sha256": "0d9952a9dc1d8ca8538b1010c78b0cc0ffe19924f0a31e6e6a56572fdb26eb04",
+    "bytes": 840691
+  },
+  {
+    "path": "papers/ict/2024/4it1-may-june-2024-p1r-ms.pdf",
+    "sha256": "b4365cff4fb6ac67835e86399e4621691a6b46faef3bc7f2479a2807d1ccdd4f",
+    "bytes": 311745
+  },
+  {
+    "path": "papers/ict/2024/4it1-may-june-2024-p1r-qp.pdf",
+    "sha256": "a0ac5064b0c034ee3cfcae8573715f8928d3c008226d3b2c203d970c71cc6bed",
+    "bytes": 806622
+  },
+  {
+    "path": "papers/ict/2024/4it1-may-june-2024-p2-data.zip",
+    "sha256": "5d82e62f303304e9c230ec8309db1334da7375d4f98c258303cbc819e45d00cf",
+    "bytes": 6316130
+  },
+  {
+    "path": "papers/ict/2024/4it1-may-june-2024-p2-ms.pdf",
+    "sha256": "f5736d9943345108bfe6b55cf2a3b99337814bb959546563d8c622af9b2b2da1",
+    "bytes": 431752
+  },
+  {
+    "path": "papers/ict/2024/4it1-may-june-2024-p2-qp.pdf",
+    "sha256": "574a68863bdd5748dc23a09de075e748c4989b623fa53ebd7b893abf66ebeec8",
+    "bytes": 179654
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p1-er.pdf",
+    "sha256": "2eb391dcdf03a5ca29d2c9a5c62f1232ad427e4dc3e00e29fb1adc959b19329b",
+    "bytes": 163505
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p1-ms.pdf",
+    "sha256": "2a3697d3a5dea0206c7b02a1ae6a0cd7e4c485fb25abd560f356f9db7e7753e5",
+    "bytes": 225503
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p1-qp.pdf",
+    "sha256": "a90815dab9e1f0d08c4cdedda059cb82780b3ca885c33a46809ee38a41f39d79",
+    "bytes": 762927
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p1r-er.pdf",
+    "sha256": "38f9f5b81ded5e289e85933fa3a4f6f3e0d11dfdf6da3a7322c118088cd95f2d",
+    "bytes": 149633
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p1r-ms.pdf",
+    "sha256": "4d7db0ed3757da76d419bf290394772e5d185086be7f92eeb413988b8e8f07d2",
+    "bytes": 255400
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p1r-qp.pdf",
+    "sha256": "992d8db89cd490b05b0f6b7fa6f55c5dfe3fb2c0affd1475553eafcec28474b2",
+    "bytes": 687873
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p2-data.zip",
+    "sha256": "0831bcf27760d2d842ee40c590e4ff06292ac612ddb249b6d45fa1fd5637b976",
+    "bytes": 18194586
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p2-ms.pdf",
+    "sha256": "82f720ec0e540d51ddbb70b20ec83d36bc17e71b0cfc4f702a4f0141a36fe6d5",
+    "bytes": 577078
+  },
+  {
+    "path": "papers/ict/2023/4it1-may-june-2023-p2-qp.pdf",
+    "sha256": "002f04ae482063d599797ef4c07fd13fe074d5fa4d39acf51443cb992e52861d",
+    "bytes": 176889
+  },
+  {
+    "path": "papers/ict/2023/4it1-november-2023-p1-ms.pdf",
+    "sha256": "d718e861e9036a9a1276b4aa383a66422b15a1ccaef08888d0abebb572c305d3",
+    "bytes": 203411
+  },
+  {
+    "path": "papers/ict/2023/4it1-november-2023-p1-qp.pdf",
+    "sha256": "017be5d8111ae8ae69e2e47fec5dedcd2b6b1d782986f701fe3f676dbd1604e2",
+    "bytes": 551034
+  },
+  {
+    "path": "papers/ict/2023/4it1-november-2023-p2-data.zip",
+    "sha256": "95c21ed8493531eff24de71fe4a99ae53db1663e58a6afd07ff84c580df12e97",
+    "bytes": 3008200
+  },
+  {
+    "path": "papers/ict/2023/4it1-november-2023-p2-ms.pdf",
+    "sha256": "761fead108757a47df9a30a84d2ed061304874fb954ee56144c1ca68bf055695",
+    "bytes": 212446
+  },
+  {
+    "path": "papers/ict/2023/4it1-november-2023-p2-qp.pdf",
+    "sha256": "8a89ecc5e97c8f2b23d3f419b8e1cf1aeae62096601c78484ae0d42d0e5b7e30",
+    "bytes": 213795
+  },
+  {
+    "path": "papers/ict/2022/4it1-may-june-2022-p1-ms.pdf",
+    "sha256": "a5e54c1ee35f137d18e6b571164b0228305079c555e22421e5d1be46e79de386",
+    "bytes": 305709
+  },
+  {
+    "path": "papers/ict/2022/4it1-may-june-2022-p1-qp.pdf",
+    "sha256": "29d43c7419fae7a6d34901812f5f8ff7099c744ec3d79408f5a341727dd7cd0a",
+    "bytes": 1034704
+  },
+  {
+    "path": "papers/ict/2022/4it1-may-june-2022-p1r-ms.pdf",
+    "sha256": "53f1a1ddf9015efa0cffc2fadb565734fa4407bd0614b6d5f6f189a8fb3db1b1",
+    "bytes": 367112
+  },
+  {
+    "path": "papers/ict/2022/4it1-may-june-2022-p1r-qp.pdf",
+    "sha256": "2d6df85b0bd757abc84a39ec89ed16f647a60843eb72b4013e69b3be97faef76",
+    "bytes": 791051
+  },
+  {
+    "path": "papers/ict/2022/4it1-may-june-2022-p2-data.zip",
+    "sha256": "1c8c95359a4d3788ea4d6315c715c69d6c12f57cac692d71eff9983e804073d9",
+    "bytes": 95872631
+  },
+  {
+    "path": "papers/ict/2022/4it1-may-june-2022-p2-ms.pdf",
+    "sha256": "c64414c2102470de5a701330cbeabf39e97eb83f87ace77dd4a70e2efeebf1a7",
+    "bytes": 437409
+  },
+  {
+    "path": "papers/ict/2021/4it1-may-june-2021-p1-ms.pdf",
+    "sha256": "7eb6d3925bd67f6a9973e93b4e446f148b733d5ccd6d50ce0c7afe59995d108b",
+    "bytes": 369480
+  },
+  {
+    "path": "papers/ict/2021/4it1-may-june-2021-p1-qp.pdf",
+    "sha256": "ed211a58cdf02fbe43c2d17b98005716770baa678379db76953b990c837534f2",
+    "bytes": 1922525
+  },
+  {
+    "path": "papers/ict/2021/4it1-may-june-2021-p2-data.zip",
+    "sha256": "94771750812f9f85b6ba986b0effe809d67ff93179338eb63d42cb52152b445d",
+    "bytes": 3130832
+  },
+  {
+    "path": "papers/ict/2021/4it1-may-june-2021-p2-ms.pdf",
+    "sha256": "2a31b4a297a2dc6c10d8efc62433fc212772d454e2c74821465ad5ed991fb293",
+    "bytes": 495833
+  },
+  {
+    "path": "papers/ict/2021/4it1-may-june-2021-p2-qp.pdf",
+    "sha256": "d5a0939c19747b755788c7a7b454c51c555e59a6a58a6c055546ca10d6ed8470",
+    "bytes": 397626
+  },
+  {
+    "path": "papers/ict/2021/4it1-november-2021-p1-ms.pdf",
+    "sha256": "6c76d1a68abd3d8b3775656d8b40292fe91bdb6f80aebd41460438fbd9e5bd6c",
+    "bytes": 297697
+  },
+  {
+    "path": "papers/ict/2021/4it1-november-2021-p1-qp.pdf",
+    "sha256": "f1f4534afcaf769209cb1a9ef579e22e083c0286bd6c7dd973dc2141de743842",
+    "bytes": 1055521
+  },
+  {
+    "path": "papers/ict/2021/4it1-november-2021-p2-data.zip",
+    "sha256": "5e7974abc57350a03c51cdd2c3209422ec9a5a9b92e98e2562cad59a2c2b8cd3",
+    "bytes": 6345638
+  },
+  {
+    "path": "papers/ict/2021/4it1-november-2021-p2-ms.pdf",
+    "sha256": "faca39c310b04e9726b4beeae668f1e3f1e47d97656b0a99d24694e81a2d96a1",
+    "bytes": 547391
+  },
+  {
+    "path": "papers/ict/2021/4it1-november-2021-p2-qp.pdf",
+    "sha256": "01ed3529ddb6acae845790804b893ee01c864761a175b4126da736b5f4dc1f0f",
+    "bytes": 183100
+  },
+  {
+    "path": "papers/ict/2020/4it1-may-june-2020-p1-ms.pdf",
+    "sha256": "baaad86952f37c230643eab446665e40f073aef43199026263666d5b3f6017e5",
+    "bytes": 270393
+  },
+  {
+    "path": "papers/ict/2020/4it1-may-june-2020-p1-qp.pdf",
+    "sha256": "3e016d194d8addb1d0fd825d2b54392c3d11995dae5c5da90291dc3ad881d3f9",
+    "bytes": 690237
+  },
+  {
+    "path": "papers/ict/2020/4it1-may-june-2020-p1r-ms.pdf",
+    "sha256": "5644df4f9c7cba0921407d4b4abfee9418949d22780733e93529b7a70e36a850",
+    "bytes": 266720
+  },
+  {
+    "path": "papers/ict/2020/4it1-may-june-2020-p1r-qp.pdf",
+    "sha256": "7a17a81ebd0dced4be1b52b86ab2f6f0fee850678bd2b120197b0431a4909edf",
+    "bytes": 690017
+  },
+  {
+    "path": "papers/ict/2020/4it1-may-june-2020-p2-data.zip",
+    "sha256": "281bced783234508a722ccf797a07d35812c48958bf77118fcccefa3631f59bc",
+    "bytes": 8495104
+  },
+  {
+    "path": "papers/ict/2020/4it1-may-june-2020-p2-ms.pdf",
+    "sha256": "8b1da4d09e761179837f27d7e0930c8e1b947eb510fc83138554f723a60c714f",
+    "bytes": 633156
+  },
+  {
+    "path": "papers/ict/2020/4it1-may-june-2020-p2-qp.pdf",
+    "sha256": "1ecd15e11a21b518f1609c80e649e7ec35dd6afc3cd02c84847840c17cc6aa3a",
+    "bytes": 803655
+  },
+  {
+    "path": "papers/ict/2020/4it1-november-2020-p2-data.zip",
+    "sha256": "281bced783234508a722ccf797a07d35812c48958bf77118fcccefa3631f59bc",
+    "bytes": 8495104
+  },
+  {
+    "path": "papers/ict/2019/4it1-may-june-2019-p1-ms.pdf",
+    "sha256": "27a653fde5414f013fbd1374b11e357f7429bc03799b086a4f366088dd83c1c9",
+    "bytes": 505319
+  },
+  {
+    "path": "papers/ict/2019/4it1-may-june-2019-p1-qp.pdf",
+    "sha256": "0265beaa1dda300e8c8e5696187b6cbcb3812fc96928709d7fe2ed0d36f4fb0a",
+    "bytes": 1000434
+  },
+  {
+    "path": "papers/ict/2019/4it1-may-june-2019-p1r-ms.pdf",
+    "sha256": "1cd76bc9d6d106f083d022ba4186a8a826b784302fb7eea9f6398672dad51f4d",
+    "bytes": 305039
+  },
+  {
+    "path": "papers/ict/2019/4it1-may-june-2019-p1r-qp.pdf",
+    "sha256": "c41e4e9b3d6f8d6d050cbf7fd744caa8330c55f97eccb47d1b0a752f96945bbe",
+    "bytes": 1001130
+  },
+  {
+    "path": "papers/ict/2019/4it1-may-june-2019-p2-data.zip",
+    "sha256": "cd79869e1d7456412729794dc45b27cdab990b16c7b6d2671f12abb0e61296b8",
+    "bytes": 2869504
+  },
+  {
+    "path": "papers/ict/2019/4it1-may-june-2019-p2-ms.pdf",
+    "sha256": "98f5994124e98be35f051825a8d57a7768fdf5461866a58be5466040b2667a02",
+    "bytes": 297903
+  },
+  {
+    "path": "papers/ict/2019/4it1-may-june-2019-p2-qp.pdf",
+    "sha256": "88678efaf86ddfa52b338430362fc55d05c9d326d776e486eb5af9f7e05b4bb8",
+    "bytes": 68764
+  },
+  {
+    "path": "papers/language-b/2026/4eb1-may-june-2026-p1-ms.pdf",
+    "sha256": "aba31a7273cf3784dc55388953daa0b56e51fe2c72333a081969a3c1ce8bddf8",
+    "bytes": 378124
+  },
+  {
+    "path": "papers/language-b/2026/4eb1-may-june-2026-p1-qp.pdf",
+    "sha256": "f467c1c30aff354bf0117d931095fd78ca1c0fdb8ae7a1c0ee4492c6541b49ea",
+    "bytes": 940398
+  },
+  {
+    "path": "papers/language-b/2026/4eb1-may-june-2026-p1r-ms.pdf",
+    "sha256": "ce6b750dc6bc01906a4ae6cab682a6efd11962c5ebfda432db1f5dd97a3cd6a7",
+    "bytes": 449163
+  },
+  {
+    "path": "papers/language-b/2026/4eb1-may-june-2026-p1r-qp.pdf",
+    "sha256": "978e67c5f930753d237eeca154a51f893a586bfa4802c464f5d7aa9bbc8b1ccd",
+    "bytes": 685515
+  },
+  {
+    "path": "papers/language-b/2025/4eb1-may-june-2025-p1-ms.pdf",
+    "sha256": "a922301581520842896a7b219815b9855e01c22949223935a8db97cf6d769b85",
+    "bytes": 292133
+  },
+  {
+    "path": "papers/language-b/2025/4eb1-may-june-2025-p1-qp.pdf",
+    "sha256": "75370467dd7166e7aa5990a02cd021bebdc58940019a8e0f76a6eebb706b4a5a",
+    "bytes": 1710531
+  },
+  {
+    "path": "papers/language-b/2025/4eb1-may-june-2025-p1r-ms.pdf",
+    "sha256": "33d0f4b4f3d757d26d25d93929db3cb9801d034ee42198e8ee6f7e725b7202d0",
+    "bytes": 354496
+  },
+  {
+    "path": "papers/language-b/2025/4eb1-may-june-2025-p1r-qp.pdf",
+    "sha256": "57d1771d70804de43c94f8a386ab58129dec7a1be3c46b5c0a763412eb5863fe",
+    "bytes": 1282243
+  },
+  {
+    "path": "papers/language-b/2025/4eb1-november-2025-p1-ms.pdf",
+    "sha256": "30f2e52fad7e7add7d4d571f460d4ae0ca3d17dac13efac091f0ed2aedf893eb",
+    "bytes": 347297
+  },
+  {
+    "path": "papers/language-b/2025/4eb1-november-2025-p1-qp.pdf",
+    "sha256": "0eabd4c4f2532ed6256ffd0cb5f6a5d6af94dcb93ceed8d27ebb42c08991ac54",
+    "bytes": 1146905
+  },
+  {
+    "path": "papers/language-b/2024/4eb1-may-june-2024-p1-ms.pdf",
+    "sha256": "583690c8f13acb4af1d75e155e4418a24178d481fe1159f26ae420900d018443",
+    "bytes": 470736
+  },
+  {
+    "path": "papers/language-b/2024/4eb1-may-june-2024-p1-qp.pdf",
+    "sha256": "d1bc1a7709ca4711faebbb4b901abbda1f268a495f8a1208df891f8ea2187085",
+    "bytes": 989434
+  },
+  {
+    "path": "papers/language-b/2024/4eb1-may-june-2024-p1r-ms.pdf",
+    "sha256": "cac3b369a50647942ccb790e36f709fc597d5afdd9076cabb1de061b5adb8675",
+    "bytes": 341453
+  },
+  {
+    "path": "papers/language-b/2024/4eb1-may-june-2024-p1r-qp.pdf",
+    "sha256": "4eba01a7bdb1e89649487ba1ebb7b580f8b86a36b980be904ba82ac8561bc028",
+    "bytes": 1508807
+  },
+  {
+    "path": "papers/language-b/2024/4eb1-november-2024-p1-ms.pdf",
+    "sha256": "0c0aeb7b99c1f2bc8811b7bb1ad5b3f2c8f21fd04eb21386f9dd63b8ee61fc04",
+    "bytes": 2314086
+  },
+  {
+    "path": "papers/language-b/2024/4eb1-november-2024-p1-qp.pdf",
+    "sha256": "709d86bf32b96b664c8b71c2c086b67dd87baf5a22564da4b82bac57a2f14bb7",
+    "bytes": 773787
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-may-june-2023-p1-er.pdf",
+    "sha256": "3035ad8f75c8b14dd8bda291ed7556b2faf2d2ce0a59d2606c883282ec6583b8",
+    "bytes": 8966116
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-may-june-2023-p1-ms.pdf",
+    "sha256": "521bcae0f0099d9d0c29d50d3c8b805985d559843a72b7a8925b0d34be7a99d2",
+    "bytes": 291081
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-may-june-2023-p1-qp.pdf",
+    "sha256": "cb21a170c74096d3c6503323ceb77d81a2177df8700182c284610b7ba008f2a1",
+    "bytes": 1416761
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-may-june-2023-p1r-er.pdf",
+    "sha256": "db26b72cb0029c4c07388a014ba382a5c4de407e201efdc13349c240a24d9109",
+    "bytes": 7680787
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-may-june-2023-p1r-ms.pdf",
+    "sha256": "0228c88820e9e6723d22ab98d886cc17f979d6072c1ac718e4cc5369bb462354",
+    "bytes": 243920
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-may-june-2023-p1r-qp.pdf",
+    "sha256": "d812df1182f572aa59760ce59f45e152abbd9306af8bdd9072d75fb3f375582c",
+    "bytes": 825813
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-november-2023-p1-ms.pdf",
+    "sha256": "5a19073d5f5f0fe22a1205ae83a44d55820acd83a8afb819f95c674e00d011ab",
+    "bytes": 252880
+  },
+  {
+    "path": "papers/language-b/2023/4eb1-november-2023-p1-qp.pdf",
+    "sha256": "4ebb9094d9b183d38c147ce7f7d1e433cf34574e876259354694d6afd70f2742",
+    "bytes": 1313668
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-january-2022-p1-ms.pdf",
+    "sha256": "8b0326dabe76dcedd9018eda7b1beffd483f1187b000b1de04a38612b598713d",
+    "bytes": 322731
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-january-2022-p1-qp.pdf",
+    "sha256": "908725ee74d1812169dae51768b22b797f089fc2b5b222bfc9e709434d7abafe",
+    "bytes": 1614394
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-january-2022-p1r-ms.pdf",
+    "sha256": "42cd44266d2276c0288f6badfb56cdc28835c8157786e1ba574df428709a01e9",
+    "bytes": 327252
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-january-2022-p1r-qp.pdf",
+    "sha256": "6061d9a1acca2325c810ed2a9570d7192ad8f8664ea701a8cf2a9fab9447ae55",
+    "bytes": 2013198
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-may-june-2022-p1-ms.pdf",
+    "sha256": "4709d9f919f6b4536b265950c2659db7c31cca4288f6e36decd9091b78431937",
+    "bytes": 329977
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-may-june-2022-p1-qp.pdf",
+    "sha256": "a716b2edd6dfeb8ca1aee63ff86da60641e3f137a80ab494c37b5b0d3e72ca09",
+    "bytes": 1139594
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-may-june-2022-p1r-ms.pdf",
+    "sha256": "b97ef4a2a7559e212638fdcb3d3cb6e26b4580bd026136284ffc232ad3df2d07",
+    "bytes": 236077
+  },
+  {
+    "path": "papers/language-b/2022/4eb1-may-june-2022-p1r-qp.pdf",
+    "sha256": "cf1199a624f82fae78832ae1e96c5e26a84a072fa04f31ad0f59bd2756d4c6c3",
+    "bytes": 2083317
+  },
+  {
+    "path": "papers/language-b/2021/4eb1-may-june-2021-p1-ms.pdf",
+    "sha256": "03dc756a53848695469ffc76a52146ad8c22b9f13d368b35b832762e82bf6b98",
+    "bytes": 373014
+  },
+  {
+    "path": "papers/language-b/2021/4eb1-may-june-2021-p1-qp.pdf",
+    "sha256": "56b4964cd67924b355061b4abdf8e0b74e97305a276dfbdba7a64f5d7c711726",
+    "bytes": 3209867
+  },
+  {
+    "path": "papers/language-b/2021/4eb1-november-2021-p1-ms.pdf",
+    "sha256": "b3d1165b30be5a6d8bac5c8c799516d6e8b6ba32c0de4a7bd7dde271d748c665",
+    "bytes": 262272
+  },
+  {
+    "path": "papers/language-b/2021/4eb1-november-2021-p1-qp.pdf",
+    "sha256": "0f94543f48ce6a2cf8ddf11f06c34e5b7c8db48724c417400dab59d7afffcf1b",
+    "bytes": 1032330
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-january-2020-p1-ms.pdf",
+    "sha256": "6b49181320fc01f2132b86a34a26919685074a57e4cc67b0c6a0091784999c42",
+    "bytes": 277380
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-january-2020-p1-qp.pdf",
+    "sha256": "c7e2379890ee0cfe3984f1a1699549d288d087f3168860ed0517a7524ca62144",
+    "bytes": 637551
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-january-2020-p1r-ms.pdf",
+    "sha256": "2486913020140f7d51a356cb46f38aec09341a28d487e42c87040e3a6ec762db",
+    "bytes": 146877
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-january-2020-p1r-qp.pdf",
+    "sha256": "a3f6450d7bdb8bb5f27411599fea161906cee9270d9869aeddca74aedd40d972",
+    "bytes": 607880
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-may-june-november-2020-p1-ms.pdf",
+    "sha256": "cace49964ab02f713f60c42e051c6aeabadc38824ccdc51e1eb5314951a2da52",
+    "bytes": 283802
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-may-june-november-2020-p1-qp.pdf",
+    "sha256": "bc02e442e1a664d17618a6ef1554be22ee5cda1414ade453350f4bbab048a029",
+    "bytes": 5702358
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-may-june-november-2020-p1r-ms.pdf",
+    "sha256": "def592eb11132b06dca1b1bfcfdbce1e233be3bfc6ded57c7a6834c27c470901",
+    "bytes": 301091
+  },
+  {
+    "path": "papers/language-b/2020/4eb1-may-june-november-2020-p1r-qp.pdf",
+    "sha256": "7d5b9c585b6e9791c91e4f728a33ea1d3d16c4199dce4995e0b2be6c704b1795",
+    "bytes": 3676123
+  },
+  {
+    "path": "papers/language-b/2019/4eb1-may-june-2019-p1-ms.pdf",
+    "sha256": "8a15c46f435f265cbc27bd820d8e655b509e1e04fa6266756c138b6f4924767b",
+    "bytes": 304623
+  },
+  {
+    "path": "papers/language-b/2019/4eb1-may-june-2019-p1-qp.pdf",
+    "sha256": "00cebda88e2edc358b11abaac3802749f8e47f941efbe2c439148a9ccccada9a",
+    "bytes": 1338306
+  },
+  {
+    "path": "papers/language-b/2019/4eb1-may-june-2019-p1r-ms.pdf",
+    "sha256": "32c6687c775367c88c6201d548edd171c0adbce0eaf3a26a94668dde63a73109",
+    "bytes": 421035
+  },
+  {
+    "path": "papers/language-b/2019/4eb1-may-june-2019-p1r-qp.pdf",
+    "sha256": "1f6eebe8f16581c061d170b65b289f0e84223e6409958334a843fb2dcc007f00",
+    "bytes": 1376873
+  }
+]

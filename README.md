@@ -15,7 +15,7 @@ Complete redesign of the existing Next.js teaching website, recovered from its l
 - Practice records stay in the current browser and do not sync across devices. Clearing browser storage removes them. Binary practice has no timer or lost lives, and progresses from four to eight bits.
 - The custom forest-green Kee logo appears in every header and footer, and in browser icon metadata. The original transparent asset is `public/kee-logo.png`.
 - Edexcel IGCSE English Language B (4EB1) is the third class, linked from the homepage, resource library, and existing subject pages. Its page at `/subject/language-b` includes reading and writing focus areas, class enquiries, a searchable past-paper library, and Pearson's official specification and qualification links. Private class materials are requested from Kee; no separate pricing is claimed.
-- All three subject pages include 165 curated external resources from Paperlords: 54 CS, 63 ICT, and 48 English Language B files. These are links to files at their original provider, with visible source attribution; PDFs are not republished in this repository. Source, year, session, and type filters work alongside the existing Kee/Google Drive index. PDF previews use Google Docs Viewer with a direct-file fallback; ZIP practical files open directly.
+- The main library hosts 165 downloaded resources directly under `public/papers/`: 54 CS, 63 ICT, and 48 English Language B files. Main-library links and downloads use this website’s own domain. The existing Kee/Google Drive index remains under Additional resources. Year, session, type, and library filters are available; the default view and dashboard counts use the main library. PDF previews use Google Docs Viewer with a direct-file fallback.
 - Store prices and the original free sample PDF are retained. Orders are prepared as enquiries to Kee on Telegram; this site does not process payments.
 
 ## Run locally
@@ -36,7 +36,7 @@ Keep the existing Vercel environment variables. Google Drive uses `DRIVE_CS_FOLD
 
 ## Content maintenance
 
-Add articles as Markdown files in `content/articles/` and rebuild. Reviewed static page templates live in `lib/design-pages.json`; shared design styles are in `app/globals.css`, `app/refined.css`, `app/playground.css`, `app/brand-class.css`, and `app/resources.css`. Learning-tool interactions live in `public/app.js` and `public/python-worker.js`. Paperlords metadata is a checked snapshot in `public/data/paperlords.json`; see `docs/paperlords-catalogue.md` before updating it.
+Add articles as Markdown files in `content/articles/` and rebuild. Reviewed static page templates live in `lib/design-pages.json`; shared design styles are in `app/globals.css`, `app/refined.css`, `app/playground.css`, `app/brand-class.css`, and `app/resources.css`. Learning-tool interactions live in `public/app.js` and `public/python-worker.js`. Main-library metadata is in `public/data/past-papers.json`, with file sizes and SHA-256 hashes in `lib/papers-manifest.json`; see `docs/past-paper-library.md` before updating it.
 
 All twelve page routes were checked for mobile layout. Functional checks covered resource filters, a full quiz and review, circuit signals and wiring, binary scoring and progression, real Python execution/input/stop, and store difficulty selection.
 
@@ -44,4 +44,8 @@ The playground update was also checked at 320px width across all five playground
 
 The logo and third-class update passed a production build. Homepage, library, and English class layouts were checked at 320px without horizontal overflow. Logo loading, mobile menu, resource navigation, and the class enquiry destination were verified.
 
-Paperlords checks covered all 173 source URLs, qualification codes in the first two pages of 154 reachable PDFs, exact PDF duplicates, and document-cover label corrections. Eight records were excluded: one broken link, five files for the previous ICT 4IT0 syllabus, and two exact duplicate CS PDFs. Functional checks covered source counts, existing library counts, year/type filtering, pagination, empty-search recovery, a real rendered PDF preview, ZIP handling, and corrected English regional labels. All three resource pages were checked at 320px width.
+Library checks covered all 173 candidate URLs, qualification codes in the first two pages of 154 reachable PDFs, exact PDF duplicates, and document-cover label corrections. Eight records were excluded: one broken link, five files for the previous ICT 4IT0 syllabus, and two exact duplicate CS PDFs. All 165 selected files are downloaded locally. Two original ICT 2020 practical archives do not have a readable ZIP central directory; they are retained unchanged with a visible note. Functional checks cover main/additional-library counts, year/type filtering, pagination, search recovery, and direct download paths.
+
+## Deploy the downloaded library
+
+The downloaded assets total about 265 MiB. Deploy from the connected Git repository rather than uploading source files with the Vercel CLI, whose Hobby source-upload limit is 100 MB. Commit and push the complete source and `public/papers/`, then create a production Git deployment using the existing Vercel project and GitHub repository connection. Existing server-only environment variables remain configured in Vercel.
