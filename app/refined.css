@@ -7,3 +7,37 @@
 @media(max-width:650px){.file-actions{width:calc(100% - 45px)}}
 
 .journal-articles{display:grid;gap:24px}.article-prose header{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:25px}.article-prose header .eyebrow{font-family:DM Sans,Arial,sans-serif}
+
+/* Store: show the actual free paper before asking students to choose a bundle. */
+.store-sample{display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;align-items:center;background:#e9f0df;border:1px solid #d3dfc5;border-radius:18px;padding:30px;margin-bottom:34px}
+.store-sample-copy h2{font-size:clamp(25px,2.6vw,34px);line-height:1.25;margin:14px 0}
+.store-sample-copy p{max-width:440px;color:var(--muted);font-size:13px;line-height:1.85}
+.store-sample-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:24px}
+.store-sample-actions .button{padding:13px 18px;font-size:11px}
+.store-sample-preview{background:#fffefa;border:1px solid #cbd7c0;border-radius:11px;padding:13px;box-shadow:0 8px 22px #183c3112}
+.store-sample-preview-top{display:flex;justify-content:space-between;gap:12px;padding:3px 3px 11px;font-size:9px;font-weight:700;letter-spacing:.7px;color:#48694d}
+.store-sample-preview>a{display:block;height:315px;overflow:hidden;border:1px solid var(--line);background:#fff}
+.store-sample-preview img{display:block;width:100%;height:auto}
+.store-scope{margin:18px 0 8px;line-height:1.8}.store-scope a{text-decoration:underline;text-underline-offset:3px}
+.product-subject{font-size:9px;letter-spacing:.7px;font-weight:700;color:#52764f;margin-bottom:9px}
+.product-actions{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:16px}.product-actions .button{width:100%;margin-top:0}
+.product-preview-link{font-size:11px;font-weight:650;text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+.order-subject{font-size:11px;color:var(--muted);margin:9px 0 0}
+
+/* Journal: let readers scan by class, then follow the worked steps comfortably. */
+.journal-card{display:grid;grid-template-columns:190px minmax(0,1fr)}
+.journal-art{min-height:205px;padding:20px;align-content:center;gap:10px;font-size:22px;letter-spacing:-.7px;text-align:center}
+.journal-art>span{padding:16px 12px;overflow-wrap:anywhere;max-width:100%}
+.journal-art small{font-size:8px;margin-top:4px;line-height:1.5}
+.journal-card:nth-child(4n+2) .journal-art{background-color:#eeeedd}.journal-card:nth-child(4n+3) .journal-art{background-color:#e6ece8}.journal-card:nth-child(4n+4) .journal-art{background-color:#e9ebdf}
+.journal-card-copy{padding:24px 26px}.journal-card-copy h2{font-size:23px;line-height:1.35;margin:16px 0 8px}.journal-card-copy p{font-size:12px;line-height:1.75;margin:0 0 17px}
+.journal-card-meta,.article-meta{display:flex;align-items:center;gap:9px 14px;flex-wrap:wrap;font-size:10px;color:var(--muted)}
+.journal-subject{display:inline-flex;align-items:center;border:1px solid #c7d7b9;border-radius:99px;padding:5px 9px;color:#315c3e;background:#edf3e7;font-size:9px;font-weight:700;line-height:1.3}
+.journal-aside{align-self:start;position:sticky;top:105px}.journal-subject-links{display:grid;gap:0;width:100%;margin:6px 0 15px;border-top:1px solid var(--line)}.journal-subject-links a{font-size:12px;font-weight:600;border-bottom:1px solid var(--line);padding:13px 0}.journal-subject-links a:hover{text-decoration:underline;text-underline-offset:4px}
+.article-meta{margin-bottom:13px}.article-prose header h1{line-height:1.22;margin:15px 0}.article-prose header>p{font-size:15px;color:var(--muted);line-height:1.8;margin:12px 0}
+.article-prose h2{line-height:1.35;margin-top:40px}.article-prose h3{line-height:1.4}.article-prose ol,.article-prose ul{padding-left:24px}.article-prose li{padding-left:4px;margin:7px 0}
+.article-prose pre{overflow:auto;background:#e9efde;border:1px solid #d5e1cb;border-radius:9px;padding:18px 20px;line-height:1.7}.article-prose pre code{padding:0;background:transparent;white-space:pre;overflow-wrap:normal;font-size:13px}
+.article-prose blockquote{margin:22px 0;padding:2px 20px;border-left:3px solid #91ac73;background:#eef3e6;color:#31573d;border-radius:0 8px 8px 0}
+
+@media(max-width:900px){.journal-grid{grid-template-columns:1fr}.journal-aside{position:static;max-width:none;border-top:1px solid var(--line);padding:25px 0}.journal-subject-links{grid-template-columns:1fr 1fr;column-gap:20px}}
+@media(max-width:650px){.store-sample{grid-template-columns:1fr;padding:22px;gap:20px;margin-bottom:26px}.store-sample-preview>a{height:270px}.store-sample-copy p{font-size:13px}.journal-card{grid-template-columns:1fr}.journal-art{min-height:125px;padding:17px}.journal-card-copy{padding:22px}.journal-card-copy h2{font-size:22px}.journal-aside{padding-inline:4px}.article-prose pre{padding:14px}.article-prose pre code{font-size:11px}}

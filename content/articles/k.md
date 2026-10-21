@@ -2,6 +2,10 @@
 title: "IPv4 နဲ့ IPv6"
 date: "2026-02-24"
 description: "IPv4 နဲ့ IPv6 ကွာခြားချက်များနှင့် ဘာကြောင့် IPv6 ကို အသုံးပြုရသလဲ"
+subject: "Computer Science"
+subjectHref: "/subject/cs/"
+visual: "IPv4 → IPv6"
+topic: "NETWORKS · IP ADDRESSES"
 ---
 
 အခုခေတ်မှာ လူတယောက်တည်းတင် ဖုန်း၊ ကွန်ပျူတာ၊ Smart Watch ကစလို့ အိမ်က Smart TV တွေအထိ အင်တာနက်ချိတ်တဲ့ စက်တွေ အများကြီး သုံးလာကြတာ သတိထားမိကြလား။

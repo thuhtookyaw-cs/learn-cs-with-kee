@@ -201,24 +201,27 @@ if (page === 'resources') {
 }
 
 if (page === 'store') {
+  const sampleUrl = '/data/sample-exam-paper.pdf';
+  const subject = 'Edexcel International GCSE Computer Science (4CP0)';
   const products = [
-    {id:'free',title:'Free sample exam paper',desc:'A complete Edexcel IGCSE Computer Science sample paper. A good place to find your starting point.',price:0,type:'free',art:'01',label:'START HERE'},
-    {id:'single',title:'1 sample exam paper',desc:'One focused practice paper. Choose Easy, Hard, or Extreme to suit your next study session.',price:1000,type:'paid',art:'01',label:'CHOOSE YOUR LEVEL'},
-    {id:'five',title:'5 papers bundle',desc:'Five sample exam papers for a little more practice. Choose the difficulty level that works for you.',price:4000,original:5000,type:'paid',art:'05',label:'PRACTICE BUNDLE'},
-    {id:'ten',title:'10 papers bundle',desc:'Ten sample exam papers to build a steady practice rhythm. Available in Easy, Hard, or Extreme.',price:8000,original:10000,type:'paid',art:'10',label:'PRACTICE BUNDLE'},
-    {id:'mixed',title:'Mixed level: 10 papers',desc:'A blend of Easy, Hard, and Extreme papers. Work through a wider range of challenges.',price:8000,original:10000,type:'paid',art:'10+',label:'MIX IT UP'}
+    {id:'free',title:'Free sample exam paper',desc:'One complete original practice paper to see the question style and start working.',price:0,type:'free',art:'01',label:'START HERE'},
+    {id:'single',title:'1 practice paper',desc:'One original practice paper. Ask for Easy, Hard, or Extreme difficulty.',price:1000,type:'paid',art:'01',label:'CHOOSE YOUR LEVEL'},
+    {id:'five',title:'5-paper practice bundle',desc:'Five original practice papers at the difficulty level you choose.',price:4000,original:5000,type:'paid',art:'05',label:'PRACTICE BUNDLE'},
+    {id:'ten',title:'10-paper practice bundle',desc:'Ten original practice papers at the difficulty level you choose.',price:8000,original:10000,type:'paid',art:'10',label:'PRACTICE BUNDLE'},
+    {id:'mixed',title:'10-paper mixed-level bundle',desc:'Ten original practice papers across Easy, Hard, and Extreme levels.',price:8000,original:10000,type:'paid',art:'10+',label:'MIX IT UP'}
   ];
   let filter = 'all', selected;
   const money = amount => `${amount.toLocaleString('en-US')} MMK`;
   function renderProducts() {
     const search = $('#store-search').value.toLowerCase().trim();
-    const list = products.filter(product => (filter === 'all' || product.type === filter) && `${product.title} ${product.desc}`.toLowerCase().includes(search));
+    const list = products.filter(product => (filter === 'all' || product.type === filter) && `${product.title} ${product.desc} ${subject}`.toLowerCase().includes(search));
     $('#store-count').textContent = `${list.length} ${list.length === 1 ? 'resource' : 'resources'}`;
     $('#store-empty').hidden = list.length > 0;
-    $('#store-products').innerHTML = list.map(product => `<article class="product-card"><div class="product-art" aria-hidden="true"><span>${product.art}</span><div class="pill">${product.label}</div></div><div class="product-copy"><h2>${product.title}</h2><p>${product.desc}</p><div class="product-price">${product.original ? `<s>${money(product.original)}</s>` : ''}<strong>${product.price ? money(product.price) : 'Free'}</strong></div>${product.type === 'free' ? '<a class="button button-outline" href="/data/sample-exam-paper.pdf" download>Download sample PDF <span>↓</span></a>' : `<button class="button button-outline" data-order="${product.id}">Choose resource </button>`}</div></article>`).join('');
+    $('#store-products').innerHTML = list.map(product => `<article class="product-card"><div class="product-art" aria-hidden="true"><span>${product.art}</span><div class="pill">${product.label}</div></div><div class="product-copy"><div class="product-subject">COMPUTER SCIENCE · 4CP0</div><h2>${product.title}</h2><p>${product.desc}</p><div class="product-price">${product.original ? `<s>${money(product.original)}</s>` : ''}<strong>${product.price ? money(product.price) : 'Free'}</strong></div><div class="product-actions">${product.type === 'free' ? `<a class="button button-outline" href="${sampleUrl}" download>Download free paper <span>↓</span></a>` : `<button class="button button-outline" data-order="${product.id}">Ask about this ${product.id === 'single' ? 'paper' : 'bundle'}</button>`}<a class="product-preview-link" href="${sampleUrl}" target="_blank" rel="noopener">View a free paper example</a></div></div></article>`).join('');
     $$('[data-order]').forEach(button => button.addEventListener('click', () => {
       selected = products.find(product => product.id === button.dataset.order);
       $('#order-title').textContent = selected.title;
+      $('#order-subject').textContent = subject;
       $('#order-price').textContent = money(selected.price);
       $('#order-level').hidden = selected.id === 'mixed';
       $('label[for="order-level"]').hidden = selected.id === 'mixed';
@@ -227,7 +230,7 @@ if (page === 'store') {
   }
   function updateOrder() {
     const level = selected.id === 'mixed' ? 'Mixed levels' : $('#order-level').value;
-    $('#order-link').href = `https://t.me/xkxxee?text=${encodeURIComponent(`Hi Kee! I'd like to ask about ${selected.title} (${level}), priced at ${money(selected.price)}. Could you confirm how to order?`)}`;
+    $('#order-link').href = `https://t.me/xkxxee?text=${encodeURIComponent(`Hi Kee! I'd like to ask about the ${subject} ${selected.title} (${level}), priced at ${money(selected.price)}. Could you confirm how to order?`)}`;
   }
   $('#order-level').addEventListener('change', updateOrder);
   $('#store-search').addEventListener('input', renderProducts);
