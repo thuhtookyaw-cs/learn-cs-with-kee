@@ -2,6 +2,7 @@ import './globals.css';
 import './refined.css';
 import './playground.css';
 import './brand-class.css';
+import './resources.css';
 
 export const metadata = {
     title: { default: 'Learn CS with Kee', template: '%s — Learn CS with Kee' },
