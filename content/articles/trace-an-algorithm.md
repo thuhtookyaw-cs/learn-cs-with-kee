@@ -1,5 +1,5 @@
 ---
-title: "Trace an algorithm without losing your place"
+title: "K an algorithm without losing your place"
 date: "2026-10-22"
 description: "A small loop, a clear trace, and a fresh question to try for Edexcel IGCSE Computer Science."
 subject: "Computer Science"
