@@ -50,3 +50,5 @@ Library checks covered all 173 candidate URLs, qualification codes in the first 
 ## Deploy the downloaded library
 
 The downloaded assets total about 265 MiB. Deploy from the connected Git repository rather than uploading source files with the Vercel CLI, whose Hobby source-upload limit is 100 MB. Commit and push the complete source and `public/papers/`, then create a production Git deployment using the existing Vercel project and GitHub repository connection. Existing server-only environment variables remain configured in Vercel.
+
+Past-paper browsing groups matching files by qualification, year, exact exam series, and paper variant. The browser helper is `public/paper-library.mjs`; run `node --test tests/paper-library.test.mjs` to verify grouping, searching, filters, ordering, and preservation of all hosted files. All three subject libraries have file-type shortcuts, removable filters, paper-number selection, and collapsible phone filters.

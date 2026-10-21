@@ -156,65 +156,105 @@ if (page === 'dashboard') {
 
 if (page === 'resources') {
   const subject = $('.resource-workspace').dataset.subject;
-  const controls = ['#resource-search', '#year-filter', '#session-filter', '#kind-filter', '#library-filter', '#resource-sort'].map(selector => $(selector));
-  let files = [], pageNumber = 1, filtered = [], additionalLoaded = false, additionalLoading;
-  const size = 15;
+  const controls = ['#resource-search', '#year-filter', '#session-filter', '#paper-filter', '#kind-filter', '#library-filter', '#resource-sort'].map(selector => $(selector));
+  let files = [], pageNumber = 1, helpers, additionalLoaded = false, additionalLoading, libraryRequest = 0;
+  const size = 8;
+  const typeLabels = {'':'All files','Question paper':'Question papers','Mark scheme':'Mark schemes','Data files':'Practical files','Examiner report':'Examiner reports','Topical questions':'Topical questions','Other resources':'Other resources'};
+  const filterNames = {'resource-search':'Search','year-filter':'Year','session-filter':'Series','paper-filter':'Paper','kind-filter':'Type','library-filter':'Collection'};
+  const filters = () => ({search:$('#resource-search').value,year:$('#year-filter').value,session:$('#session-filter').value,paper:$('#paper-filter').value,kind:$('#kind-filter').value,library:$('#library-filter').value});
+  const panel = $('.paper-filter-panel');
+  panel.open = !window.matchMedia('(max-width: 760px)').matches;
   function render() {
-    const search = $('#resource-search').value.toLowerCase().trim();
-    const libraryFiles = files.filter(file => !$('#library-filter').value || file.sourceKey === $('#library-filter').value);
-    filtered = libraryFiles.filter(file => (!search || [file.name, ...file.folders, file.kind, file.source, file.code || ''].join(' ').toLowerCase().replace(/[-_]/g, ' ').includes(search.replace(/[-_]/g, ' '))) && (!$('#year-filter').value || file.year === $('#year-filter').value) && (!$('#session-filter').value || file.session === $('#session-filter').value) && (!$('#kind-filter').value || file.kind === $('#kind-filter').value));
-    const sort = $('#resource-sort').value;
-    const dateOrder = file => Number(file.year || 0) * 12 + (file.session.includes('November') ? 11 : file.session === 'January' ? 1 : file.session ? 6 : 0);
-    filtered.sort((a,b) => sort === 'name' ? a.name.localeCompare(b.name) : ((sort === 'new' ? -1 : 1) * (dateOrder(a) - dateOrder(b)) || a.name.localeCompare(b.name)));
-    const totalPages = Math.max(1, Math.ceil(filtered.length / size));
-    pageNumber = Math.min(pageNumber, totalPages);
-    $('#results-count').textContent = `${filtered.length} ${filtered.length === 1 ? 'file' : 'files'}${filtered.length !== libraryFiles.length ? ` of ${libraryFiles.length}` : ''}`;
-    const items = filtered.slice((pageNumber - 1) * size, pageNumber * size);
-    $('#resource-list').innerHTML = items.length ? items.map((file,index) => `<article class="file-row"><span class="file-icon" aria-hidden="true">${file.name.includes('.') ? file.name.split('.').pop().slice(0,4).toUpperCase() : 'FILE'}</span><div class="file-copy"><h3>${escapeHtml(file.name.replace(/[-_]/g, ' '))}</h3><p>${escapeHtml([file.year,file.session,file.kind].filter(Boolean).join(' · '))}</p>${file.sourceKey === 'primary' ? `<span class="file-source">${file.bytes ? `${(file.bytes / 1048576).toFixed(1)} MB` : 'Ready to download'}</span>` : '<span class="file-source">Additional resource</span>'}${file.note ? `<p class="file-note">${escapeHtml(file.note)}</p>` : ''}</div><div class="file-actions">${file.preview ? `<button class="plain-button" data-preview="${index}" aria-label="Preview ${escapeHtml(file.name)}">Preview</button>` : ''}<a href="${escapeHtml(safeUrl(file.url))}" target="_blank" rel="noopener" ${file.sourceKey === 'primary' ? 'download' : ''} aria-label="Download ${escapeHtml(file.name)}">Download ↓</a></div></article>`).join('') : '<div class="empty-state"><h2>No papers found.</h2><p>Try a different search, or reset your filters.</p><button class="button button-outline" id="empty-reset">Reset filters</button></div>';
-    $$('[data-preview]').forEach(button => button.addEventListener('click', () => previewFile(items[Number(button.dataset.preview)])));
-    $('#empty-reset')?.addEventListener('click', resetFilters);
-    $('#resource-pagination').innerHTML = totalPages > 1 ? `<button id="previous-page" ${pageNumber === 1 ? 'disabled' : ''}>← Previous</button><span>Page ${pageNumber} of ${totalPages}</span><button id="next-page" ${pageNumber === totalPages ? 'disabled' : ''}>Next →</button>` : '';
-    function turnPage(delta) { pageNumber += delta; render(); $('.resource-results').scrollIntoView({behavior:'smooth',block:'start'}); }
-    $('#previous-page')?.addEventListener('click', () => turnPage(-1));
-    $('#next-page')?.addEventListener('click', () => turnPage(1));
+    if (!helpers) return;
+    const current = filters();
+    const filtered = helpers.filterPapers(files,current);
+    const groups = helpers.groupPapers(filtered,$('#resource-sort').value);
+    const totalPages = Math.max(1,Math.ceil(groups.length / size));
+    pageNumber = Math.min(pageNumber,totalPages);
+    const start = (pageNumber-1)*size, items = groups.slice(start,start+size);
+    const unit = current.library === 'additional' ? (groups.length === 1 ? 'resource' : 'resources') : (groups.length === 1 ? 'paper set' : 'paper sets');
+    $('#results-count').textContent = `${groups.length} ${unit} · ${filtered.length} ${filtered.length === 1 ? 'file' : 'files'}`;
+    $('#resource-index-status').textContent = groups.length ? `Showing ${start+1}–${Math.min(start+size,groups.length)} of ${groups.length}` : 'Try fewer filters';
+    const base = helpers.filterPapers(files,{...current,kind:''});
+    $$('[data-paper-kind]').forEach(button => {
+      const kind = button.dataset.paperKind;
+      const count = kind ? base.filter(file=>file.kind===kind).length : base.length;
+      button.hidden = Boolean(kind && !files.some(file=>(!current.library || file.sourceKey===current.library) && file.kind===kind));
+      button.setAttribute('aria-pressed',String(current.kind===kind));
+      button.innerHTML = `${typeLabels[kind]}<span>${count}</span>`;
+    });
+    const selected = controls.filter(control => control.id !== 'resource-sort' && control.value && !(control.id==='library-filter' && control.value==='primary'));
+    $('#active-paper-filters').hidden = !selected.length;
+    $('#active-paper-filters').innerHTML = selected.map(control => {
+      const value = control.id==='paper-filter' ? helpers.paperLabel(control.value) : control.id==='library-filter' ? 'Additional resources' : control.value;
+      return `<button type="button" data-clear-filter="${control.id}" aria-label="Remove ${escapeHtml(filterNames[control.id])} filter: ${escapeHtml(value)}">${escapeHtml(value)}<span aria-hidden="true">×</span></button>`;
+    }).join('');
+    $$('[data-clear-filter]').forEach(button=>button.addEventListener('click',()=>{
+      const control=$(`#${button.dataset.clearFilter}`);control.value=control.id==='library-filter'?'primary':'';
+      pageNumber=1;if(control.id==='library-filter') selectLibrary();else render();
+    }));
+    const visibleFiles=[];
+    $('#resource-list').innerHTML = items.length ? items.map(group => {
+      const title = group.primary ? helpers.paperLabel(group.paper) : group.files[0].name.replace(/[-_]/g,' ');
+      const meta = [group.code,group.session,group.year].filter(Boolean).join(' · ');
+      return `<article class="paper-set"><header class="paper-set-heading"><div><p>${escapeHtml(meta || 'Additional resource')}</p><h2>${escapeHtml(title)}</h2></div><span>${group.files.length} ${group.files.length===1?'file':'files'}</span></header><div class="paper-set-files">${group.files.map(file => {
+        const index=visibleFiles.push(file)-1;
+        const extension=file.name.includes('.') ? file.name.split('.').pop().toUpperCase() : '';
+        const format=/^[A-Z0-9]{2,5}$/.test(extension)?extension:'FILE';
+        const details=[format,helpers.formatBytes(file.bytes),file.sourceKey==='primary'?'':'Additional resource'].filter(Boolean).join(' · ');
+        return `<div class="paper-file"><div class="paper-file-copy"><h3>${escapeHtml(file.kind)}</h3><p>${escapeHtml(details)}</p>${file.note?`<p class="paper-file-note">${escapeHtml(file.note)}</p>`:''}</div><div class="paper-file-actions">${file.preview?`<button type="button" data-preview="${index}" aria-label="Preview ${escapeHtml(file.name)}">Preview</button>`:''}<a href="${escapeHtml(safeUrl(file.url))}" ${file.sourceKey==='primary'?'download':'target="_blank" rel="noopener"'} aria-label="Download ${escapeHtml(file.name)}">Download</a></div></div>`;
+      }).join('')}</div></article>`;
+    }).join('') : '<div class="empty-state"><h2>No matching papers</h2><p>Try another year, paper number or keyword. You can also clear your filters and start again.</p><button class="button button-outline" id="empty-reset" type="button">Reset filters</button></div>';
+    $$('[data-preview]').forEach(button => button.addEventListener('click',()=>previewFile(visibleFiles[Number(button.dataset.preview)])));
+    $('#empty-reset')?.addEventListener('click',resetFilters);
+    $('#resource-pagination').innerHTML = totalPages>1 ? `<button type="button" id="previous-page" ${pageNumber===1?'disabled':''}>Previous</button><span>Page ${pageNumber} of ${totalPages}</span><button type="button" id="next-page" ${pageNumber===totalPages?'disabled':''}>Next</button>` : '';
+    function turnPage(delta) { pageNumber+=delta;render();$('.resource-results').scrollIntoView({behavior:'smooth',block:'start'});$('#resource-search').focus({preventScroll:true}); }
+    $('#previous-page')?.addEventListener('click',()=>turnPage(-1));
+    $('#next-page')?.addEventListener('click',()=>turnPage(1));
   }
-  function resetFilters() { controls.forEach(control => control.value = control.id === 'resource-sort' ? 'new' : control.id === 'library-filter' ? 'primary' : ''); pageNumber = 1; render(); }
+  function resetFilters() { controls.forEach(control=>control.value=control.id==='resource-sort'?'new':control.id==='library-filter'?'primary':'');libraryRequest++;$('#resource-list').removeAttribute('aria-busy');pageNumber=1;updateOptions();render(); }
   function updateOptions() {
-    for (const [selector, property] of [['#year-filter','year'],['#session-filter','session']]) {
-      const select = $(selector), existing = new Set([...select.options].map(option => option.value));
-      const values = [...new Set(files.map(file => file[property]).filter(Boolean))].sort();
-      if (property === 'year') values.reverse();
-      values.filter(value => !existing.has(value)).forEach(value => select.add(new Option(value,value)));
+    const libraryFiles=files.filter(file=>!$('#library-filter').value || file.sourceKey===$('#library-filter').value);
+    for(const [selector,property,label] of [['#year-filter','year','All years'],['#session-filter','session','All series'],['#paper-filter','paper','All papers']]) {
+      const select=$(selector), current=select.value;
+      const values=[...new Set(libraryFiles.map(file=>file[property]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+      if(property==='year') values.reverse();
+      select.innerHTML=`<option value="">${label}</option>`+values.map(value=>`<option value="${escapeHtml(value)}">${escapeHtml(property==='paper'?helpers.paperLabel(value):value)}</option>`).join('');
+      select.value=values.includes(current)?current:'';
     }
   }
   async function selectLibrary() {
-    if (subject !== 'language-b' && $('#library-filter').value !== 'primary' && !additionalLoaded) {
-      $('#resource-index-status').textContent = 'Loading additional resources…';
-      if (!additionalLoading) additionalLoading = loadAdditionalResources();
+    const request=++libraryRequest;
+    $('#resource-list').removeAttribute('aria-busy');
+    if(subject!=='language-b' && $('#library-filter').value!=='primary' && !additionalLoaded) {
+      $('#results-count').textContent='Loading additional resources…';$('#resource-list').setAttribute('aria-busy','true');
+      if(!additionalLoading) additionalLoading=loadAdditionalResources();
       try {
-        const extra = await additionalLoading;
-        if (!additionalLoaded) {
-          files.push(...extra.files.filter(file => file.subject === subject).map(file => ({...file, session:file.session === 'June' ? 'May/June' : file.session, source:'Additional resources', sourceKey:'additional'})));
-          additionalLoaded = true; updateOptions();
+        const extra=await additionalLoading;
+        if(!additionalLoaded) {
+          files.push(...extra.files.filter(file=>file.subject===subject).map(file=>({...file,session:file.session==='June'?'May/June':file.session,sourceKey:'additional'})));
+          additionalLoaded=true;
         }
-        $('#resource-index-status').textContent = extra.saved ? 'Additional resources · Saved index' : 'PDFs & practical files';
       } catch {
-        additionalLoading = undefined;
-        $('#library-filter').value = 'primary';
-        $('#resource-index-status').textContent = 'Additional resources unavailable · Main library shown';
+        additionalLoading=undefined;
+        if(request===libraryRequest) {$('#library-filter').value='primary';$('#library-notice').hidden=false;}
       }
+      if(request!==libraryRequest) return;
+      $('#resource-list').removeAttribute('aria-busy');
     }
-    if ($('#library-filter').value === 'primary') $('#resource-index-status').textContent = 'PDFs & practical files · Hosted here';
-    pageNumber = 1; render();
+    updateOptions();pageNumber=1;render();
   }
-  controls.forEach(control => control.addEventListener(control.type === 'search' ? 'input' : 'change', () => { if (control.id === 'library-filter') selectLibrary(); else { pageNumber = 1; render(); } }));
-  $('#clear-filters').addEventListener('click', resetFilters);
-  loadResources(subject).then(data => {
-    files = data.filter(file => file.subject === subject);
-    updateOptions();
-    if (subject === 'language-b') $('#library-filter').querySelector('option[value="additional"]').remove();
-    render();
-  }).catch(() => { $('#results-count').textContent = 'Resource index unavailable'; $('#resource-error').hidden = false; });
+  controls.forEach(control=>control.addEventListener(control.type==='search'?'input':'change',()=>{
+    if(control.id==='library-filter') selectLibrary();else {pageNumber=1;render();}
+  }));
+  $$('[data-paper-kind]').forEach(button=>button.addEventListener('click',()=>{$('#kind-filter').value=button.dataset.paperKind;pageNumber=1;render();}));
+  $('#clear-filters').addEventListener('click',resetFilters);
+  Promise.all([loadResources(),import('/paper-library.mjs')]).then(([data,module])=>{
+    files=data.filter(file=>file.subject===subject);helpers=module;
+    $('#library-total').textContent=`${files.length} files · ${Math.min(...files.map(file=>Number(file.year)))}–${Math.max(...files.map(file=>Number(file.year)))}`;
+    if(subject==='language-b') $('#library-filter').querySelector('option[value="additional"]').remove();
+    updateOptions();render();
+  }).catch(()=>{$('#results-count').textContent='Library unavailable';$('#library-total').textContent='Please try again shortly';$('#resource-error').hidden=false;});
 }
 
 if (page === 'store') {
