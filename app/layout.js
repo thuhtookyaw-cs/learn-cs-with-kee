@@ -1,21 +1,11 @@
 import './globals.css';
-import PasscodeGate from '@/components/common/PasscodeGate';
-import CustomCursor from '@/components/ui/CustomCursor';
+import './refined.css';
 
 export const metadata = {
-    title: 'Learn CS with Kee',
-    description: 'Personalised Edexcel IGCSE Computer Science & ICT tutoring by Kee — A* graduate',
+    title: { default: 'Learn CS with Kee', template: '%s — Learn CS with Kee' },
+    description: 'Clearer concepts. More confident learners. Personal Edexcel IGCSE Computer Science and ICT tutoring, past papers, and interactive practice with Kee.',
 };
 
 export default function RootLayout({ children }) {
-    return (
-        <html lang="en" suppressHydrationWarning>
-            <body suppressHydrationWarning>
-                <CustomCursor />
-                <PasscodeGate>
-                    {children}
-                </PasscodeGate>
-            </body>
-        </html>
-    );
+    return <html lang="en"><body>{children}</body></html>;
 }
