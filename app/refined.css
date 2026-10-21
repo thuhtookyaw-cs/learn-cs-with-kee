@@ -41,3 +41,9 @@
 
 @media(max-width:900px){.journal-grid{grid-template-columns:1fr}.journal-aside{position:static;max-width:none;border-top:1px solid var(--line);padding:25px 0}.journal-subject-links{grid-template-columns:1fr 1fr;column-gap:20px}}
 @media(max-width:650px){.store-sample{grid-template-columns:1fr;padding:22px;gap:20px;margin-bottom:26px}.store-sample-preview>a{height:270px}.store-sample-copy p{font-size:13px}.journal-card{grid-template-columns:1fr}.journal-art{min-height:125px;padding:17px}.journal-card-copy{padding:22px}.journal-card-copy h2{font-size:22px}.journal-aside{padding-inline:4px}.article-prose pre{padding:14px}.article-prose pre code{font-size:11px}}
+.paper-tutor-help p a{text-decoration:underline;text-underline-offset:3px}
+nav .nav-store{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-width:28px;min-height:28px}
+nav .nav-store svg{display:block;width:20px;height:20px;flex:none}
+nav .nav-store-label{display:none}
+nav .nav-store[aria-current=page]{border-bottom:1px solid currentColor}
+@media(max-width:650px){nav .nav-store{justify-content:flex-start}nav .nav-store-label{display:inline}nav .nav-store[aria-current=page]{border-bottom:0}}
