@@ -1,4 +1,5 @@
-.DS_Store\n.vercel
+.DS_Store
+.vercel
 node_modules
 .next
 .env.local

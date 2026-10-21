@@ -1,0 +1,7 @@
+[
+  {"id":"free","title":"Free sample exam paper","desc":"One complete original practice paper to see the question style and start working.","price":0,"type":"free","art":"01","label":"START HERE","subject":"Computer Science","code":"4CP0"},
+  {"id":"single","title":"1 practice paper","desc":"One original practice paper. Ask for Easy, Hard, or Extreme difficulty.","price":1000,"type":"paid","art":"01","label":"CHOOSE YOUR LEVEL","subject":"Computer Science","code":"4CP0"},
+  {"id":"five","title":"5-paper practice bundle","desc":"Five original practice papers at the difficulty level you choose.","price":4000,"original":5000,"type":"paid","art":"05","label":"PRACTICE BUNDLE","subject":"Computer Science","code":"4CP0"},
+  {"id":"ten","title":"10-paper practice bundle","desc":"Ten original practice papers at the difficulty level you choose.","price":8000,"original":10000,"type":"paid","art":"10","label":"PRACTICE BUNDLE","subject":"Computer Science","code":"4CP0"},
+  {"id":"mixed","title":"10-paper mixed-level bundle","desc":"Ten original practice papers across Easy, Hard, and Extreme levels.","price":8000,"original":10000,"type":"paid","art":"10+","label":"MIX IT UP","subject":"Computer Science","code":"4CP0"}
+]

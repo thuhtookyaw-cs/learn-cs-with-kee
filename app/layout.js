@@ -4,6 +4,7 @@ import './playground.css';
 import './brand-class.css';
 import './resources.css';
 import './home-hub.css';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
     title: { default: 'Study with Kee', template: '%s — Study with Kee' },
@@ -12,5 +13,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-    return <html lang="en"><body>{children}</body></html>;
+    return <html lang="en"><body>{children}<Analytics /></body></html>;
 }
