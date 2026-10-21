@@ -56,22 +56,13 @@ async function loadAdditionalResources() {
     return { files, saved: true };
   }
 }
-async function loadResources(subject) {
-  const [kee, primary] = await Promise.allSettled([
-    subject === 'language-b' ? Promise.resolve({files:[],saved:false}) : loadAdditionalResources(),
-    fetch('/data/past-papers.json').then(async response => {
-      if (!response.ok) throw Error('Main library index unavailable');
-      const files = await response.json();
-      if (!Array.isArray(files)) throw Error('Invalid Main library index');
-      return files;
-    })
-  ]);
-  if (kee.status === 'rejected' && primary.status === 'rejected') throw Error('Resource indexes unavailable');
-  if (subject === 'language-b' && primary.status === 'rejected') throw Error('English resource index unavailable');
-  const files = kee.status === 'fulfilled' ? kee.value.files.map(file => ({...file, session:file.session === 'June' ? 'May/June' : file.session, source:'Additional resources', sourceKey:'additional'})) : [];
-  if (primary.status === 'fulfilled') files.push(...primary.value);
+async function loadResources() {
+  const response = await fetch('/data/past-papers.json');
+  if (!response.ok) throw Error('Main library index unavailable');
+  const files = await response.json();
+  if (!Array.isArray(files)) throw Error('Invalid main library index');
   const status = $('#resource-index-status');
-  if (status) status.textContent = primary.status === 'fulfilled' ? 'PDFs & practical files · Hosted here' : 'Main library unavailable · Additional resources shown';
+  if (status) status.textContent = 'PDFs & practical files · Hosted here';
   return files;
 }
 const page = document.querySelector('#site-root')?.dataset.page || document.body.dataset.page;
@@ -166,7 +157,7 @@ if (page === 'dashboard') {
 if (page === 'resources') {
   const subject = $('.resource-workspace').dataset.subject;
   const controls = ['#resource-search', '#year-filter', '#session-filter', '#kind-filter', '#library-filter', '#resource-sort'].map(selector => $(selector));
-  let files = [], pageNumber = 1, filtered = [];
+  let files = [], pageNumber = 1, filtered = [], additionalLoaded = false, additionalLoading;
   const size = 15;
   function render() {
     const search = $('#resource-search').value.toLowerCase().trim();
@@ -188,14 +179,40 @@ if (page === 'resources') {
     $('#next-page')?.addEventListener('click', () => turnPage(1));
   }
   function resetFilters() { controls.forEach(control => control.value = control.id === 'resource-sort' ? 'new' : control.id === 'library-filter' ? 'primary' : ''); pageNumber = 1; render(); }
-  controls.forEach(control => control.addEventListener(control.type === 'search' ? 'input' : 'change', () => { pageNumber = 1; render(); }));
+  function updateOptions() {
+    for (const [selector, property] of [['#year-filter','year'],['#session-filter','session']]) {
+      const select = $(selector), existing = new Set([...select.options].map(option => option.value));
+      const values = [...new Set(files.map(file => file[property]).filter(Boolean))].sort();
+      if (property === 'year') values.reverse();
+      values.filter(value => !existing.has(value)).forEach(value => select.add(new Option(value,value)));
+    }
+  }
+  async function selectLibrary() {
+    if (subject !== 'language-b' && $('#library-filter').value !== 'primary' && !additionalLoaded) {
+      $('#resource-index-status').textContent = 'Loading additional resources…';
+      if (!additionalLoading) additionalLoading = loadAdditionalResources();
+      try {
+        const extra = await additionalLoading;
+        if (!additionalLoaded) {
+          files.push(...extra.files.filter(file => file.subject === subject).map(file => ({...file, session:file.session === 'June' ? 'May/June' : file.session, source:'Additional resources', sourceKey:'additional'})));
+          additionalLoaded = true; updateOptions();
+        }
+        $('#resource-index-status').textContent = extra.saved ? 'Additional resources · Saved index' : 'PDFs & practical files';
+      } catch {
+        additionalLoading = undefined;
+        $('#library-filter').value = 'primary';
+        $('#resource-index-status').textContent = 'Additional resources unavailable · Main library shown';
+      }
+    }
+    if ($('#library-filter').value === 'primary') $('#resource-index-status').textContent = 'PDFs & practical files · Hosted here';
+    pageNumber = 1; render();
+  }
+  controls.forEach(control => control.addEventListener(control.type === 'search' ? 'input' : 'change', () => { if (control.id === 'library-filter') selectLibrary(); else { pageNumber = 1; render(); } }));
   $('#clear-filters').addEventListener('click', resetFilters);
   loadResources(subject).then(data => {
     files = data.filter(file => file.subject === subject);
-    [...new Set(files.map(file => file.year).filter(Boolean))].sort().reverse().forEach(year => $('#year-filter').add(new Option(year, year)));
-    [...new Set(files.map(file => file.session).filter(Boolean))].sort().forEach(session => $('#session-filter').add(new Option(session, session)));
-    if (!files.some(file => file.sourceKey === 'primary')) $('#library-filter').value = 'additional';
-    if (!files.some(file => file.sourceKey === 'additional')) $('#library-filter').querySelector('option[value="additional"]').remove();
+    updateOptions();
+    if (subject === 'language-b') $('#library-filter').querySelector('option[value="additional"]').remove();
     render();
   }).catch(() => { $('#results-count').textContent = 'Resource index unavailable'; $('#resource-error').hidden = false; });
 }
