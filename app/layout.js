@@ -1,10 +1,12 @@
 import './globals.css';
 import './refined.css';
 import './playground.css';
+import './brand-class.css';
 
 export const metadata = {
     title: { default: 'Learn CS with Kee', template: '%s — Learn CS with Kee' },
-    description: 'Clearer concepts. More confident learners. Personal Edexcel IGCSE Computer Science and ICT tutoring, past papers, and interactive practice with Kee.',
+    description: 'Clearer concepts. More confident learners. Edexcel IGCSE Computer Science, ICT, and English Language B classes, resources, and practice with Kee.',
+    icons: { icon: [{ url: '/kee-logo.png', type: 'image/png' }], apple: '/kee-logo.png' },
 };
 
 export default function RootLayout({ children }) {
