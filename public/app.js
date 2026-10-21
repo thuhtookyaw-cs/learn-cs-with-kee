@@ -58,6 +58,89 @@ async function loadResources() {
 }
 const page = document.querySelector('#site-root')?.dataset.page || document.body.dataset.page;
 
+const practiceKey = 'kee-practice-v1';
+function readPractice(key, fallback) {
+  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
+  catch { return fallback; }
+}
+function savePractice(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+  catch { return false; }
+}
+function practiceRecord() {
+  const record = readPractice(practiceKey, {});
+  return record && typeof record === 'object' && !Array.isArray(record) ? record : {};
+}
+function updatePractice(values) { savePractice(practiceKey, {...practiceRecord(), ...values}); }
+const practiceTools = {
+  python:{name:'Python editor',url:'/playground/python/'},
+  logic:{name:'Logic lab',url:'/playground/logic/'},
+  quiz:{name:'Quick quiz',url:'/playground/quiz/'},
+  binary:{name:'Binary arcade',url:'/playground/binary/'}
+};
+if (practiceTools[page]) updatePractice({lastTool:page});
+
+if (page === 'playground') {
+  const targets = [13,6,9,5,14,10,7,12];
+  let challenge = 0, value = 0, solved = false;
+  const bits = $$('[data-warm-bit]');
+  function showRecords() {
+    const record = practiceRecord();
+    $('#record-warmups').textContent = Number.isInteger(record.warmups) && record.warmups >= 0 ? record.warmups : 0;
+    const quizPlayed = Number.isInteger(record.quizAttempts) && record.quizAttempts > 0;
+    $('#record-quiz').textContent = quizPlayed ? `${record.quizBest}/10` : 'Not tried yet';
+    $('#record-quiz').classList.toggle('not-started', !quizPlayed);
+    const arcadePlayed = (Number.isInteger(record.arcadeBest) && record.arcadeBest > 0) || record.arcadeRuns > 0;
+    $('#record-arcade').textContent = arcadePlayed ? (record.arcadeBest || 0) : 'Not tried yet';
+    $('#record-arcade').classList.toggle('not-started', !arcadePlayed);
+    const recent = practiceTools[record.lastTool];
+    $('#practice-resume').hidden = !recent;
+    if (recent) { $('#resume-description').textContent = `Your last stop was the ${recent.name.toLowerCase()}.`; $('#resume-link').href = recent.url; }
+  }
+  bits.forEach(bit => bit.addEventListener('click', () => {
+    const active = bit.getAttribute('aria-pressed') !== 'true';
+    bit.setAttribute('aria-pressed', String(active)); $('strong', bit).textContent = active ? '1' : '0';
+    const values = bits.filter(button => button.getAttribute('aria-pressed') === 'true').map(button => Number(button.dataset.warmBit));
+    value = values.reduce((sum, next) => sum + next, 0);
+    $('#warmup-value').textContent = value;
+    $('#warmup-expression').textContent = values.join(' + ') || '0';
+  }));
+  $('#check-warmup').addEventListener('click', () => {
+    const correct = value === targets[challenge];
+    $('#warmup-feedback').classList.toggle('success', correct);
+    $('#warmup-feedback').textContent = correct ? `That’s it. ${value} in decimal is ${value.toString(2).padStart(4,'0')} in binary.` : `Your switches add up to ${value}. You’re looking for ${targets[challenge]} — try changing a bit.`;
+    if (correct && !solved) {
+      solved = true; const record = practiceRecord(); updatePractice({warmups:(Number.isInteger(record.warmups) ? record.warmups : 0)+1});
+      $('#check-warmup').disabled = true; $('#next-warmup').hidden = false; $('#hint-warmup').hidden = true; showRecords();
+    }
+  });
+  $('#hint-warmup').addEventListener('click', () => {
+    const target = targets[challenge], highest = 2 ** Math.floor(Math.log2(target));
+    $('#warmup-feedback').textContent = `Start with ${highest}, the biggest bit that fits. Then make the remaining ${target-highest} using the smaller bits.`;
+  });
+  $('#next-warmup').addEventListener('click', () => {
+    challenge = (challenge+1) % targets.length; value = 0; solved = false;
+    bits.forEach(bit => {bit.setAttribute('aria-pressed','false'); $('strong', bit).textContent = '0';});
+    $('#warmup-target').textContent = targets[challenge]; $('#warmup-value').textContent = '0'; $('#warmup-expression').textContent = '0';
+    $('#check-warmup').disabled = false; $('#next-warmup').hidden = true; $('#hint-warmup').hidden = false;
+    $('#warmup-feedback').classList.remove('success'); $('#warmup-feedback').textContent = 'A fresh number. Take it one bit at a time.'; bits[0].focus({preventScroll:true});
+  });
+  const paths = {
+    foundations:[['binary','Get comfortable with bits','/playground/binary/?mode=practice'],['logic','See what a logic gate does'],['python','Write a small program']],
+    revision:[['quiz','Find the ideas to revisit'],['python','Practise a programming example'],['resources','Put it into exam practice','/subject/cs/']],
+    challenge:[['logic','Build your own circuit'],['binary','Test your speed in the arcade','/playground/binary/?mode=arcade'],['quiz','Try a fresh question mix']]
+  };
+  function choosePath(key) {
+    const steps = paths[key];
+    $$('[data-practice-path]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.practicePath === key)));
+    $('#practice-path').innerHTML = `<ol class="practice-path-steps">${steps.map(([tool,label,url],index) => `<li><a href="${url || practiceTools[tool].url}"><span>${index+1}</span>${label}<i aria-hidden="true">↗</i></a></li>`).join('')}</ol>`;
+    $$('[data-tool]').forEach(card => { const recommended = card.dataset.tool === steps[0][0]; card.classList.toggle('is-recommended',recommended); $('.recommended-label',card).hidden = !recommended; });
+  }
+  $$('[data-practice-path]').forEach(button => button.addEventListener('click',()=>choosePath(button.dataset.practicePath)));
+  window.addEventListener('storage', event => { if (event.key === practiceKey || event.key === null) showRecords(); });
+  choosePath('foundations'); showRecords();
+}
+
 if (page === 'dashboard') {
   loadResources().then(files => { $('#cs-count').textContent = files.filter(file => file.subject === 'cs').length; $('#ict-count').textContent = files.filter(file => file.subject === 'ict').length; }).catch(() => { $('#cs-count').textContent = 'CS'; $('#ict-count').textContent = 'ICT'; });
 }
@@ -139,7 +222,19 @@ if (page === 'python') {
   };
   let worker, ready = false, running = false;
   const editor = $('#python-code'), output = $('#python-output'), run = $('#run-python'), stop = $('#stop-python');
-  editor.value = examples.hello;
+  const savedDraft = readPractice('kee-python-draft-v1', null);
+  editor.value = savedDraft && typeof savedDraft.code === 'string' ? savedDraft.code.slice(0,50000) : examples.hello;
+  if (savedDraft && typeof savedDraft.input === 'string') $('#python-input').value = savedDraft.input.slice(0,10000);
+  if (savedDraft) $('#draft-status').textContent = 'Your saved draft is restored';
+  function saveDraft() {
+    const saved = savePractice('kee-python-draft-v1',{code:editor.value.slice(0,50000),input:$('#python-input').value.slice(0,10000)});
+    $('#draft-status').textContent = saved ? 'Draft saved in this browser' : 'Draft could not be saved in this browser';
+  }
+  let draftTimer;
+  function queueDraftSave() { clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft,350); }
+  editor.addEventListener('input',queueDraftSave);
+  $('#python-input').addEventListener('input',queueDraftSave);
+  window.addEventListener('pagehide',saveDraft);
   function appendOutput(text) { output.textContent += (output.textContent ? '\n' : '') + text; output.scrollTop = output.scrollHeight; }
   function setRunning(value) { running = value; run.disabled = value; stop.hidden = !value; }
   function stopWorker() { worker?.terminate(); worker = undefined; ready = false; setRunning(false); $('#python-status').textContent = 'Stopped. Python will reload on the next run.'; }
@@ -162,23 +257,26 @@ if (page === 'python') {
   run.addEventListener('click', execute);
   stop.addEventListener('click', () => { stopWorker(); appendOutput('Execution stopped.'); });
   $('#clear-console').addEventListener('click', () => output.textContent = '');
-  $('#python-example').addEventListener('change', event => { editor.value = examples[event.target.value]; if (event.target.value === 'input') $('#python-input').value = 'Kee\n18'; });
+  $('#python-example').addEventListener('change', event => { editor.value = examples[event.target.value]; if (event.target.value === 'input') $('#python-input').value = 'Kee\n18'; saveDraft(); });
   editor.addEventListener('keydown', event => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) { event.preventDefault(); execute(); }
-    if (event.key === 'Tab' && !event.shiftKey) { event.preventDefault(); editor.setRangeText('    ', editor.selectionStart, editor.selectionEnd, 'end'); }
+    if (event.key === 'Tab' && !event.shiftKey) { event.preventDefault(); editor.setRangeText('    ', editor.selectionStart, editor.selectionEnd, 'end'); queueDraftSave(); }
   });
   $('#download-code').addEventListener('click', () => { const url = URL.createObjectURL(new Blob([editor.value], {type:'text/x-python'})); const link = document.createElement('a'); link.href = url; link.download = 'script.py'; link.click(); setTimeout(() => URL.revokeObjectURL(url),1000); });
   window.addEventListener('pagehide', () => worker?.terminate());
 }
 
 if (page === 'quiz') {
-  let bank = [], questions = [], index = 0, score = 0, answers = [];
+  let bank = [], questions = [], index = 0, score = 0, answers = [], recorded = false;
   const area = $('#quiz-area');
+  const previousQuiz = practiceRecord();
+  $('#quiz-personal-best').hidden = !(previousQuiz.quizAttempts > 0);
+  if (previousQuiz.quizAttempts > 0) $('#quiz-personal-best').textContent = `Your best: ${previousQuiz.quizBest}/10 · Saved in this browser`;
   function start() {
     if (!bank.length) return;
     const pool = [...bank];
     for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i],pool[j]] = [pool[j],pool[i]]; }
-    questions = pool.slice(0,10); index = 0; score = 0; answers = []; renderQuestion();
+    questions = pool.slice(0,10); index = 0; score = 0; answers = []; recorded = false; renderQuestion();
   }
   function renderQuestion() {
     const question = questions[index];
@@ -197,7 +295,9 @@ if (page === 'quiz') {
     $('#next-question').addEventListener('click', () => { index++; if (index < questions.length) renderQuestion(); else renderResults(); });
   }
   function renderResults() {
+    if (!recorded) { const record = practiceRecord(); updatePractice({quizAttempts:(record.quizAttempts || 0)+1,quizBest:Math.max(record.quizBest || 0,score)}); recorded = true; }
     area.innerHTML = `<div class="quiz-welcome"><span class="big-symbol">${score}/${questions.length}</span><h2>${score === questions.length ? 'Everything clicked.' : 'A little clearer than before.'}</h2><p>${score >= 7 ? 'You’re building a solid foundation. Revisit the questions below, or try a fresh mix.' : 'Every attempt shows you where to focus next. Review the answers below, then give it another go.'}</p><button class="button" id="restart-quiz">Try a fresh mix ↻</button></div><h3>Your review</h3><ul class="review-list">${answers.map(({question,answer,correct}) => `<li><span class="review-status">${correct ? '✓ UNDERSTOOD' : '↻ REVISIT'}</span><strong>${escapeHtml(question.q)}</strong><span>${correct ? 'Your answer' : 'Correct answer'}: ${escapeHtml(question.answer)}</span>${!correct ? `<br><span>Your answer: ${escapeHtml(answer)}</span>` : ''}</li>`).join('')}</ul>`;
+    const best = document.createElement('p'); best.className = 'small-note'; best.textContent = `Your best: ${practiceRecord().quizBest}/10 · Saved in this browser`; $('.quiz-welcome').append(best);
     $('#restart-quiz').addEventListener('click',start);
     area.scrollIntoView({behavior:'smooth',block:'start'});
   }
@@ -208,6 +308,9 @@ if (page === 'quiz') {
 
 if (page === 'binary') {
   let score = 0, lives = 3, level = 1, bitCount = 4, value = 0, target = 0, running = false, paused = false, distance = 0, last = 0, frame;
+  const requestedMode = new URLSearchParams(location.search).get('mode');
+  let mode = requestedMode === 'practice' || requestedMode === 'arcade' ? requestedMode : readPractice('kee-binary-mode-v1','arcade');
+  if (!['practice','arcade'].includes(mode)) mode = 'arcade';
   const field = $('#arcade-field'), number = $('#falling-number'), overlay = $('#arcade-overlay');
   const feedback = text => $('#arcade-feedback').textContent = text;
   function renderBits() {
@@ -216,7 +319,7 @@ if (page === 'binary') {
     $$('.arcade-bit').forEach(button => button.addEventListener('click', () => { if (!running || paused) return; const on = button.getAttribute('aria-pressed') !== 'true'; button.setAttribute('aria-pressed',String(on)); $('strong',button).textContent = on ? '1' : '0'; value += (on ? 1 : -1) * Number(button.dataset.value); $('#arcade-value').textContent = value; }));
   }
   function spawn() { distance = 18; const previous = target; do { target = 1 + Math.floor(Math.random() * (2 ** bitCount - 1)); } while (target === previous); number.textContent = target; number.style.transform = 'translate(-50%,18px)'; }
-  function updateStats() { $('#arcade-score').textContent = score; $('#arcade-level').textContent = level; $('#arcade-lives').textContent = lives; }
+  function updateStats() { $('#arcade-score').textContent = score; $('#arcade-level').textContent = level; $('#arcade-lives').textContent = lives; $('#arcade-best').textContent = practiceRecord().arcadeBest || 0; }
   function finish() {
     running = false; cancelAnimationFrame(frame); number.hidden = true; $('#submit-binary').disabled = true; $('#pause-arcade').disabled = true;
     overlay.hidden = false; overlay.innerHTML = `<span class="big-symbol">${score}</span><h2>A good bit of practice.</h2><p>You matched ${score} ${score === 1 ? 'number' : 'numbers'}. Ready for another round?</p><button id="restart-arcade" class="button">Play again ↻</button>`;
@@ -234,7 +337,7 @@ if (page === 'binary') {
     }
     frame = requestAnimationFrame(tick);
   }
-  function start() { cancelAnimationFrame(frame); score = 0; lives = 3; level = 1; bitCount = 4; running = true; paused = false; last = 0; overlay.hidden = true; number.hidden = false; $('#submit-binary').disabled = false; $('#pause-arcade').disabled = false; $('#pause-arcade').textContent = 'Pause'; updateStats(); renderBits(); spawn(); feedback('Tap the bits. Add the values. Press Enter to match.'); frame = requestAnimationFrame(tick); }
+  function start() { if (mode === 'arcade') {const record=practiceRecord();updatePractice({arcadeRuns:(record.arcadeRuns || 0)+1});} cancelAnimationFrame(frame); score = 0; lives = 3; level = 1; bitCount = 4; running = true; paused = false; last = 0; overlay.hidden = true; number.hidden = false; $('#submit-binary').disabled = false; $('#pause-arcade').disabled = false; $('#pause-arcade').textContent = 'Pause'; updateStats(); renderBits(); spawn(); feedback(mode === 'practice' ? 'No timer. Tap the bits, then press Enter to check your answer.' : 'Tap the bits. Add the values. Press Enter to match.'); if (mode === 'arcade') frame = requestAnimationFrame(tick); }
   function togglePause() {
     if (!running) return;
     paused = !paused; $('#pause-arcade').textContent = paused ? 'Resume' : 'Pause'; $('#submit-binary').disabled = paused;
@@ -244,12 +347,24 @@ if (page === 'binary') {
   function submit() {
     if (!running || paused) return;
     if (value !== target) { feedback(`Your switches add up to ${value}. Aim for ${target}.`); return; }
-    score++; level = 1 + Math.floor(score / 5); bitCount = Math.min(8,4 + Math.floor(score / 5)); updateStats(); feedback('That’s a match. Here comes the next one.'); renderBits(); spawn();
+    score++; level = 1 + Math.floor(score / 5); bitCount = Math.min(8,4 + Math.floor(score / 5));
+    if (mode === 'arcade' && score > (practiceRecord().arcadeBest || 0)) updatePractice({arcadeBest:score});
+    updateStats(); feedback('That’s a match. Here comes the next one.'); renderBits(); spawn();
   }
-  $('#start-arcade').addEventListener('click',start); $('#submit-binary').addEventListener('click',submit); $('#pause-arcade').addEventListener('click',togglePause);
+  function selectMode(nextMode) {
+    mode = nextMode; savePractice('kee-binary-mode-v1',mode);
+    running = false; paused = false; cancelAnimationFrame(frame); score = 0; lives = 3; level = 1; bitCount = 4;
+    field.classList.toggle('practice-mode',mode === 'practice'); $('#arcade-lives-group').hidden = mode === 'practice'; $('#pause-arcade').hidden = mode === 'practice'; $('#pause-arcade').disabled = true; $('#submit-binary').disabled = true; number.hidden = true;
+    $$('[data-binary-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.binaryMode === mode)));
+    overlay.hidden = false;
+    overlay.innerHTML = mode === 'practice' ? '<span class="big-symbol">01</span><h2>Take it one bit at a time.</h2><p>No timer and no lost lives. Add the bit values to match each decimal number. More bits unlock as you practise.</p><button class="button" id="start-arcade">Start practising →</button>' : '<span class="big-symbol">01</span><h2>Catch the number.</h2><p>Match each decimal number before it reaches the line. You have three lives. More bits unlock as you progress.</p><button class="button" id="start-arcade">Let’s play ▷</button>';
+    $('#start-arcade').addEventListener('click',start); updateStats(); renderBits(); feedback('Choose a mode to start. Switching modes starts a new round.');
+  }
+  $$('[data-binary-mode]').forEach(button => button.addEventListener('click',()=>selectMode(button.dataset.binaryMode)));
+  $('#submit-binary').addEventListener('click',submit); $('#pause-arcade').addEventListener('click',togglePause);
   document.addEventListener('keydown',event => { if (event.key === 'Enter' && running && (document.activeElement.classList.contains('arcade-bit') || !['BUTTON','A','INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))) { event.preventDefault(); submit(); } });
-  document.addEventListener('visibilitychange',() => { if (document.hidden && running && !paused) togglePause(); });
-  window.addEventListener('pagehide',() => cancelAnimationFrame(frame)); renderBits();
+  document.addEventListener('visibilitychange',() => { if (document.hidden && running && !paused && mode === 'arcade') togglePause(); });
+  window.addEventListener('pagehide',() => cancelAnimationFrame(frame)); selectMode(mode);
 }
 
 if (page === 'logic') {
@@ -302,7 +417,26 @@ if (page === 'logic') {
     });
   }
   function example() { nodes=[];wires=[];nextId=1;pending=null;const a=addNode('INPUT',40,100),b=addNode('INPUT',40,295),xor=addNode('XOR',260,100),and=addNode('AND',260,295),sum=addNode('OUTPUT',480,100),carry=addNode('OUTPUT',480,295);wires=[{from:a.id,to:xor.id,port:0},{from:b.id,to:xor.id,port:1},{from:a.id,to:and.id,port:0},{from:b.id,to:and.id,port:1},{from:xor.id,to:sum.id,port:0},{from:and.id,to:carry.id,port:0}];render();say('Half adder: XOR gives the sum; AND gives the carry. Toggle the two inputs to explore.');}
+  $('#restore-circuit').disabled = !readPractice('kee-circuit-v1',null);
+  $('#save-circuit').addEventListener('click',()=>{
+    const saved = savePractice('kee-circuit-v1',{version:1,nodes,wires,nextId});
+    $('#restore-circuit').disabled = !saved; say(saved ? 'Circuit saved in this browser. You can restore it after leaving the page.' : 'This browser could not save the circuit. Your current circuit is still on the canvas.');
+  });
+  $('#restore-circuit').addEventListener('click',()=>{
+    const saved = readPractice('kee-circuit-v1',null), types=['INPUT','AND','OR','NOT','XOR','NAND','NOR','OUTPUT'];
+    if (!saved || saved.version !== 1 || !Array.isArray(saved.nodes) || !Array.isArray(saved.wires) || saved.nodes.length > 25 || saved.wires.length > 50 || saved.nodes.some(node=>!Number.isInteger(node.id)||!types.includes(node.type)||!Number.isFinite(node.x)||!Number.isFinite(node.y)) || new Set(saved.nodes.map(node=>node.id)).size !== saved.nodes.length) {say('The saved circuit could not be restored. Your current canvas is unchanged.');return;}
+    const oldNodes=nodes,oldWires=wires;
+    nodes=saved.nodes.map(node=>({...node,x:Math.max(15,Math.min(770,node.x)),y:Math.max(10,Math.min(385,node.y)),on:Boolean(node.on)})); wires=[];
+    for (const wire of saved.wires) {
+      const from=nodes.find(node=>node.id===wire.from),to=nodes.find(node=>node.id===wire.to);
+      if (!from || !to || from.type==='OUTPUT' || !Number.isInteger(wire.port) || wire.port<0 || wire.port>=countInputs(to.type) || wires.some(item=>item.to===wire.to&&item.port===wire.port) || wouldCycle(wire.from,wire.to)) {nodes=oldNodes;wires=oldWires;say('The saved circuit contains an invalid connection. Your current canvas is unchanged.');return;}
+      wires.push({from:wire.from,to:wire.to,port:wire.port});
+    }
+    nextId=Math.max(0,...nodes.map(node=>node.id))+1;pending=null;render();say('Saved circuit restored. Pick up where you left off.');
+  });
   $$('[data-add-gate]').forEach(button=>button.addEventListener('click',()=>{if(nodes.length>=25){say('Your workspace has 25 components. Remove one before adding more.');return;}addNode(button.dataset.addGate);render();say(`${button.dataset.addGate} added. Drag it into place.`);}));
   $('#load-example').addEventListener('click',example);$('#reset-circuit').addEventListener('click',()=>{nodes=[];wires=[];pending=null;nextId=1;render();say('A fresh canvas. Add an input, a gate, and an output to get started.');});
   $('#cancel-wire').addEventListener('click',()=>{pending=null;render();say('Connection cancelled.');});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&pending!==null){pending=null;render();say('Connection cancelled.');}});example();
 }
+
+document.querySelector('#site-root')?.setAttribute('data-interactive', 'ready');
