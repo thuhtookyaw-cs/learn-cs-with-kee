@@ -89,10 +89,8 @@ Caesar Cipher မှာ အက္ခရာအားလုံးကို shift �
 
 ဥပမာ message က HELLO ဖြစ်ပြီး keyword က KEY ဆိုပါစို့။ Keyword ကို message နဲ့ အရှည်တူအောင် ထပ်သုံးရပါတယ်။
 
-`
 Plaintext: H E L L O
 Keystream: K E Y K E
-`
 
 အဲဒီနောက် plaintext အက္ခရာနဲ့ သက်ဆိုင်ရာ keystream အက္ခရာကို Vigenère grid ထဲမှာ တွဲဖက်ကြည့်ပြီး ciphertext ကို ရယူပါတယ်။
 
