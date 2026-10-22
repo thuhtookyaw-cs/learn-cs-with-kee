@@ -4,9 +4,9 @@ date: "2026-10-22"
 description: "ကိုယ့် Message ကို ဘယ်သူဖတ်နိုင်မလဲ?"
 subject: "Computer Science"
 subjectHref: "/subject/cs/"
-type: "worked example"
+type: "Read the article"
 visual: "Encryption?"
-topic: "TOPIC"
+topic: "Security"
 ---
 
 ## Encryption
