@@ -149,6 +149,8 @@
     padding: 14px 18px;
     text-align: start;
     vertical-align: top;
+    overflow-wrap: normal;
+    word-break: normal;
     border-bottom: 1px solid var(--line);
 }
 
