@@ -2,7 +2,7 @@ import localFont from 'next/font/local';
 import './journal-font.css';
 
 const journalFont = localFont({
-    src: './fonts/AJ_04.ttf',
+    src: './fonts/TU01_Pann_Yeat.ttf',
     weight: '400',
     style: 'normal',
     display: 'swap',

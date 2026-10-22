@@ -1,9 +1,9 @@
 ======================================================================
 FONTS MYANMAR - FONT LICENSE AGREEMENT
-Font: AJ 04
+Font: TU01_Pann Yeat
 License Tier: Free (Personal & Commercial)
-Creator / Foundry: AJ
-Date: 2026-10-21
+Creator / Foundry: The Universe
+Date: 2026-10-08
 Platform: https://fontsmyanmar.com
 ======================================================================
 
@@ -20,10 +20,10 @@ AUTHORIZED PERMISSIONS:
 PROHIBITIONS & RESTRICTIONS:
 - Reselling, redistributing, sub-licensing, renting, leasing, or publicly uploading the raw font software (.ttf, .otf, .woff, .woff2) is strictly prohibited.
 - Reverse-engineering, decompiling, or modifying font outline glyphs and character mapping tables is strictly prohibited.
-- All intellectual property, trademarks, and typeface copyrights remain the exclusive property of the creator / foundry (AJ).
+- All intellectual property, trademarks, and typeface copyrights remain the exclusive property of the creator / foundry (The Universe).
 
 [MYANMAR SUMMARY]
 တစ်ကိုယ်ရေသုံးနှင့် စီးပွားဖြစ် ဒီဇိုင်းလုပ်ငန်းများတွင် လွတ်လပ်စွာ အခမဲ့ အသုံးပြုနိုင်ပါသည်။ ဖောင့်ဖိုင်မူရင်းအား ပြန်လည်ရောင်းချခြင်း၊ အခမဲ့ဝေမျှဖြန့်ချိခြင်းနှင့် မွမ်းမံပြင်ဆင်ခြင်း (Decompile) လုံးဝ မပြုလုပ်ရပါ။
 
 ======================================================================
-Copyright (c) Fonts Myanmar & AJ. All rights reserved.
+Copyright (c) Fonts Myanmar & The Universe. All rights reserved.
