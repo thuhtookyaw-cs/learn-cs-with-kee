@@ -1,0 +1,29 @@
+======================================================================
+FONTS MYANMAR - FONT LICENSE AGREEMENT
+Font: AJ 04
+License Tier: Free (Personal & Commercial)
+Creator / Foundry: AJ
+Date: 2026-10-21
+Platform: https://fontsmyanmar.com
+======================================================================
+
+COMMERCIAL & PERSONAL USE GRANT
+
+This font software is licensed for both personal and commercial design projects under the Fonts Myanmar Free Font Agreement.
+
+AUTHORIZED PERMISSIONS:
+- Personal and commercial graphic design projects.
+- Commercial client projects, advertising flyers, posters, brochures, and marketing collateral.
+- Creation of logos, social media graphics, print publications, and merchandise graphics.
+- Rasterized digital graphics, broadcast video titles, and web graphics.
+
+PROHIBITIONS & RESTRICTIONS:
+- Reselling, redistributing, sub-licensing, renting, leasing, or publicly uploading the raw font software (.ttf, .otf, .woff, .woff2) is strictly prohibited.
+- Reverse-engineering, decompiling, or modifying font outline glyphs and character mapping tables is strictly prohibited.
+- All intellectual property, trademarks, and typeface copyrights remain the exclusive property of the creator / foundry (AJ).
+
+[MYANMAR SUMMARY]
+တစ်ကိုယ်ရေသုံးနှင့် စီးပွားဖြစ် ဒီဇိုင်းလုပ်ငန်းများတွင် လွတ်လပ်စွာ အခမဲ့ အသုံးပြုနိုင်ပါသည်။ ဖောင့်ဖိုင်မူရင်းအား ပြန်လည်ရောင်းချခြင်း၊ အခမဲ့ဝေမျှဖြန့်ချိခြင်းနှင့် မွမ်းမံပြင်ဆင်ခြင်း (Decompile) လုံးဝ မပြုလုပ်ရပါ။
+
+======================================================================
+Copyright (c) Fonts Myanmar & AJ. All rights reserved.

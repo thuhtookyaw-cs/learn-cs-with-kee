@@ -1,0 +1,32 @@
+.journal-font .article-prose,
+.journal-font .article-prose :is(h1, h2, h3, h4, h5, h6),
+.journal-font .journal-card-copy :is(h2, p),
+.journal-font [data-page="article"] .breadcrumbs > span:last-child {
+    font-family: var(--font-journal), sans-serif;
+    font-synthesis: weight style;
+    letter-spacing: normal;
+}
+
+.journal-font .article-prose {
+    font-size: 16px;
+    line-height: 2.1;
+}
+
+.journal-font .article-prose :is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.7;
+}
+
+.journal-font .article-prose header > p,
+.journal-font .journal-card-copy > p {
+    line-height: 2;
+}
+
+.journal-font .journal-card-copy h2 {
+    line-height: 1.7;
+}
+
+@media (max-width: 650px) {
+    .journal-font .article-prose {
+        font-size: 15px;
+    }
+}
