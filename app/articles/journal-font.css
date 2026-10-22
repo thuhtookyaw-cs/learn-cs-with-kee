@@ -10,6 +10,7 @@
 .journal-font .article-prose {
     font-size: 20px;
     line-height: 2.1;
+    min-width: 0;
 }
 
 .journal-font .article-prose :is(h1, h2, h3, h4, h5, h6) {
@@ -45,6 +46,138 @@
     line-height: 1.7;
 }
 
+.journal-font .article-body {
+    max-width: 760px;
+}
+
+.journal-font .article-body > :first-child {
+    margin-top: 0;
+}
+
+.journal-font .article-body h2 {
+    margin: 48px 0 20px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+}
+
+.journal-font .article-body h3 {
+    margin: 32px 0 14px;
+}
+
+.journal-font .article-body p {
+    margin: 20px 0;
+}
+
+.journal-font .article-body :is(ul, ol) {
+    margin: 22px 0;
+    padding-inline-start: 1.5em;
+}
+
+.journal-font .article-body li {
+    margin: 12px 0;
+    padding-inline-start: 6px;
+}
+
+.journal-font .article-body li :is(p, ul, ol) {
+    margin-block: 8px;
+}
+
+.journal-font .article-body strong {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.journal-font .article-body a {
+    text-underline-offset: 4px;
+}
+
+.journal-font .article-body pre {
+    max-width: 100%;
+    margin: 26px 0;
+    padding: 22px;
+    background: #edf2e7;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    tab-size: 4;
+}
+
+.journal-font .article-body pre code {
+    display: block;
+    padding: 0;
+    line-height: 1.8;
+    white-space: pre;
+    overflow-wrap: normal;
+    background: transparent;
+}
+
+.journal-font .article-body blockquote {
+    margin: 28px 0;
+    padding: 14px 22px;
+    border-left: 4px solid #83a366;
+}
+
+.journal-font .article-body blockquote p {
+    margin: 10px 0;
+}
+
+.journal-font .article-body img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 28px auto;
+    border-radius: 10px;
+}
+
+.journal-font .article-table-scroll {
+    max-width: 100%;
+    margin: 28px 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.journal-font .article-table-scroll table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85em;
+    line-height: 1.9;
+}
+
+.journal-font .article-table-scroll :is(th, td) {
+    padding: 14px 18px;
+    text-align: start;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+}
+
+.journal-font .article-table-scroll th {
+    background: #edf3e6;
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.journal-font .article-table-scroll tbody tr:nth-child(even) {
+    background: #f8faf5;
+}
+
+.journal-font .article-table-scroll tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.journal-font .article-body .contains-task-list {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.journal-font .article-body .task-list-item input {
+    width: 1em;
+    height: 1em;
+    margin-inline-end: .6em;
+    accent-color: var(--green);
+}
+
 @media (max-width: 650px) {
     .journal-font .article-prose {
         font-size: 18px;
@@ -52,5 +185,18 @@
 
     .journal-font .article-prose header > p {
         font-size: 17px;
+    }
+
+    .journal-font .article-body h2 {
+        margin-top: 36px;
+        padding-top: 22px;
+    }
+
+    .journal-font .article-body pre {
+        padding: 16px;
+    }
+
+    .journal-font .article-table-scroll :is(th, td) {
+        padding: 11px 13px;
     }
 }
