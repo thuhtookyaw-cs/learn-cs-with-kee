@@ -27,7 +27,9 @@
 .language-symbol { font-family: Georgia, serif; letter-spacing: -3px; }
 .class-card-note { font-size: 10px; }
 .language-class-main { padding-bottom: 50px; }
-.language-hero { display: grid; grid-template-columns: 1.12fr 1fr; align-items: center; gap: 80px; padding-block: 48px 65px; }
+.language-hero { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); align-items: center; gap: 80px; padding-block: 48px 65px; }
+.language-hero > * { min-width: 0; }
+.physics-art .physics-formula { font-size: clamp(72px, 18vw, 150px); letter-spacing: -.07em; }
 .language-hero h1 { font: 600 clamp(43px, 5.1vw, 66px)/1.12 Manrope, Arial, sans-serif; letter-spacing: -3px; margin: 24px 0; }
 .language-hero h1 em { font-style: normal; color: #71814e; }
 .language-hero-copy > p { font-size: 18px; line-height: 1.8; margin: 0 0 19px; }
@@ -99,7 +101,7 @@
   .hero .eyebrow { font-size: 7px; letter-spacing: .8px; }
   .subject-grid .subject-card, .library-cards .subject-card { padding: 25px; }
   .subject-grid .subject-card h3, .library-cards h2 { font-size: 24px; }
-  .language-hero { grid-template-columns: 1fr; padding-block: 35px 42px; gap: 32px; }
+  .language-hero { grid-template-columns: minmax(0, 1fr); padding-block: 35px 42px; gap: 32px; }
   .language-hero h1 { font-size: clamp(43px, 11.5vw, 62px); letter-spacing: -2px; margin-block: 22px; }
   .language-hero-copy > p { font-size: 17px; }
   .language-hero-copy > .language-description { font-size: 13px; }

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Test"
 date: "2026-10-22"
 description: "A clear description for students."

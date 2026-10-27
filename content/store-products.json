@@ -66,6 +66,7 @@
     "art": "01",
     "label": "NEW BUNDLE",
     "subject": "Computer Science",
-    "code": "4CP0"
+    "code": "4CP0",
+    "published": false
   }
 ]

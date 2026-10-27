@@ -15,6 +15,10 @@ $$('a', navigation).forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && navigation.classList.contains('open')) { closeMenu(); menu.focus(); } });
 
 $$('[data-close-dialog]').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
+$$('dialog').forEach(dialog => dialog.addEventListener('click', event => {
+  const bounds = dialog.getBoundingClientRect();
+  if (event.target === dialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) dialog.close();
+}));
 const preview = $('#preview-dialog');
 preview.addEventListener('close', () => $('#preview-frame').removeAttribute('src'));
 function previewFile(file) {
@@ -214,7 +218,7 @@ if (page === 'store') {
     $$('[data-order]').forEach(button => button.addEventListener('click', () => {
       selected = products.find(product => product.id === button.dataset.order);
       $('#order-title').textContent = selected.title;
-      $('#order-subject').textContent = `Edexcel International GCSE ${selected.subject} (${selected.code})`;
+      $('#order-subject').textContent = `Created by Kee · ${selected.subject} practice · ${selected.code}`;
       $('#order-price').textContent = money(selected.price);
       $('#order-level').hidden = selected.id === 'mixed';
       $('label[for="order-level"]').hidden = selected.id === 'mixed';
@@ -223,16 +227,35 @@ if (page === 'store') {
   }
   function updateOrder() {
     const level = selected.id === 'mixed' ? 'Mixed levels' : $('#order-level').value;
-    $('#order-link').href = `https://t.me/xkxxee?text=${encodeURIComponent(`Hi Kee! I'd like to ask about the Edexcel International GCSE ${selected.subject} (${selected.code}) ${selected.title} (${level}), priced at ${money(selected.price)}. Could you confirm how to order?`)}`;
+    $('#order-link').href = `https://t.me/xkxxee?text=${encodeURIComponent(`Hi Kee! I'd like to ask about your ${selected.subject} practice resource for Edexcel IGCSE (${selected.code}): ${selected.title} (${level}), priced at ${money(selected.price)}. Could you confirm how to order?`)}`;
   }
   $('#order-level').addEventListener('change', updateOrder);
   $('#store-search').addEventListener('input', renderProducts);
   $$('[data-store-filter]').forEach(button => button.addEventListener('click', () => { filter = button.dataset.storeFilter; $$('[data-store-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button))); renderProducts(); }));
-  fetch('/data/store-products.json').then(response => {
-    if (!response.ok) throw new Error('Store data unavailable');
-    return response.json();
-  }).then(data => { products = Array.isArray(data) ? data : []; renderProducts(); })
-    .catch(() => { $('#store-count').textContent = 'Store unavailable'; $('#store-empty').hidden = false; });
+  async function loadProducts() {
+    $('#store-products').setAttribute('aria-busy', 'true');
+    $('#store-count').textContent = 'Loading practice papers…';
+    $('#store-error').hidden = true;
+    $('#store-empty').hidden = true;
+    $('#retry-store').disabled = true;
+    try {
+      const response = await fetch('/data/store-products.json');
+      if (!response.ok) throw new Error('Store data unavailable');
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error('Invalid Store data');
+      products = data.filter(product => product.published !== false);
+      renderProducts();
+    } catch {
+      $('#store-count').textContent = 'Store unavailable';
+      $('#store-error').hidden = false;
+      $('#store-products').replaceChildren();
+    } finally {
+      $('#store-products').setAttribute('aria-busy', 'false');
+      $('#retry-store').disabled = false;
+    }
+  }
+  $('#retry-store').addEventListener('click', loadProducts);
+  loadProducts();
 }
 
 if (page === 'python') {
@@ -291,15 +314,14 @@ if (page === 'python') {
 
 if (page === 'quiz') {
   let bank = [], questions = [], index = 0, score = 0, answers = [], recorded = false;
+  let prepareQuiz;
   const area = $('#quiz-area');
   const previousQuiz = practiceRecord();
   $('#quiz-personal-best').hidden = !(previousQuiz.quizAttempts > 0);
   if (previousQuiz.quizAttempts > 0) $('#quiz-personal-best').textContent = `Your best: ${previousQuiz.quizBest}/10 · Saved in this browser`;
   function start() {
     if (!bank.length) return;
-    const pool = [...bank];
-    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i],pool[j]] = [pool[j],pool[i]]; }
-    questions = pool.slice(0,10); index = 0; score = 0; answers = []; recorded = false; renderQuestion();
+    questions = prepareQuiz(bank); index = 0; score = 0; answers = []; recorded = false; renderQuestion();
   }
   function renderQuestion() {
     const question = questions[index];
@@ -326,7 +348,15 @@ if (page === 'quiz') {
   }
   $('#start-quiz').disabled = true;
   $('#start-quiz').addEventListener('click',start);
-  fetch('/data/quiz.json').then(response => { if (!response.ok) throw Error(); return response.json(); }).then(data => { bank = data.filter(item => item.options.includes(item.answer)); $('#quiz-bank-status').textContent = `${bank.length} questions in the original question bank.`; $('#start-quiz').disabled = false; }).catch(() => $('#quiz-bank-status').textContent = 'The questions couldn’t load. Refresh to try again.');
+  Promise.all([
+    fetch('/data/quiz.json').then(response => { if (!response.ok) throw Error(); return response.json(); }),
+    import('/quiz-practice.mjs')
+  ]).then(([data, helpers]) => {
+    prepareQuiz = helpers.prepareQuiz;
+    bank = data.filter(item => typeof item.q === 'string' && Array.isArray(item.options) && item.options.length > 1 && item.options.includes(item.answer));
+    $('#quiz-bank-status').textContent = `${bank.length} questions to practise.`;
+    $('#start-quiz').disabled = !bank.length;
+  }).catch(() => $('#quiz-bank-status').textContent = 'The questions couldn’t load. Refresh to try again.');
 }
 
 if (page === 'binary') {

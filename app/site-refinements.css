@@ -1,0 +1,44 @@
+/* Keep the shared navigation sticky on React-rendered Journal pages. */
+.frame-fragment {
+    display: contents;
+}
+
+.not-found-page {
+    min-height: 55vh;
+    padding-bottom: 60px;
+}
+
+.not-found-page .actions {
+    margin-top: 28px;
+}
+
+.store-grid[aria-busy="true"] {
+    min-height: 180px;
+}
+
+.store-load-error {
+    margin-block: 20px;
+}
+
+.store-load-error .button {
+    margin-top: 18px;
+}
+
+.dialog-heading .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+}
+
+@media (max-width: 760px) {
+    .paper-kind-tabs button,
+    .paper-file-actions a,
+    .paper-file-actions button,
+    .paper-active-filters button,
+    .paper-reset {
+        min-height: 44px;
+    }
+
+    .segmented > button {
+        min-height: 44px;
+    }
+}

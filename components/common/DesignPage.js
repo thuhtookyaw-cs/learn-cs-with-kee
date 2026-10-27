@@ -17,9 +17,9 @@ export function DesignFrame({ children, page = 'journal' }) {
     const header = template.slice(0, template.indexOf('<main'));
     const footer = template.slice(template.lastIndexOf('<footer'));
     return <div id="site-root" data-page={page}>
-        <div dangerouslySetInnerHTML={{ __html: header }} />
+        <div className="frame-fragment" dangerouslySetInnerHTML={{ __html: page === 'not-found' ? header.replace(/ aria-current="page"/g, '') : header }} />
         {children}
-        <div dangerouslySetInnerHTML={{ __html: footer }} />
+        <div className="frame-fragment" dangerouslySetInnerHTML={{ __html: footer }} />
         <Script src="/app.js" strategy="afterInteractive" />
     </div>;
 }
