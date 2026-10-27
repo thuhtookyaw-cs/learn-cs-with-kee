@@ -29,6 +29,112 @@
     min-height: 44px;
 }
 
+.subject-card .subject-top {
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.subject-card-cover {
+    display: block;
+    width: 104px;
+    height: auto;
+    border-radius: 2px 5px 5px 2px;
+    box-shadow: 0 9px 18px #193d2920;
+}
+
+.subject-card .subject-top .pill {
+    margin-top: 2px;
+}
+
+.subject-textbook {
+    margin: 0;
+    padding: 30px;
+    border: 1px solid #d9dfcf;
+    border-radius: 20px;
+    background: #eef1e6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    min-width: 0;
+}
+
+.subject-textbook-cover {
+    display: block;
+    width: min(100%, 260px);
+    height: auto;
+    border-radius: 2px 6px 6px 2px;
+    box-shadow: 0 14px 24px #193d2926;
+}
+
+.subject-textbook figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+}
+
+.textbook-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+}
+
+.subject-textbook figcaption a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 11px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.past-paper-page .subject-book-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 250px;
+    gap: 48px;
+    align-items: center;
+}
+
+.subject-book-intro > div > p {
+    font-size: 14px;
+    line-height: 1.85;
+    max-width: 590px;
+    color: var(--muted);
+}
+
+.subject-textbook-compact {
+    padding: 20px;
+    gap: 12px;
+}
+
+.subject-textbook-compact .subject-textbook-cover {
+    width: 150px;
+}
+
+@media (max-width: 650px) {
+    .subject-textbook {
+        padding: 25px;
+        border-radius: 16px;
+    }
+
+    .subject-textbook-cover {
+        width: min(100%, 230px);
+    }
+
+    .past-paper-page .subject-book-intro {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .subject-textbook-compact .subject-textbook-cover {
+        width: 170px;
+    }
+}
+
 @media (max-width: 760px) {
     .paper-kind-tabs button,
     .paper-file-actions a,
